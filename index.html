@@ -1,9 +1,117 @@
+<!-- <form>
+	<label for="test">Test Type</label>
+	<select id="test" name="test">
+	  <option value="none" selected>Select…</option>
+	  <option value="tensile">Tensile</option>
+	  <option value="rockwell-hardness">Rockwell Hardness</option>
+	  <option value="vickers-hardness">Vickers Hardness</option>
+	  <option value="knoop-hardness">Knoop Hardness</option>
+	  <option value="fatigue">Fatigue</option>
+	  <option value="charpy">Charpy</option>
+	</select>
+	<label for="material">Material</label>
+	<select id="material" name="material">
+	  <option value="none" selected>Select…</option>
+	  <option value="apple">Apple</option>
+	  <option value="banana">Banana</option>
+	  <option value="cherry">Cherry</option>
+	  <option value="durian">Durian</option>
+	</select>
+  </form>
+  <video width="960" height="720" controls>
+	<source src="movie.mp4" type="video/mp4">
+	<source src="movie.ogg" type="video/ogg">
+  Your browser does not support the video tag.
+  </video> -->
+
+<html>
+    <head>
+    <!-- <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> -->
+	<meta charset="UTF-8" />
+	<link rel="stylesheet" href="https://unpkg.com/98.css" />
+    <script language="javascript" type="text/javascript">
+    function dynamicdropdown(listindex)
+    {
+        switch (listindex)
+        {
+        case "tensile" :
+            document.getElementById("material").options[0]=new Option("Aluminum 6061","aluminum_6061");
+            document.getElementById("material").options[1]=new Option("Brass 360","brass_360");
+            document.getElementById("material").options[2]=new Option("Low Carbon Steel","low_carbon_steel");
+			document.getElementById("material").options[3]=new Option("PLA","pla");
+            document.getElementById("material").options[4]=new Option("Stainless Steel 316L","stainless_steel_316l");
+            document.getElementById("material").options[5]=new Option("Steel 1084","steel_1084");
+            break;
+        case "fatigue" :
+            document.getElementById("material").options[0]=new Option("Steel 316L","steel_316l");
+            break;
+		case "rockwell-hardness" :
+			document.getElementById("material").options[0]=new Option("Brass 360","brass_360");
+            break;
+		case "vickers-hardness" :
+            document.getElementById("material").options[0]=new Option("Steel 1018","steel_1018");
+            break;
+		case "knoop-hardness" :
+            document.getElementById("material").options[0]=new Option("N/A","");
+            break;
+		case "charpy" :
+            document.getElementById("material").options[0]=new Option("Steel 4140","steel_4140");
+            break;
+        }
+		
+        return true;
+    }
+    </script>
+    </head>
+    <title>Dynamic Drop Down List</title>
+    <body>
+    <div class="category_div" id="category_div">
+		<div class="title-bar">
+			<div class="title-bar-text">
+			  Test Types:
+			</div>
+		</div>
+        <select id="test_type" name="test_type" onchange="javascript: dynamicdropdown(this.options[this.selectedIndex].value);">
+			<option value="">Select Test</option>
+			<option value="tensile">Tensile</option>
+			<option value="fatigue">Fatigue</option>
+			<option value="rockwell-hardness">Rockwell Hardness</option>
+			<option value="vickers-hardness">Vickers Hardness</option>
+			<option value="knoop-hardness">Knoop Hardness</option>
+			<option value="charpy">Charpy</option>
+        </select>
+    </div>
+    <div class="sub_category_div" id="sub_category_div">Status:
+        <script type="text/javascript" language="JavaScript">
+        	document.write('<select name="material" id="material"><option value="">Select a Test Type</option></select>')
+        </script>
+        <noscript>
+			<select id="material" name="material">
+				<option value="">Select a Test Type</option>
+			</select>
+        </noscript>
+    </div>
+    </body>
+</html>
+
+<!-- <!DOCTYPE html>
 <html>
 <head>
-<script language="javascript">
-alert("Hi there, and welcome.")
-</script>
+  <title>98.css example</title>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="https://unpkg.com/98.css" />
 </head>
+
 <body>
+  <div class="window" style="margin: 32px; width: 250px">
+    <div class="title-bar">
+      <div class="title-bar-text">
+        My First VB4 Program
+      </div>
+    </div>
+    <div class="window-body">
+      <p>Hello, world!</p>
+    </div>
+  </div>
 </body>
-</html>
+</html> -->
