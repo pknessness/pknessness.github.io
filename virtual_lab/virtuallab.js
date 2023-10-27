@@ -43,6 +43,7 @@ function dynamicdropdown(listindex)
             break;
         }
 
+    changeVideo();
     return true;
 }
 
@@ -56,56 +57,27 @@ function changeVideo(){
     var testType = document.querySelector('#test_type');
     var materialType = document.querySelector('#material_type');
 
-    var path = `videos/${testType.value}/${materialType.value}.mp4`;
+    var videoPath;
+    var rawDataPath;
+
+    if(testType.value == '' | materialType.value == ''){
+        videoPath = 'standby.mp4'
+    }else{
+        videoPath = `videos/${testType.value}/${materialType.value}.mp4`;
+    }
+
+    var rawDataButton = document.getElementById("raw_data");
+    if(testType.value == 'tensile'){
+        rawDataButton.disabled = false;
+        rawDataPath = `raw_data/${testType.value}/${materialType.value}.xlsx`;
+    }else{
+        rawDataButton.disabled = true;
+    }
 
     video.pause();
-    sources.setAttribute('src', path);
+    sources.setAttribute('src', videoPath);
+    sources.setAttribute('poster', "");
+    document.getElementById('download_url').setAttribute('href', rawDataPath);
     video.load();
-    video.play();
+    //video.play();
 }
-
-const processor = {};
-
-processor.doLoad = function doLoad() {
-    const video = document.getElementById("video_canvas");
-    this.video = video;
-
-    this.c1 = document.getElementById("zoom_canvas");
-    this.ctx1 = this.c1.getContext("2d");
-
-    video.addEventListener(
-        "play",
-        () => {
-            this.width = video.videoWidth / 2;
-            this.height = video.videoHeight / 2;
-            this.timerCallback();
-        },
-        false,
-    );
-};
-
-processor.timerCallback = function timerCallback() {
-    if (this.video.paused || this.video.ended) {
-        return;
-    }
-    this.computeFrame();
-    setTimeout(() => {
-        this.timerCallback();
-    }, 0);
-};
-
-processor.computeFrame = function () {
-    this.ctx1.drawImage(this.video, 0, 0, this.width, this.height);
-    const frame = this.ctx1.getImageData(0, 0, this.width, this.height);
-    const data = frame.data;
-
-    for (let i = 0; i < data.length; i += 4) {
-        const red = data[i + 0];
-        const green = data[i + 1];
-        const blue = data[i + 2];
-        if (green > 100 && red > 100 && blue < 43) {
-            data[i + 3] = 0;
-        }
-    }
-    this.ctx1.putImageData(frame, 0, 0);
-};

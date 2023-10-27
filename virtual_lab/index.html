@@ -1,0 +1,55 @@
+<html>
+  <head>
+    <!-- <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> -->
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="stylesheet.css" />
+  </head>
+  <title>Virtual Lab UI</title>
+  <body>
+    <div class="parent" id="parent_layout">
+      <div class="div1" id="settings_menu">
+        <div class="title-bar">
+          <div class="title-bar-text">
+              Select Experiment:
+          </div>
+        </div>
+        <div class="verticalsplit">
+          <div class="topsplit">
+            <select id="test_type" class="larger-select" name="test_type" onchange="javascript: dynamicdropdown(this.options[this.selectedIndex].value);">
+              <option value="">Select Test</option>
+              <option value="tensile">Tensile</option>
+              <option value="fatigue">Fatigue</option>
+              <option value="rockwell_hardness">Rockwell Hardness</option>
+              <option value="vickers_hardness">Vickers Hardness</option>
+              <option value="knoop_hardness">Knoop Hardness</option>
+              <option value="charpy">Charpy</option>
+            </select>
+          </div>
+          <div class="bottomsplit">
+            <select id="material_type" name="material_type" class="larger-select" onchange="changeVideo()">
+            <option value="">Select Test Type To Show Available Materials</option>
+            </select>
+          </div>
+        </div>
+        <button class="larger-button" id="start_sim" onclick="changeVideo()">
+          Begin Simulation
+        </button>
+        <a href="standby.png" id="download_url" download>
+          <button class="larger-button" id="raw_data" disabled="true">
+            Raw Data
+          </button>
+        </a>
+      </div>
+      <div class="div2" id="zoom_box">
+        <canvas id="zoom_canvas" class="zoom-frame"></canvas>
+      </div>
+      <div class="div3" id="video_div">
+        <video id="video_canvas" class="video-frame" controls="false" poster="standby.png">
+          <source src="standby.mp4" type="video/mp4" id="video_source">
+        </video>
+      </div>
+    </div>
+    <script src = "virtuallab.js"></script>
+    <script src = "zoom_window.js"></script>
+  </body>
+</html>

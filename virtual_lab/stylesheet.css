@@ -94,7 +94,7 @@ button{
 button:not(:disabled):active,
 input[type=reset]:not(:disabled):active,
 input[type=submit]:not(:disabled):active {
-    box-shadow: inset -1px -1px #fff, inset 1px 1px #0a0a0a, inset -2px -2px #dfdfdf, inset 2px 2px grey;
+    box-shadow: inset -2.5px -2.5px #fff, inset 2.5px 2.5px #0a0a0a, inset -5px -5px #dfdfdf, inset 5px 5px grey;
     text-shadow: 1px 1px #222
 }
 
@@ -136,7 +136,10 @@ input[readonly]+label {
 button:disabled,
 input[type=reset]:disabled,
 input[type=submit]:disabled {
-    text-shadow: 1px 1px 0 #fff
+    text-shadow: 1px 1px 0 #fff;
+    color: #a7a7a7;
+    background: rgb(212, 212, 212);
+    box-shadow: inset -2.5px -2.5px #868686, inset 2.5px 2.5px #fff, inset -5px -5px rgb(196, 196, 196), inset 5px 5px #f0f0f0
 }
 
 .window {
