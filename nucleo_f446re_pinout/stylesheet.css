@@ -9,6 +9,7 @@
 button{
     background: transparent;
     border: 2px solid #ffffff77;
+    /* font-size: 12px */
 }
 
 button:hover{

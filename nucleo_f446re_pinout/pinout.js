@@ -179,6 +179,8 @@ rightButtonData[1][17] = {pinType:"nc",pinName:"NC",spiID:-1,spiPin:"",canID:-1,
 rightButtonData[0][18] = {pinType:"digital",pinName:"PA_3",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:2,uartPin:"RX",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1};
 rightButtonData[1][18] = {pinType:"nc",pinName:"NC",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1};
 
+var zoomDiv = document.getElementById("zoom-div");
+
 function createSubButtons(buttonCreationLocationX,buttonCreationLocationY, i, j, side){
   var bd = (side == "left") ? leftButtonData : rightButtonData;
 
@@ -196,6 +198,7 @@ function createSubButtons(buttonCreationLocationX,buttonCreationLocationY, i, j,
     label.position(miniButtonCreateX,miniButtonCreateY);
     label.size(labelSizeX/3,labelSizeY/2);
     label.style('background: #99aaff;');
+    label.style('font-size', zoomDiv.clientWidth/150 + 'px');
     if(side == "left")leftButtonTags[i][j].push(label); else rightButtonTags[i][j].push(label);
     //console.log(leftButtonTags);
     miniButtonCreateX += labelSizeX/3;
@@ -210,6 +213,7 @@ function createSubButtons(buttonCreationLocationX,buttonCreationLocationY, i, j,
     label.position(miniButtonCreateX,miniButtonCreateY);
     label.size(labelSizeX/3,labelSizeY/2);
     label.style('background: #ffcc11;');
+    label.style('font-size', zoomDiv.clientWidth/150 + 'px');
     if(side == "left")leftButtonTags[i][j].push(label); else rightButtonTags[i][j].push(label);
     miniButtonCreateX += labelSizeX/3;
     rowCount ++;
@@ -223,6 +227,7 @@ function createSubButtons(buttonCreationLocationX,buttonCreationLocationY, i, j,
     label.position(miniButtonCreateX,miniButtonCreateY);
     label.size(labelSizeX/3,labelSizeY/2);
     label.style('background: #77ff44;');
+    label.style('font-size', zoomDiv.clientWidth/150 + 'px');
     if(side == "left")leftButtonTags[i][j].push(label); else rightButtonTags[i][j].push(label);
     miniButtonCreateX += labelSizeX/3;
     rowCount ++;
@@ -236,6 +241,7 @@ function createSubButtons(buttonCreationLocationX,buttonCreationLocationY, i, j,
     label.position(miniButtonCreateX,miniButtonCreateY);
     label.size(labelSizeX/3,labelSizeY/2);
     label.style('background: #ff9911;');
+    label.style('font-size', zoomDiv.clientWidth/150 + 'px');
     if(side == "left")leftButtonTags[i][j].push(label); else rightButtonTags[i][j].push(label);
     miniButtonCreateX += labelSizeX/3;
     rowCount ++;
@@ -249,6 +255,7 @@ function createSubButtons(buttonCreationLocationX,buttonCreationLocationY, i, j,
     label.position(miniButtonCreateX,miniButtonCreateY);
     label.size(labelSizeX/3,labelSizeY/2);
     label.style('background: #8844ff;');
+    label.style('font-size', zoomDiv.clientWidth/150 + 'px');
     if(side == "left")leftButtonTags[i][j].push(label); else rightButtonTags[i][j].push(label);
     miniButtonCreateX += labelSizeX/3;
     rowCount ++;
@@ -262,6 +269,7 @@ function createSubButtons(buttonCreationLocationX,buttonCreationLocationY, i, j,
     label.position(miniButtonCreateX,miniButtonCreateY);
     label.size(labelSizeX/3,labelSizeY/2);
     label.style('background: #DDBB88;');
+    label.style('font-size', zoomDiv.clientWidth/150 + 'px');
     if(side == "left")leftButtonTags[i][j].push(label); else rightButtonTags[i][j].push(label);
     miniButtonCreateX += labelSizeX/3;
     rowCount ++;
@@ -275,6 +283,7 @@ function createSubButtons(buttonCreationLocationX,buttonCreationLocationY, i, j,
     label.position(miniButtonCreateX,miniButtonCreateY);
     label.size(labelSizeX/3,labelSizeY/2);
     label.style('background: #DDBB88;');
+    label.style('font-size', zoomDiv.clientWidth/150 + 'px');
     if(side == "left")leftButtonTags[i][j].push(label); else rightButtonTags[i][j].push(label);
     miniButtonCreateX += labelSizeX/3;
     rowCount ++;
@@ -288,6 +297,7 @@ function createSubButtons(buttonCreationLocationX,buttonCreationLocationY, i, j,
     label.position(miniButtonCreateX,miniButtonCreateY);
     label.size(labelSizeX/3,labelSizeY/2);
     label.style('background: #bb33dd;');
+    label.style('font-size', zoomDiv.clientWidth/150 + 'px');
     if(side == "left")leftButtonTags[i][j].push(label); else rightButtonTags[i][j].push(label);
     miniButtonCreateX += labelSizeX/3;
     rowCount ++;
@@ -302,6 +312,7 @@ function createSubButtons(buttonCreationLocationX,buttonCreationLocationY, i, j,
     label.position(miniButtonCreateX,miniButtonCreateY);
     label.size(labelSizeX,labelSizeY);
     label.style('background: #ee4455;');
+    label.style('font-size', zoomDiv.clientWidth/150 + 'px');
     if(side == "left")leftButtonTags[i][j].push(label); else rightButtonTags[i][j].push(label);
   }
 
@@ -310,6 +321,7 @@ function createSubButtons(buttonCreationLocationX,buttonCreationLocationY, i, j,
     label.position(miniButtonCreateX,miniButtonCreateY);
     label.size(labelSizeX,labelSizeY);
     label.style('background: #dd5555;');
+    label.style('font-size', zoomDiv.clientWidth/150 + 'px');
     if(side == "left")leftButtonTags[i][j].push(label); else rightButtonTags[i][j].push(label);
   }
 
@@ -318,6 +330,7 @@ function createSubButtons(buttonCreationLocationX,buttonCreationLocationY, i, j,
     label.position(miniButtonCreateX,miniButtonCreateY);
     label.size(labelSizeX,labelSizeY);
     label.style('background: #ddeedd;');
+    label.style('font-size', zoomDiv.clientWidth/150 + 'px');
     if(side == "left")leftButtonTags[i][j].push(label); else rightButtonTags[i][j].push(label);
   }
 }
@@ -329,12 +342,11 @@ const img = new Image();
     ctx.drawImage(img, (canvas.clientWidth-img.width)/2, (canvas.clientHeight-img.height)/2);
 };
 
-let input, buton, greeting;
+let input, buton, greeting, searchBar;
 
 function setup() {
   img.src = "nucleo_real.jpg";
   // create canvas
-  var zoomDiv = document.getElementById("zoom-div");
   console.log("x",zoomDiv.clientWidth,"y",zoomDiv.clientHeight);
   var p5canvas = createCanvas(zoomDiv.clientWidth, zoomDiv.clientHeight);
 
@@ -358,12 +370,15 @@ function setup() {
   showAll.position(zoomDiv.clientWidth/2 - buttonsWidth, 40);
   showAll.size(buttonsWidth,buttonsHeight);
   showAll.style('background: #babded;');
+  console.log(`w${zoomDiv.clientWidth}h${zoomDiv.clientHeight} t${textSize()}`)
+  showAll.style('font-size', zoomDiv.clientWidth/110 + 'px');
   showAll.mousePressed(showAllButton);
 
   var hideAll = createButton(`Hide All`);
   hideAll.position(zoomDiv.clientWidth/2, 40);
   hideAll.size(buttonsWidth,buttonsHeight);
   hideAll.style('background: #abddbe;');
+  hideAll.style('font-size', zoomDiv.clientWidth/110 + 'px');
   hideAll.mousePressed(hideAllButton);
 
   // var showAll = createButton(`Show All`);
@@ -378,7 +393,7 @@ function setup() {
   // hideAll.style('background: #eddf12a;');
   // hideAll.mousePressed(hideAllButton);
 
-  var searchBar = createInput()
+  searchBar = createInput()
   searchBar.position(zoomDiv.clientWidth/2 - buttonsWidth, 80);
   searchBar.size(buttonsWidth,buttonsHeight);
   searchBar.input(searchInput);
@@ -386,6 +401,7 @@ function setup() {
   var resetSearch = createButton("Reset Search")
   resetSearch.position(zoomDiv.clientWidth/2, 80);
   resetSearch.size(buttonsWidth,buttonsHeight);
+  searchBar.input(resetSearchButton);
 
   buttonCreationLocationX = canvas.clientWidth/2 - pinsDisplaceXL - pinSpacingX;
   buttonCreationLocationY = canvas.clientHeight/2 - pinsDisplaceYL;
@@ -400,9 +416,7 @@ function setup() {
       btn.size(pinSizeX,pinSizeY);
       //console.log(`x${buttonCreationLocationX} y${buttonCreationLocationY}`);
       pinSet[j] = btn;
-      // leftPins[i][j].position(buttonCreationLocationX,buttonCreationLocationY);
 
-      //console.log(`${i},${j}`)
       btn.mouseOver(onHoverAbstraction(i,j,"left"));
       btn.mousePressed(onClickAbstraction(i,j,"left"));
 
@@ -423,9 +437,7 @@ function setup() {
       btn.size(pinSizeX,pinSizeY);
       //console.log(`x${buttonCreationLocationX} y${buttonCreationLocationY}`);
       pinSet[j] = btn;
-      // leftPins[i][j].position(buttonCreationLocationX,buttonCreationLocationY);
 
-      //console.log(`${i},${j}`)
       btn.mouseOver(onHoverAbstraction(i,j,"right"));
       btn.mousePressed(onClickAbstraction(i,j,"right"));
 
@@ -626,6 +638,10 @@ function searchInput(){
       }
     }
   }
+}
+
+function resetSearchButton(){
+  searchBar.html("");
 }
 
 // setInterval(draw, 50);
