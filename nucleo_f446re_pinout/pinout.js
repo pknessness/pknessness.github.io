@@ -418,6 +418,7 @@ function setup() {
       pinSet[j] = btn;
 
       btn.mouseOver(onHoverAbstraction(i,j,"left"));
+      btn.mouseOut(offHoverAbstraction(i,j,"left"));
       btn.mousePressed(onClickAbstraction(i,j,"left"));
 
       buttonCreationLocationY += pinSpacingY;
@@ -439,6 +440,7 @@ function setup() {
       pinSet[j] = btn;
 
       btn.mouseOver(onHoverAbstraction(i,j,"right"));
+      btn.mouseOut(offHoverAbstraction(i,j,"right"));
       btn.mousePressed(onClickAbstraction(i,j,"right"));
 
       buttonCreationLocationY += pinSpacingY;
@@ -565,14 +567,30 @@ function onHoverAbstraction(i, j, side){
   return function() {onHover(i,j, side);}
   }
 
+  function offHoverAbstraction(i, j, side){
+    return function() {offHover(i,j, side);}
+    }
+
 function onHover(i,j, side){
-  leftLabelsHover = [[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false]];
-  rightLabelsHover = [[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false]];
+  // leftLabelsHover = [[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false]];
+  // rightLabelsHover = [[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false]];
   if(side == "left"){
     leftLabelsHover[i][j] = true;
     //leftPins[i][j].style("border: 2px solid #d81c1c77;")
   }else if(side == "right"){
     rightLabelsHover[i][j] = true;
+    //rightPins[i][j].style("border: 2px solid #d81c1c77;")
+  }
+}
+
+function offHover(i,j, side){
+  // leftLabelsHover = [[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false]];
+  // rightLabelsHover = [[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false]];
+  if(side == "left"){
+    leftLabelsHover[i][j] = false;
+    //leftPins[i][j].style("border: 2px solid #d81c1c77;")
+  }else if(side == "right"){
+    rightLabelsHover[i][j] = false;
     //rightPins[i][j].style("border: 2px solid #d81c1c77;")
   }
 }
@@ -614,8 +632,8 @@ function searchInput(){
   if(text == ""){
     searchMode = false;
   }else{
-    leftLabelsHover = [[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false]];
-    rightLabelsHover = [[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false]];
+    // leftLabelsHover = [[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false]];
+    // rightLabelsHover = [[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false]];
 
     searchMode = true;
     for(var i = 0; i < 2; i++){
