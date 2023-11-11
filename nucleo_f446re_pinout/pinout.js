@@ -66,120 +66,120 @@ var hoverTag = "";
 //leftButtonData[0][0] = {pinType:"digital",pinName:"P",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1};
 
 
-leftButtonData[0][0] = {pinType:"digital",pinName:"PC_10",spiID:3,spiPin:"CLK",canID:-1,canPin:"",uartID:3,uartPin:"TX",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1};
-leftButtonData[1][0] = {pinType:"digital",pinName:"PC_11",spiID:3,spiPin:"MISO",canID:-1,canPin:"",uartID:3,uartPin:"RX",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1};
+leftButtonData[0][0] = {pinType:"digital",pinName:"PC_10",spiID:3,spiPin:"CLK",canID:-1,canPin:"",uartID:3,uartPin:"TX",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
+leftButtonData[1][0] = {pinType:"digital",pinName:"PC_11",spiID:3,spiPin:"MISO",canID:-1,canPin:"",uartID:3,uartPin:"RX",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
 
-leftButtonData[0][1] = {pinType:"digital",pinName:"PC_12",spiID:3,spiPin:"MOSI",canID:-1,canPin:"",uartID:5,uartPin:"TX",i2cID:2,i2cPin:"SDA",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1};
-leftButtonData[1][1] = {pinType:"digital",pinName:"PD_2",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:5,uartPin:"RX",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1};
+leftButtonData[0][1] = {pinType:"digital",pinName:"PC_12",spiID:3,spiPin:"MOSI",canID:-1,canPin:"",uartID:5,uartPin:"TX",i2cID:2,i2cPin:"SDA",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
+leftButtonData[1][1] = {pinType:"digital",pinName:"PD_2",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:5,uartPin:"RX",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
 
-leftButtonData[0][2] = {pinType:"power",pinName:"VDD",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1};
-leftButtonData[1][2] = {pinType:"power",pinName:"E5V",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1};
+leftButtonData[0][2] = {pinType:"power",pinName:"VDD",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
+leftButtonData[1][2] = {pinType:"power",pinName:"E5V",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
 
-leftButtonData[0][3] = {pinType:"control",pinName:"BOOT0",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1};
-leftButtonData[1][3] = {pinType:"power",pinName:"GND",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1};
+leftButtonData[0][3] = {pinType:"control",pinName:"BOOT0",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
+leftButtonData[1][3] = {pinType:"power",pinName:"GND",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
 
-leftButtonData[0][4] = {pinType:"nc",pinName:"NC",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1};
-leftButtonData[1][4] = {pinType:"nc",pinName:"NC",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1};
+leftButtonData[0][4] = {pinType:"nc",pinName:"NC",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
+leftButtonData[1][4] = {pinType:"nc",pinName:"NC",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
 
-leftButtonData[0][5] = {pinType:"nc",pinName:"NC",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1};
-leftButtonData[1][5] = {pinType:"power",pinName:"IOREF",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1};
+leftButtonData[0][5] = {pinType:"nc",pinName:"NC",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
+leftButtonData[1][5] = {pinType:"power",pinName:"IOREF",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
 
-leftButtonData[0][6] = {pinType:"digital",pinName:"PA_13",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1};
-leftButtonData[1][6] = {pinType:"control",pinName:"RESET",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1};
+leftButtonData[0][6] = {pinType:"digital",pinName:"PA_13",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
+leftButtonData[1][6] = {pinType:"control",pinName:"RESET",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
 
-leftButtonData[0][7] = {pinType:"digital",pinName:"PA_14",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1};
-leftButtonData[1][7] = {pinType:"power",pinName:"3.3V",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1};
+leftButtonData[0][7] = {pinType:"digital",pinName:"PA_14",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
+leftButtonData[1][7] = {pinType:"power",pinName:"3.3V",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
 
-leftButtonData[0][8] = {pinType:"digital",pinName:"PA_15",spiID:1,spiPin:"CS",canID:-1,canPin:"",uartID:4,uartPin:"RTS",i2cID:-1,i2cPin:"",pwmTimer:2,pwmChannel:1,pwmInverted:false, adcID:-1, dacID:-1};
-leftButtonData[1][8] = {pinType:"power",pinName:"5V",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1};
+leftButtonData[0][8] = {pinType:"digital",pinName:"PA_15",spiID:1,spiPin:"CS",canID:-1,canPin:"",uartID:4,uartPin:"RTS",i2cID:-1,i2cPin:"",pwmTimer:2,pwmChannel:1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
+leftButtonData[1][8] = {pinType:"power",pinName:"5V",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
 
-leftButtonData[0][9] = {pinType:"power",pinName:"GND",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1};
-leftButtonData[1][9] = {pinType:"power",pinName:"GND",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1};
+leftButtonData[0][9] = {pinType:"power",pinName:"GND",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
+leftButtonData[1][9] = {pinType:"power",pinName:"GND",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
 
-leftButtonData[0][10] = {pinType:"digital",pinName:"PB_7",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:1,uartPin:"RX",i2cID:1,i2cPin:"SDA",pwmTimer:4,pwmChannel:2,pwmInverted:false, adcID:-1, dacID:-1};
-leftButtonData[1][10] = {pinType:"power",pinName:"GND",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1};
+leftButtonData[0][10] = {pinType:"digital",pinName:"PB_7",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:1,uartPin:"RX",i2cID:1,i2cPin:"SDA",pwmTimer:4,pwmChannel:2,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
+leftButtonData[1][10] = {pinType:"power",pinName:"GND",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
 
-leftButtonData[0][11] = {pinType:"digital",pinName:"PC_13",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1};
-leftButtonData[1][11] = {pinType:"power",pinName:"VIN",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1};
+leftButtonData[0][11] = {pinType:"digital",pinName:"PC_13",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: "BUTTON1"};
+leftButtonData[1][11] = {pinType:"power",pinName:"VIN",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
 
-leftButtonData[0][12] = {pinType:"digital",pinName:"PC_14",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1};
-leftButtonData[1][12] = {pinType:"nc",pinName:"NC",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1};
+leftButtonData[0][12] = {pinType:"digital",pinName:"PC_14",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
+leftButtonData[1][12] = {pinType:"nc",pinName:"NC",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
 
-leftButtonData[0][13] = {pinType:"digital",pinName:"PC_15",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1};
-leftButtonData[1][13] = {pinType:"digital",pinName:"PA_0",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:4,uartPin:"TX",i2cID:-1,i2cPin:"",pwmTimer:2,pwmChannel:1,pwmInverted:false, adcID:0, dacID:-1};
+leftButtonData[0][13] = {pinType:"digital",pinName:"PC_15",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
+leftButtonData[1][13] = {pinType:"digital",pinName:"PA_0",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:4,uartPin:"TX",i2cID:-1,i2cPin:"",pwmTimer:2,pwmChannel:1,pwmInverted:false, adcID:0, dacID:-1, extralabel: "UART2_CTS"};
 
-leftButtonData[0][14] = {pinType:"digital",pinName:"PH_0",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1};
-leftButtonData[1][14] = {pinType:"digital",pinName:"PA_1",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:4,uartPin:"RX",i2cID:-1,i2cPin:"",pwmTimer:2,pwmChannel:2,pwmInverted:false, adcID:1, dacID:-1};
+leftButtonData[0][14] = {pinType:"digital",pinName:"PH_0",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
+leftButtonData[1][14] = {pinType:"digital",pinName:"PA_1",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:4,uartPin:"RX",i2cID:-1,i2cPin:"",pwmTimer:2,pwmChannel:2,pwmInverted:false, adcID:1, dacID:-1, extralabel: "UART2_RTS"};
 
-leftButtonData[0][15] = {pinType:"digital",pinName:"PH_1",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1};
-leftButtonData[1][15] = {pinType:"digital",pinName:"PA_4",spiID:1,spiPin:"CS",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:4, dacID:1};
+leftButtonData[0][15] = {pinType:"digital",pinName:"PH_1",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
+leftButtonData[1][15] = {pinType:"digital",pinName:"PA_4",spiID:1,spiPin:"CS",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:4, dacID:1, extralabel: ""};
 
-leftButtonData[0][16] = {pinType:"power",pinName:"VBAT",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1};
-leftButtonData[1][16] = {pinType:"digital",pinName:"PB_0",spiID:3,spiPin:"MOSI",canID:-1,canPin:"",uartID:4,uartPin:"CTS",i2cID:-1,i2cPin:"",pwmTimer:1,pwmChannel:2,pwmInverted:true, adcID:8, dacID:-1};
+leftButtonData[0][16] = {pinType:"power",pinName:"VBAT",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
+leftButtonData[1][16] = {pinType:"digital",pinName:"PB_0",spiID:3,spiPin:"MOSI",canID:-1,canPin:"",uartID:4,uartPin:"CTS",i2cID:-1,i2cPin:"",pwmTimer:1,pwmChannel:2,pwmInverted:true, adcID:8, dacID:-1, extralabel: ""};
 
-leftButtonData[0][17] = {pinType:"digital",pinName:"PC_2",spiID:2,spiPin:"MISO",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:12, dacID:-1};
-leftButtonData[1][17] = {pinType:"digital",pinName:"PC_1",spiID:2,spiPin:"MOSI",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:11, dacID:-1};
+leftButtonData[0][17] = {pinType:"digital",pinName:"PC_2",spiID:2,spiPin:"MISO",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:12, dacID:-1, extralabel: ""};
+leftButtonData[1][17] = {pinType:"digital",pinName:"PC_1",spiID:2,spiPin:"MOSI",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:11, dacID:-1, extralabel: ""};
 
-leftButtonData[0][18] = {pinType:"digital",pinName:"PC_3",spiID:2,spiPin:"MOSI",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:13, dacID:-1};
-leftButtonData[1][18] = {pinType:"digital",pinName:"PC_0",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:10, dacID:-1};
+leftButtonData[0][18] = {pinType:"digital",pinName:"PC_3",spiID:2,spiPin:"MOSI",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:13, dacID:-1, extralabel: ""};
+leftButtonData[1][18] = {pinType:"digital",pinName:"PC_0",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:10, dacID:-1, extralabel: ""};
 
 
-rightButtonData[0][0] = {pinType:"digital",pinName:"PC_9",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:5,uartPin:"CTS",i2cID:3,i2cPin:"SDA",pwmTimer:3,pwmChannel:4,pwmInverted:false, adcID:-1, dacID:-1};
-rightButtonData[1][0] = {pinType:"digital",pinName:"PC_8",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:5,uartPin:"RTS",i2cID:-1,i2cPin:"",pwmTimer:3,pwmChannel:3,pwmInverted:false, adcID:-1, dacID:-1};
+rightButtonData[0][0] = {pinType:"digital",pinName:"PC_9",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:5,uartPin:"CTS",i2cID:3,i2cPin:"SDA",pwmTimer:3,pwmChannel:4,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
+rightButtonData[1][0] = {pinType:"digital",pinName:"PC_8",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:5,uartPin:"RTS",i2cID:-1,i2cPin:"",pwmTimer:3,pwmChannel:3,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
 
-rightButtonData[0][1] = {pinType:"digital",pinName:"PB_8",spiID:-1,spiPin:"",canID:1,canPin:"RD",uartID:-1,uartPin:"",i2cID:1,i2cPin:"SCL",pwmTimer:2,pwmChannel:1,pwmInverted:false, adcID:-1, dacID:-1};
-rightButtonData[1][1] = {pinType:"digital",pinName:"PC_6",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:6,uartPin:"TX",i2cID:1,i2cPin:"SCL",pwmTimer:3,pwmChannel:1,pwmInverted:false, adcID:-1, dacID:-1};
+rightButtonData[0][1] = {pinType:"digital",pinName:"PB_8",spiID:-1,spiPin:"",canID:1,canPin:"RD",uartID:-1,uartPin:"",i2cID:1,i2cPin:"SCL",pwmTimer:2,pwmChannel:1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
+rightButtonData[1][1] = {pinType:"digital",pinName:"PC_6",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:6,uartPin:"TX",i2cID:1,i2cPin:"SCL",pwmTimer:3,pwmChannel:1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
 
-rightButtonData[0][2] = {pinType:"digital",pinName:"PB_9",spiID:2,spiPin:"CS",canID:1,canPin:"TD",uartID:-1,uartPin:"",i2cID:1,i2cPin:"CS",pwmTimer:2,pwmChannel:2,pwmInverted:false, adcID:-1, dacID:-1};
-rightButtonData[1][2] = {pinType:"digital",pinName:"PC_5",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:3,uartPin:"RX",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:15, dacID:-1};
+rightButtonData[0][2] = {pinType:"digital",pinName:"PB_9",spiID:2,spiPin:"CS",canID:1,canPin:"TD",uartID:-1,uartPin:"",i2cID:1,i2cPin:"CS",pwmTimer:2,pwmChannel:2,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
+rightButtonData[1][2] = {pinType:"digital",pinName:"PC_5",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:3,uartPin:"RX",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:15, dacID:-1, extralabel: ""};
 
-rightButtonData[0][3] = {pinType:"power",pinName:"AVDD",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1};
-rightButtonData[1][3] = {pinType:"power",pinName:"U5V",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1};
+rightButtonData[0][3] = {pinType:"power",pinName:"AVDD",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
+rightButtonData[1][3] = {pinType:"power",pinName:"U5V",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
 
-rightButtonData[0][4] = {pinType:"power",pinName:"GND",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1};
-rightButtonData[1][4] = {pinType:"nc",pinName:"NC",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1};
+rightButtonData[0][4] = {pinType:"power",pinName:"GND",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
+rightButtonData[1][4] = {pinType:"nc",pinName:"NC",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
 
-rightButtonData[0][5] = {pinType:"digital",pinName:"PA_5",spiID:1,spiPin:"CLK",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:2,pwmChannel:1,pwmInverted:false, adcID:5, dacID:2};
-rightButtonData[1][5] = {pinType:"digital",pinName:"PA_12",spiID:-1,spiPin:"",canID:1,canPin:"TD",uartID:1,uartPin:"RTS",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1};
+rightButtonData[0][5] = {pinType:"digital",pinName:"PA_5",spiID:1,spiPin:"CLK",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:2,pwmChannel:1,pwmInverted:false, adcID:5, dacID:2, extralabel: "LED1"};
+rightButtonData[1][5] = {pinType:"digital",pinName:"PA_12",spiID:-1,spiPin:"",canID:1,canPin:"TD",uartID:1,uartPin:"RTS",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
 
-rightButtonData[0][6] = {pinType:"digital",pinName:"PA_6",spiID:1,spiPin:"MISO",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:3,pwmChannel:1,pwmInverted:false, adcID:6, dacID:-1};
-rightButtonData[1][6] = {pinType:"digital",pinName:"PA_11",spiID:-1,spiPin:"",canID:1,canPin:"RD",uartID:1,uartPin:"CTS",i2cID:-1,i2cPin:"",pwmTimer:1,pwmChannel:4,pwmInverted:false, adcID:-1, dacID:-1};
+rightButtonData[0][6] = {pinType:"digital",pinName:"PA_6",spiID:1,spiPin:"MISO",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:3,pwmChannel:1,pwmInverted:false, adcID:6, dacID:-1, extralabel: ""};
+rightButtonData[1][6] = {pinType:"digital",pinName:"PA_11",spiID:-1,spiPin:"",canID:1,canPin:"RD",uartID:1,uartPin:"CTS",i2cID:-1,i2cPin:"",pwmTimer:1,pwmChannel:4,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
 
-rightButtonData[0][7] = {pinType:"digital",pinName:"PA_7",spiID:1,spiPin:"MOSI",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:1,pwmChannel:1,pwmInverted:true, adcID:7, dacID:-1};
-rightButtonData[1][7] = {pinType:"digital",pinName:"PB_12",spiID:2,spiPin:"CS",canID:2,canPin:"RD",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1};
+rightButtonData[0][7] = {pinType:"digital",pinName:"PA_7",spiID:1,spiPin:"MOSI",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:1,pwmChannel:1,pwmInverted:true, adcID:7, dacID:-1, extralabel: ""};
+rightButtonData[1][7] = {pinType:"digital",pinName:"PB_12",spiID:2,spiPin:"CS",canID:2,canPin:"RD",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
 
-rightButtonData[0][8] = {pinType:"digital",pinName:"PB_6",spiID:-1,spiPin:"",canID:2,canPin:"TD",uartID:1,uartPin:"TX",i2cID:1,i2cPin:"SCL",pwmTimer:4,pwmChannel:1,pwmInverted:false, adcID:-1, dacID:-1};
-rightButtonData[1][8] = {pinType:"digital",pinName:"NC",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1};
+rightButtonData[0][8] = {pinType:"digital",pinName:"PB_6",spiID:-1,spiPin:"",canID:2,canPin:"TD",uartID:1,uartPin:"TX",i2cID:1,i2cPin:"SCL",pwmTimer:4,pwmChannel:1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
+rightButtonData[1][8] = {pinType:"nc",pinName:"NC",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
 
-rightButtonData[0][9] = {pinType:"digital",pinName:"PC_7",spiID:2,spiPin:"CLK",canID:-1,canPin:"",uartID:6,uartPin:"RX",i2cID:1,i2cPin:"SDA",pwmTimer:3,pwmChannel:2,pwmInverted:false, adcID:-1, dacID:-1};
-rightButtonData[1][9] = {pinType:"power",pinName:"GND",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1};
+rightButtonData[0][9] = {pinType:"digital",pinName:"PC_7",spiID:2,spiPin:"CLK",canID:-1,canPin:"",uartID:6,uartPin:"RX",i2cID:1,i2cPin:"SDA",pwmTimer:3,pwmChannel:2,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
+rightButtonData[1][9] = {pinType:"power",pinName:"GND",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
 
-rightButtonData[0][10] = {pinType:"digital",pinName:"PA_9",spiID:2,spiPin:"CLK",canID:-1,canPin:"",uartID:1,uartPin:"TX",i2cID:-1,i2cPin:"",pwmTimer:1,pwmChannel:2,pwmInverted:false, adcID:-1, dacID:-1};
-rightButtonData[1][10] = {pinType:"digital",pinName:"PB_2",spiID:3,spiPin:"MOSI",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:2,pwmChannel:4,pwmInverted:true, adcID:-1, dacID:-1};
+rightButtonData[0][10] = {pinType:"digital",pinName:"PA_9",spiID:2,spiPin:"CLK",canID:-1,canPin:"",uartID:1,uartPin:"TX",i2cID:-1,i2cPin:"",pwmTimer:1,pwmChannel:2,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
+rightButtonData[1][10] = {pinType:"digital",pinName:"PB_2",spiID:3,spiPin:"MOSI",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:2,pwmChannel:4,pwmInverted:true, adcID:-1, dacID:-1, extralabel: ""};
 
-rightButtonData[0][11] = {pinType:"digital",pinName:"PA_8",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:3,i2cPin:"SCL",pwmTimer:1,pwmChannel:1,pwmInverted:false, adcID:-1, dacID:-1};
-rightButtonData[1][11] = {pinType:"digital",pinName:"PB_1",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:1,pwmChannel:3,pwmInverted:true, adcID:9, dacID:-1};
+rightButtonData[0][11] = {pinType:"digital",pinName:"PA_8",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:3,i2cPin:"SCL",pwmTimer:1,pwmChannel:1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
+rightButtonData[1][11] = {pinType:"digital",pinName:"PB_1",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:1,pwmChannel:3,pwmInverted:true, adcID:9, dacID:-1, extralabel: ""};
 
-rightButtonData[0][12] = {pinType:"digital",pinName:"PB_10",spiID:2,spiPin:"CLK",canID:-1,canPin:"",uartID:3,uartPin:"TX",i2cID:2,i2cPin:"SCL",pwmTimer:2,pwmChannel:3,pwmInverted:false, adcID:-1, dacID:-1};
-rightButtonData[1][12] = {pinType:"digital",pinName:"PB_15",spiID:2,spiPin:"MOSI",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:1,pwmChannel:3,pwmInverted:true, adcID:-1, dacID:-1};
+rightButtonData[0][12] = {pinType:"digital",pinName:"PB_10",spiID:2,spiPin:"CLK",canID:-1,canPin:"",uartID:3,uartPin:"TX",i2cID:2,i2cPin:"SCL",pwmTimer:2,pwmChannel:3,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
+rightButtonData[1][12] = {pinType:"digital",pinName:"PB_15",spiID:2,spiPin:"MOSI",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:1,pwmChannel:3,pwmInverted:true, adcID:-1, dacID:-1, extralabel: ""};
 
-rightButtonData[0][13] = {pinType:"digital",pinName:"PB_4",spiID:1,spiPin:"MISO",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:3,i2cPin:"SDA",pwmTimer:3,pwmChannel:1,pwmInverted:false, adcID:-1, dacID:-1};
-rightButtonData[1][13] = {pinType:"digital",pinName:"PB_14",spiID:2,spiPin:"MISO",canID:-1,canPin:"",uartID:3,uartPin:"RTS",i2cID:-1,i2cPin:"",pwmTimer:1,pwmChannel:2,pwmInverted:true, adcID:-1, dacID:-1};
+rightButtonData[0][13] = {pinType:"digital",pinName:"PB_4",spiID:1,spiPin:"MISO",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:3,i2cPin:"SDA",pwmTimer:3,pwmChannel:1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: "SPI2_CS"};
+rightButtonData[1][13] = {pinType:"digital",pinName:"PB_14",spiID:2,spiPin:"MISO",canID:-1,canPin:"",uartID:3,uartPin:"RTS",i2cID:-1,i2cPin:"",pwmTimer:1,pwmChannel:2,pwmInverted:true, adcID:-1, dacID:-1, extralabel: ""};
 
-rightButtonData[0][14] = {pinType:"digital",pinName:"PB_5",spiID:1,spiPin:"MOSI",canID:2,canPin:"RD",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:3,pwmChannel:2,pwmInverted:false, adcID:-1, dacID:-1};
-rightButtonData[1][14] = {pinType:"digital",pinName:"PB_13",spiID:2,spiPin:"CLK",canID:2,canPin:"TD",uartID:3,uartPin:"CTS",i2cID:-1,i2cPin:"",pwmTimer:1,pwmChannel:1,pwmInverted:true, adcID:-1, dacID:-1};
+rightButtonData[0][14] = {pinType:"digital",pinName:"PB_5",spiID:1,spiPin:"MOSI",canID:2,canPin:"RD",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:3,pwmChannel:2,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
+rightButtonData[1][14] = {pinType:"digital",pinName:"PB_13",spiID:2,spiPin:"CLK",canID:2,canPin:"TD",uartID:3,uartPin:"CTS",i2cID:-1,i2cPin:"",pwmTimer:1,pwmChannel:1,pwmInverted:true, adcID:-1, dacID:-1, extralabel: ""};
 
-rightButtonData[0][15] = {pinType:"digital",pinName:"PB_3",spiID:1,spiPin:"CLK",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:2,pwmChannel:2,pwmInverted:false, adcID:-1, dacID:-1};
-rightButtonData[1][15] = {pinType:"power",pinName:"AGND",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1};
+rightButtonData[0][15] = {pinType:"digital",pinName:"PB_3",spiID:1,spiPin:"CLK",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:2,pwmChannel:2,pwmInverted:false, adcID:-1, dacID:-1, extralabel: "SWO"};
+rightButtonData[1][15] = {pinType:"power",pinName:"AGND",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
 
-rightButtonData[0][16] = {pinType:"digital",pinName:"PA_10",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:1,uartPin:"RX",i2cID:-1,i2cPin:"",pwmTimer:1,pwmChannel:3,pwmInverted:false, adcID:-1, dacID:-1};
-rightButtonData[1][16] = {pinType:"digital",pinName:"PC_4",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:14, dacID:-1};
+rightButtonData[0][16] = {pinType:"digital",pinName:"PA_10",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:1,uartPin:"RX",i2cID:-1,i2cPin:"",pwmTimer:1,pwmChannel:3,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
+rightButtonData[1][16] = {pinType:"digital",pinName:"PC_4",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:14, dacID:-1, extralabel: ""};
 
-rightButtonData[0][17] = {pinType:"digital",pinName:"PA_2",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:2,uartPin:"TX",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1};
-rightButtonData[1][17] = {pinType:"nc",pinName:"NC",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1};
+rightButtonData[0][17] = {pinType:"digital",pinName:"PA_2",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:2,uartPin:"TX",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: "USB_TX"};
+rightButtonData[1][17] = {pinType:"nc",pinName:"NC",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
 
-rightButtonData[0][18] = {pinType:"digital",pinName:"PA_3",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:2,uartPin:"RX",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1};
-rightButtonData[1][18] = {pinType:"nc",pinName:"NC",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1};
+rightButtonData[0][18] = {pinType:"digital",pinName:"PA_3",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:2,uartPin:"RX",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: "USB_RX"};
+rightButtonData[1][18] = {pinType:"nc",pinName:"NC",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
 
 var zoomDiv = document.getElementById("zoom-div");
 
@@ -201,8 +201,8 @@ function createSubButtons(buttonCreationLocationX,buttonCreationLocationY, i, j,
     label.size(labelSizeX/3-2,labelSizeY/2-2);
     label.style('background: #99aaff;');
     label.style('font-size', zoomDiv.clientWidth/150 + 'px');
-    label.mouseOver(onHoverTagAb(`${bd[i][j].pinName}`));
-    label.mouseOut(offHoverTagAb(`${bd[i][j].pinName}`));
+    label.mouseOver(onHoverTagAb(i, j, side, `${bd[i][j].pinName}`));
+    label.mouseOut(offHoverTagAb(i, j, side, `${bd[i][j].pinName}`));
     if(side == "left")leftButtonTags[i][j].push(label); else rightButtonTags[i][j].push(label);
     //console.log(leftButtonTags);
     miniButtonCreateX += labelSizeX/3;
@@ -218,8 +218,8 @@ function createSubButtons(buttonCreationLocationX,buttonCreationLocationY, i, j,
     label.size(labelSizeX/3-2,labelSizeY/2-2);
     label.style('background: #ffcc11;');
     label.style('font-size', zoomDiv.clientWidth/150 + 'px');
-    label.mouseOver(onHoverTagAb(`UART${bd[i][j].uartID}_${bd[i][j].uartPin}`));
-    label.mouseOut(offHoverTagAb(`UART${bd[i][j].uartID}_${bd[i][j].uartPin}`));
+    label.mouseOver(onHoverTagAb(i, j, side, `UART${bd[i][j].uartID}_${bd[i][j].uartPin}`));
+    label.mouseOut(offHoverTagAb(i, j, side, `UART${bd[i][j].uartID}_${bd[i][j].uartPin}`));
     if(side == "left")leftButtonTags[i][j].push(label); else rightButtonTags[i][j].push(label);
     miniButtonCreateX += labelSizeX/3;
     rowCount ++;
@@ -234,8 +234,8 @@ function createSubButtons(buttonCreationLocationX,buttonCreationLocationY, i, j,
     label.size(labelSizeX/3-2,labelSizeY/2-2);
     label.style('background: #77ff44;');
     label.style('font-size', zoomDiv.clientWidth/150 + 'px');
-    label.mouseOver(onHoverTagAb(`SPI${bd[i][j].spiID}_${bd[i][j].spiPin}`));
-    label.mouseOut(offHoverTagAb(`SPI${bd[i][j].spiID}_${bd[i][j].spiPin}`));
+    label.mouseOver(onHoverTagAb(i, j, side, `SPI${bd[i][j].spiID}_${bd[i][j].spiPin}`));
+    label.mouseOut(offHoverTagAb(i, j, side, `SPI${bd[i][j].spiID}_${bd[i][j].spiPin}`));
     if(side == "left")leftButtonTags[i][j].push(label); else rightButtonTags[i][j].push(label);
     miniButtonCreateX += labelSizeX/3;
     rowCount ++;
@@ -250,8 +250,8 @@ function createSubButtons(buttonCreationLocationX,buttonCreationLocationY, i, j,
     label.size(labelSizeX/3-2,labelSizeY/2-2);
     label.style('background: #ff9911;');
     label.style('font-size', zoomDiv.clientWidth/150 + 'px');
-    label.mouseOver(onHoverTagAb(`I2C${bd[i][j].i2cID}_${bd[i][j].i2cPin}`));
-    label.mouseOut(offHoverTagAb(`I2C${bd[i][j].i2cID}_${bd[i][j].i2cPin}`));
+    label.mouseOver(onHoverTagAb(i, j, side, `I2C${bd[i][j].i2cID}_${bd[i][j].i2cPin}`));
+    label.mouseOut(offHoverTagAb(i, j, side, `I2C${bd[i][j].i2cID}_${bd[i][j].i2cPin}`));
     if(side == "left")leftButtonTags[i][j].push(label); else rightButtonTags[i][j].push(label);
     miniButtonCreateX += labelSizeX/3;
     rowCount ++;
@@ -266,8 +266,8 @@ function createSubButtons(buttonCreationLocationX,buttonCreationLocationY, i, j,
     label.size(labelSizeX/3-2,labelSizeY/2-2);
     label.style('background: #8844ff;');
     label.style('font-size', zoomDiv.clientWidth/150 + 'px');
-    label.mouseOver(onHoverTagAb(`PWM${bd[i][j].pwmTimer}/${bd[i][j].pwmChannel}${bd[i][j].pwmInverted ? "N" : ""}`));
-    label.mouseOut(offHoverTagAb(`PWM${bd[i][j].pwmTimer}/${bd[i][j].pwmChannel}${bd[i][j].pwmInverted ? "N" : ""}`));
+    label.mouseOver(onHoverTagAb(i, j, side, `PWM${bd[i][j].pwmTimer}/${bd[i][j].pwmChannel}${bd[i][j].pwmInverted ? "N" : ""}`));
+    label.mouseOut(offHoverTagAb(i, j, side, `PWM${bd[i][j].pwmTimer}/${bd[i][j].pwmChannel}${bd[i][j].pwmInverted ? "N" : ""}`));
     if(side == "left")leftButtonTags[i][j].push(label); else rightButtonTags[i][j].push(label);
     miniButtonCreateX += labelSizeX/3;
     rowCount ++;
@@ -282,8 +282,8 @@ function createSubButtons(buttonCreationLocationX,buttonCreationLocationY, i, j,
     label.size(labelSizeX/3-2,labelSizeY/2-2);
     label.style('background: #DDBB88;');
     label.style('font-size', zoomDiv.clientWidth/150 + 'px');
-    label.mouseOver(onHoverTagAb(`ADC${bd[i][j].adcID}`));
-    label.mouseOut(offHoverTagAb(`ADC${bd[i][j].adcID}`));
+    label.mouseOver(onHoverTagAb(i, j, side, `ADC${bd[i][j].adcID}`));
+    label.mouseOut(offHoverTagAb(i, j, side, `ADC${bd[i][j].adcID}`));
     if(side == "left")leftButtonTags[i][j].push(label); else rightButtonTags[i][j].push(label);
     miniButtonCreateX += labelSizeX/3;
     rowCount ++;
@@ -298,8 +298,8 @@ function createSubButtons(buttonCreationLocationX,buttonCreationLocationY, i, j,
     label.size(labelSizeX/3-2,labelSizeY/2-2);
     label.style('background: #DDBB88;');
     label.style('font-size', zoomDiv.clientWidth/150 + 'px');
-    label.mouseOver(onHoverTagAb(`DAC${bd[i][j].dacID}`));
-    label.mouseOut(offHoverTagAb(`DAC${bd[i][j].dacID}`));
+    label.mouseOver(onHoverTagAb(i, j, side, `DAC${bd[i][j].dacID}`));
+    label.mouseOut(offHoverTagAb(i, j, side, `DAC${bd[i][j].dacID}`));
     if(side == "left")leftButtonTags[i][j].push(label); else rightButtonTags[i][j].push(label);
     miniButtonCreateX += labelSizeX/3;
     rowCount ++;
@@ -314,8 +314,8 @@ function createSubButtons(buttonCreationLocationX,buttonCreationLocationY, i, j,
     label.size(labelSizeX/3-2,labelSizeY/2-2);
     label.style('background: #bb33dd;');
     label.style('font-size', zoomDiv.clientWidth/150 + 'px');
-    label.mouseOver(onHoverTagAb(`CAN${bd[i][j].canID}_${bd[i][j].canPin}`));
-    label.mouseOut(offHoverTagAb(`CAN${bd[i][j].canID}_${bd[i][j].canPin}`));
+    label.mouseOver(onHoverTagAb(i, j, side, `CAN${bd[i][j].canID}_${bd[i][j].canPin}`));
+    label.mouseOut(offHoverTagAb(i, j, side, `CAN${bd[i][j].canID}_${bd[i][j].canPin}`));
     if(side == "left")leftButtonTags[i][j].push(label); else rightButtonTags[i][j].push(label);
     miniButtonCreateX += labelSizeX/3;
     rowCount ++;
@@ -332,6 +332,8 @@ function createSubButtons(buttonCreationLocationX,buttonCreationLocationY, i, j,
     label.style('background: #222222;');
     label.style('font-size', zoomDiv.clientWidth/110 + 'px');
     label.style('color: #ffffff');
+    label.mouseOver(onHoverTagAb(i, j, side, `${bd[i][j].pinName}`));
+    label.mouseOut(offHoverTagAb(i, j, side, `${bd[i][j].pinName}`));
     label.mousePressed(onClickAbstraction(i,j,side));
     if(side == "left")leftButtonTags[i][j].push(label); else rightButtonTags[i][j].push(label);
   }else if(bd[i][j].pinType == "power"){
@@ -340,16 +342,20 @@ function createSubButtons(buttonCreationLocationX,buttonCreationLocationY, i, j,
     label.size(labelSizeX-4,labelSizeY-4);
     label.style('background: #ee4455;');
     label.style('font-size', zoomDiv.clientWidth/110 + 'px');
+    label.mouseOver(onHoverTagAb(i, j, side, `${bd[i][j].pinName}`));
+    label.mouseOut(offHoverTagAb(i, j, side, `${bd[i][j].pinName}`));
     label.mousePressed(onClickAbstraction(i,j,side));
     if(side == "left")leftButtonTags[i][j].push(label); else rightButtonTags[i][j].push(label);
   }
 
   if(bd[i][j].pinType == "control"){
-    var label = createButton(`${bd[i][j].pinName}`,"#dd5555");
+    var label = createButton(`${bd[i][j].pinName}`,"#ee7777");
     label.position(miniButtonCreateX+2,miniButtonCreateY+2);
     label.size(labelSizeX-4,labelSizeY-4);
     label.style('background: #dd5555;');
     label.style('font-size', zoomDiv.clientWidth/110 + 'px');
+    label.mouseOver(onHoverTagAb(i, j, side, `${bd[i][j].pinName}`));
+    label.mouseOut(offHoverTagAb(i, j, side, `${bd[i][j].pinName}`));
     label.mousePressed(onClickAbstraction(i,j,side));
     if(side == "left")leftButtonTags[i][j].push(label); else rightButtonTags[i][j].push(label);
   }
@@ -360,6 +366,27 @@ function createSubButtons(buttonCreationLocationX,buttonCreationLocationY, i, j,
     label.size(labelSizeX-4,labelSizeY-4);
     label.style('background: #ddeedd;');
     label.style('font-size', zoomDiv.clientWidth/110 + 'px');
+    label.mouseOver(onHoverTagAb(i, j, side, `${bd[i][j].pinName}`));
+    label.mouseOut(offHoverTagAb(i, j, side, `${bd[i][j].pinName}`));
+    label.mousePressed(onClickAbstraction(i,j,side));
+    if(side == "left")leftButtonTags[i][j].push(label); else rightButtonTags[i][j].push(label);
+  }
+
+  if(bd[i][j].extralabel != ""){
+    clr = "#4455dd";
+    if(bd[i][j].extralabel.includes("UART")) clr = "#ffcc11";
+    else if(bd[i][j].extralabel.includes("SPI")) clr = "#77ff44";
+    else if(bd[i][j].extralabel.includes("PWM")) clr = "#8844ff";
+    else if(bd[i][j].extralabel.includes("I2C")) clr = "#ff9911";
+    else if(bd[i][j].extralabel.includes("CAN")) clr = "#bb33dd";
+    else if(bd[i][j].extralabel.includes("DAC") || bd[i][j].extralabel.includes("ADC")) clr = "#ddbb88";
+    var label = createButton(`${bd[i][j].extralabel}`,clr);
+    label.position(miniButtonCreateX+1,miniButtonCreateY+1);
+    label.size(labelSizeX/3-2,labelSizeY/2-2);
+    label.style(`background: ${clr};`);
+    label.style('font-size', zoomDiv.clientWidth/150 + 'px');
+    label.mouseOver(onHoverTagAb(i, j, side, `${bd[i][j].extralabel}`));
+    label.mouseOut(offHoverTagAb(i, j, side, `${bd[i][j].extralabel}`));
     label.mousePressed(onClickAbstraction(i,j,side));
     if(side == "left")leftButtonTags[i][j].push(label); else rightButtonTags[i][j].push(label);
   }
@@ -661,26 +688,29 @@ function offHover(i,j, side){
     rightLabelsHover[i][j] = false;
     //rightPins[i][j].style("border: 2px solid #d81c1c77;")
   }
+  
   ((side == "left") ? leftLabels : rightLabels)[i][j].style("border: 2px solid #111111;");
 
   ((side == "left") ? leftLabels : rightLabels)[i][j].style("background: silver");
 }
 
-function onHoverTagAb(tag){
-  return function() {onHoverTag(tag);}
+function onHoverTagAb(i, j, side, tag){
+  return function() {onHoverTag(i, j, side, tag);}
 }
 
-function offHoverTagAb(tag){
-  return function() {offHoverTag(tag);}
+function offHoverTagAb(i, j, side, tag){
+  return function() {offHoverTag(i, j, side, tag);}
 }
 
-function onHoverTag(tag){
+function onHoverTag(i, j, side, tag){
   hoverTag = tag;
   //console.log(hoverTag);
+  onHover(i, j, side);
 }
 
-function offHoverTag(tag){
+function offHoverTag(i, j, side, tag){
   hoverTag = "";
+  offHover(i, j, side);
 }
 
 function onClickAbstraction(i,j,side){
