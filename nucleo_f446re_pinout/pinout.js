@@ -342,7 +342,7 @@ const img = new Image();
     ctx.drawImage(img, (canvas.clientWidth-img.width)/2, (canvas.clientHeight-img.height)/2);
 };
 
-let input, buton, greeting, searchBar;
+let input, buton, greeting;
 
 function setup() {
   img.src = "nucleo_real.jpg";
@@ -393,15 +393,15 @@ function setup() {
   // hideAll.style('background: #eddf12a;');
   // hideAll.mousePressed(hideAllButton);
 
-  searchBar = createInput()
+  var searchBar = createInput();
   searchBar.position(zoomDiv.clientWidth/2 - buttonsWidth, 80);
   searchBar.size(buttonsWidth,buttonsHeight);
   searchBar.input(searchInput);
 
-  var resetSearch = createButton("Reset Search")
-  resetSearch.position(zoomDiv.clientWidth/2, 80);
-  resetSearch.size(buttonsWidth,buttonsHeight);
-  searchBar.input(resetSearchButton);
+  // var resetSearch = createButton("Reset Search")
+  // resetSearch.position(zoomDiv.clientWidth/2, 80);
+  // resetSearch.size(buttonsWidth,buttonsHeight);
+  // searchBar.mousePressed(resetSearchButton);
 
   buttonCreationLocationX = canvas.clientWidth/2 - pinsDisplaceXL - pinSpacingX;
   buttonCreationLocationY = canvas.clientHeight/2 - pinsDisplaceYL;
@@ -629,6 +629,7 @@ function hideAllButton(){
 
 function searchInput(){
   var text = this.value();
+  console.log(","+text);
   if(text == ""){
     searchMode = false;
   }else{
@@ -638,6 +639,8 @@ function searchInput(){
     searchMode = true;
     for(var i = 0; i < 2; i++){
       for(var j = 0; j < 19; j++){
+        //console.log(`L: i${i}j${j}`);
+        //console.log(`L: i${i}j${j} ${leftButtonTags[i][j][x].html()} ? ${text.toUpperCase()}`);
         leftLabelsSearch[i][j] = false;
         for(var x = 0; x < leftButtonTags[i][j].length; x++){
           // console.log(leftButtonTags[i][j][x].html());
@@ -658,8 +661,5 @@ function searchInput(){
   }
 }
 
-function resetSearchButton(){
-  searchBar.html("");
-}
 
 // setInterval(draw, 50);
