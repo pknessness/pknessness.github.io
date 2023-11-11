@@ -10,6 +10,7 @@ button{
     background: transparent;
     border: 2px solid #ffffff77;
     /* font-size: 12px */
+    /* background-color: #d81c1c; */
 }
 
 button:hover{

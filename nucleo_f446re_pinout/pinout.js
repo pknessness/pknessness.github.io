@@ -195,8 +195,8 @@ function createSubButtons(buttonCreationLocationX,buttonCreationLocationY, i, j,
 
   if(bd[i][j].pinType == "digital"){
     var label = createButton(`${bd[i][j].pinName}`);
-    label.position(miniButtonCreateX,miniButtonCreateY);
-    label.size(labelSizeX/3,labelSizeY/2);
+    label.position(miniButtonCreateX+1,miniButtonCreateY+1);
+    label.size(labelSizeX/3-2,labelSizeY/2-2);
     label.style('background: #99aaff;');
     label.style('font-size', zoomDiv.clientWidth/150 + 'px');
     if(side == "left")leftButtonTags[i][j].push(label); else rightButtonTags[i][j].push(label);
@@ -210,8 +210,8 @@ function createSubButtons(buttonCreationLocationX,buttonCreationLocationY, i, j,
   }
   if(bd[i][j].uartID != -1){
     var label = createButton(`UART${bd[i][j].uartID}_${bd[i][j].uartPin}`);
-    label.position(miniButtonCreateX,miniButtonCreateY);
-    label.size(labelSizeX/3,labelSizeY/2);
+    label.position(miniButtonCreateX+1,miniButtonCreateY+1);
+    label.size(labelSizeX/3-2,labelSizeY/2-2);
     label.style('background: #ffcc11;');
     label.style('font-size', zoomDiv.clientWidth/150 + 'px');
     if(side == "left")leftButtonTags[i][j].push(label); else rightButtonTags[i][j].push(label);
@@ -224,8 +224,8 @@ function createSubButtons(buttonCreationLocationX,buttonCreationLocationY, i, j,
   }
   if(bd[i][j].spiID != -1){
     var label = createButton(`SPI${bd[i][j].spiID}_${bd[i][j].spiPin}`);
-    label.position(miniButtonCreateX,miniButtonCreateY);
-    label.size(labelSizeX/3,labelSizeY/2);
+    label.position(miniButtonCreateX+1,miniButtonCreateY+1);
+    label.size(labelSizeX/3-2,labelSizeY/2-2);
     label.style('background: #77ff44;');
     label.style('font-size', zoomDiv.clientWidth/150 + 'px');
     if(side == "left")leftButtonTags[i][j].push(label); else rightButtonTags[i][j].push(label);
@@ -238,8 +238,8 @@ function createSubButtons(buttonCreationLocationX,buttonCreationLocationY, i, j,
   }
   if(bd[i][j].i2cID != -1){
     var label = createButton(`I2C${bd[i][j].i2cID}_${bd[i][j].i2cPin}`);
-    label.position(miniButtonCreateX,miniButtonCreateY);
-    label.size(labelSizeX/3,labelSizeY/2);
+    label.position(miniButtonCreateX+1,miniButtonCreateY+1);
+    label.size(labelSizeX/3-2,labelSizeY/2-2);
     label.style('background: #ff9911;');
     label.style('font-size', zoomDiv.clientWidth/150 + 'px');
     if(side == "left")leftButtonTags[i][j].push(label); else rightButtonTags[i][j].push(label);
@@ -252,8 +252,8 @@ function createSubButtons(buttonCreationLocationX,buttonCreationLocationY, i, j,
   }
   if(bd[i][j].pwmTimer != -1){
     var label = createButton(`PWM${bd[i][j].pwmTimer}/${bd[i][j].pwmChannel}${bd[i][j].pwmInverted ? "N" : ""}`);
-    label.position(miniButtonCreateX,miniButtonCreateY);
-    label.size(labelSizeX/3,labelSizeY/2);
+    label.position(miniButtonCreateX+1,miniButtonCreateY+1);
+    label.size(labelSizeX/3-2,labelSizeY/2-2);
     label.style('background: #8844ff;');
     label.style('font-size', zoomDiv.clientWidth/150 + 'px');
     if(side == "left")leftButtonTags[i][j].push(label); else rightButtonTags[i][j].push(label);
@@ -266,8 +266,8 @@ function createSubButtons(buttonCreationLocationX,buttonCreationLocationY, i, j,
   }
   if(bd[i][j].adcID != -1){
     var label = createButton(`ADC${bd[i][j].adcID}`);
-    label.position(miniButtonCreateX,miniButtonCreateY);
-    label.size(labelSizeX/3,labelSizeY/2);
+    label.position(miniButtonCreateX+1,miniButtonCreateY+1);
+    label.size(labelSizeX/3-2,labelSizeY/2-2);
     label.style('background: #DDBB88;');
     label.style('font-size', zoomDiv.clientWidth/150 + 'px');
     if(side == "left")leftButtonTags[i][j].push(label); else rightButtonTags[i][j].push(label);
@@ -280,8 +280,8 @@ function createSubButtons(buttonCreationLocationX,buttonCreationLocationY, i, j,
   }
   if(bd[i][j].dacID != -1){
     var label = createButton(`DAC${bd[i][j].dacID}`);
-    label.position(miniButtonCreateX,miniButtonCreateY);
-    label.size(labelSizeX/3,labelSizeY/2);
+    label.position(miniButtonCreateX+1,miniButtonCreateY+1);
+    label.size(labelSizeX/3-2,labelSizeY/2-2);
     label.style('background: #DDBB88;');
     label.style('font-size', zoomDiv.clientWidth/150 + 'px');
     if(side == "left")leftButtonTags[i][j].push(label); else rightButtonTags[i][j].push(label);
@@ -294,8 +294,8 @@ function createSubButtons(buttonCreationLocationX,buttonCreationLocationY, i, j,
   }
   if(bd[i][j].canID != -1){
     var label = createButton(`CAN${bd[i][j].canID}_${bd[i][j].canPin}`);
-    label.position(miniButtonCreateX,miniButtonCreateY);
-    label.size(labelSizeX/3,labelSizeY/2);
+    label.position(miniButtonCreateX+1,miniButtonCreateY+1);
+    label.size(labelSizeX/3-2,labelSizeY/2-2);
     label.style('background: #bb33dd;');
     label.style('font-size', zoomDiv.clientWidth/150 + 'px');
     if(side == "left")leftButtonTags[i][j].push(label); else rightButtonTags[i][j].push(label);
@@ -307,30 +307,42 @@ function createSubButtons(buttonCreationLocationX,buttonCreationLocationY, i, j,
     }
   }
 
-  if(bd[i][j].pinType == "power"){
+  if(bd[i][j].pinType == "power" && (bd[i][j].pinName == "GND" || bd[i][j].pinName == "AGND")){
     var label = createButton(`${bd[i][j].pinName}`);
-    label.position(miniButtonCreateX,miniButtonCreateY);
-    label.size(labelSizeX,labelSizeY);
+    label.position(miniButtonCreateX+2,miniButtonCreateY+2);
+    label.size(labelSizeX-4,labelSizeY-4);
+    label.style('background: #222222;');
+    label.style('font-size', zoomDiv.clientWidth/110 + 'px');
+    label.style('color: #ffffff');
+    label.mousePressed(onClickAbstraction(i,j,side));
+    if(side == "left")leftButtonTags[i][j].push(label); else rightButtonTags[i][j].push(label);
+  }else if(bd[i][j].pinType == "power"){
+    var label = createButton(`${bd[i][j].pinName}`);
+    label.position(miniButtonCreateX+2,miniButtonCreateY+2);
+    label.size(labelSizeX-4,labelSizeY-4);
     label.style('background: #ee4455;');
-    label.style('font-size', zoomDiv.clientWidth/150 + 'px');
+    label.style('font-size', zoomDiv.clientWidth/110 + 'px');
+    label.mousePressed(onClickAbstraction(i,j,side));
     if(side == "left")leftButtonTags[i][j].push(label); else rightButtonTags[i][j].push(label);
   }
 
   if(bd[i][j].pinType == "control"){
     var label = createButton(`${bd[i][j].pinName}`);
-    label.position(miniButtonCreateX,miniButtonCreateY);
-    label.size(labelSizeX,labelSizeY);
+    label.position(miniButtonCreateX+2,miniButtonCreateY+2);
+    label.size(labelSizeX-4,labelSizeY-4);
     label.style('background: #dd5555;');
-    label.style('font-size', zoomDiv.clientWidth/150 + 'px');
+    label.style('font-size', zoomDiv.clientWidth/110 + 'px');
+    label.mousePressed(onClickAbstraction(i,j,side));
     if(side == "left")leftButtonTags[i][j].push(label); else rightButtonTags[i][j].push(label);
   }
 
   if(bd[i][j].pinType == "nc"){
     var label = createButton(`${bd[i][j].pinName}`);
-    label.position(miniButtonCreateX,miniButtonCreateY);
-    label.size(labelSizeX,labelSizeY);
+    label.position(miniButtonCreateX+2,miniButtonCreateY+2);
+    label.size(labelSizeX-4,labelSizeY-4);
     label.style('background: #ddeedd;');
-    label.style('font-size', zoomDiv.clientWidth/150 + 'px');
+    label.style('font-size', zoomDiv.clientWidth/110 + 'px');
+    label.mousePressed(onClickAbstraction(i,j,side));
     if(side == "left")leftButtonTags[i][j].push(label); else rightButtonTags[i][j].push(label);
   }
 }
@@ -463,6 +475,7 @@ function setup() {
       btn.style('border: 2px solid #111111')
       btn.position(buttonCreationLocationX,buttonCreationLocationY);
       btn.size(labelSizeX,labelSizeY);
+      btn.mousePressed(onClickAbstraction(i,j,"left"));
       // btn.style = labelButton;
       // console.log(`x${buttonCreationLocationX} y${buttonCreationLocationY}`);
       pinSet[j] = btn;
@@ -491,6 +504,7 @@ function setup() {
       btn.style('border: 2px solid #111111')
       btn.position(buttonCreationLocationX,buttonCreationLocationY);
       btn.size(labelSizeX,labelSizeY);
+      btn.mousePressed(onClickAbstraction(i,j,"right"));
       // btn.style = labelButton;
       // console.log(`x${buttonCreationLocationX} y${buttonCreationLocationY}`);
       pinSet[j] = btn;
@@ -533,27 +547,27 @@ function draw() {
   for(var i = 0; i < 2; i ++){
     for(var j = 0; j < 19; j ++){
       // console.log(`xy${i},${j}`)
-      if(searchMode && leftLabelsSearch[i][j]){
-        leftPins[i][j].style("border: 2px solid #9933dd77;");
+      if(leftLabelsHover[i][j]){
+        leftPins[i][j].style("border: 2px solid #d81c1c77;")
         labelUpdate(i, j, true, "left");
       }else if(leftLabelsVisible[i][j]){
         leftPins[i][j].style("border: 2px solid #33ff7777;");
         labelUpdate(i, j, true, "left");
-      }else if(leftLabelsHover[i][j]){
-        leftPins[i][j].style("border: 2px solid #d81c1c77;")
+      }else if(searchMode && leftLabelsSearch[i][j]){
+        leftPins[i][j].style("border: 2px solid #9933dd77;");
         labelUpdate(i, j, true, "left");
       }else{
         leftPins[i][j].style("border: 2px solid #ffffff77;")
         labelUpdate(i, j, false, "left");
       }
-      if(searchMode && rightLabelsSearch[i][j]){
-        rightPins[i][j].style("border: 2px solid #9933dd77;");
+      if(rightLabelsHover[i][j]){
+        rightPins[i][j].style("border: 2px solid #d81c1c77;")
         labelUpdate(i, j, true, "right");
       }else if(rightLabelsVisible[i][j]){
         rightPins[i][j].style("border: 2px solid #33ff7777;")
         labelUpdate(i, j, true, "right");
-      }else if(rightLabelsHover[i][j]){
-        rightPins[i][j].style("border: 2px solid #d81c1c77;")
+      }else if(searchMode && rightLabelsSearch[i][j]){
+        rightPins[i][j].style("border: 2px solid #9933dd77;");
         labelUpdate(i, j, true, "right");
       }else{
         rightPins[i][j].style("border: 2px solid #ffffff77;")
@@ -565,11 +579,11 @@ function draw() {
 
 function onHoverAbstraction(i, j, side){
   return function() {onHover(i,j, side);}
-  }
+}
 
-  function offHoverAbstraction(i, j, side){
-    return function() {offHover(i,j, side);}
-    }
+function offHoverAbstraction(i, j, side){
+  return function() {offHover(i,j, side);}
+}
 
 function onHover(i,j, side){
   // leftLabelsHover = [[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false],[false,false]];
@@ -581,6 +595,9 @@ function onHover(i,j, side){
     rightLabelsHover[i][j] = true;
     //rightPins[i][j].style("border: 2px solid #d81c1c77;")
   }
+  ((side == "left") ? leftLabels : rightLabels)[i][j].style("border: 2px solid #d81c1c77;");
+  //((side == "left") ? leftLabels : rightLabels)[i][j].style("background-color: red")
+  ((side == "left") ? leftLabels : rightLabels)[i][j].style("background: #e87c7c");
 }
 
 function offHover(i,j, side){
@@ -593,6 +610,10 @@ function offHover(i,j, side){
     rightLabelsHover[i][j] = false;
     //rightPins[i][j].style("border: 2px solid #d81c1c77;")
   }
+  ((side == "left") ? leftLabels : rightLabels)[i][j].style("border: 2px solid #111111;");
+  //((side == "left") ? leftLabels : rightLabels)[i][j].style("background-color: red")
+  ((side == "left") ? leftLabels : rightLabels)[i][j].style("background: silver");
+  //console.log(leftLabels[i][j].style());
 }
 
 function onClickAbstraction(i, j,side){
