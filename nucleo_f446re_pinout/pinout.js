@@ -380,6 +380,7 @@ function createSubButtons(buttonCreationLocationX,buttonCreationLocationY, i, j,
     else if(bd[i][j].extralabel.includes("I2C")) clr = "#ff9911";
     else if(bd[i][j].extralabel.includes("CAN")) clr = "#bb33dd";
     else if(bd[i][j].extralabel.includes("DAC") || bd[i][j].extralabel.includes("ADC")) clr = "#ddbb88";
+
     var label = createButton(`${bd[i][j].extralabel}`,clr);
     label.position(miniButtonCreateX+1,miniButtonCreateY+1);
     label.size(labelSizeX/3-2,labelSizeY/2-2);
@@ -388,6 +389,8 @@ function createSubButtons(buttonCreationLocationX,buttonCreationLocationY, i, j,
     label.mouseOver(onHoverTagAb(i, j, side, `${bd[i][j].extralabel}`));
     label.mouseOut(offHoverTagAb(i, j, side, `${bd[i][j].extralabel}`));
     label.mousePressed(onClickAbstraction(i,j,side));
+    if(clr == "#4455dd") label.style('color: #ffffff');
+
     if(side == "left")leftButtonTags[i][j].push(label); else rightButtonTags[i][j].push(label);
   }
 }
