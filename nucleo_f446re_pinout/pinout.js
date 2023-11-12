@@ -40,8 +40,13 @@ var labelSizeY = 50;
 
 var leftPins = [];
 var rightPins = [];
+
 var leftLabels = [];
 var rightLabels = [];
+
+
+var leftPinAliases = [[null,null],[null,null],[null,null],[null,null],[null,null],[null,null],[null,null],[null,null],[null,null],[null,null],[null,null],[null,null],[null,null],[null,null],[null,null],[null,null],[null,null],[null,null],[null,null]];
+var rightPinAliases = [[null,null],[null,null],[null,null],[null,null],[null,null],[null,null],[null,null],[null,null],[null,null],[null,null],[null,null],[null,null],[null,null],[null,null],[null,null],[null,null],[null,null],[null,null],[null,null]];
 
 var searchMode = false;
 
@@ -511,6 +516,74 @@ function setup() {
     buttonCreationLocationX += pinSpacingX;
   }
 
+  buttonCreationLocationX = canvas.clientWidth/2 - pinsDisplaceXL - pinSpacingX + 52;
+  buttonCreationLocationY = canvas.clientHeight/2 - pinsDisplaceYL + 76;
+  for(var j = 4; j < 12; j++){
+    var btn = createButton('',`${1},${j}`);
+    btn.position(buttonCreationLocationX,buttonCreationLocationY);
+    btn.size(pinSizeX,pinSizeY);
+    //console.log(`x${buttonCreationLocationX} y${buttonCreationLocationY}`);
+
+    btn.mouseOver(onHoverAbstraction(1,j,"left"));
+    btn.mouseOut(offHoverAbstraction(1,j,"left"));
+    btn.mousePressed(onClickAbstraction(1,j,"left"));
+
+    leftPinAliases[1][j] = btn;
+
+    buttonCreationLocationY += pinSpacingY+0.5;
+  }
+
+  buttonCreationLocationX = canvas.clientWidth/2 - pinsDisplaceXL - pinSpacingX + 52;
+  buttonCreationLocationY = canvas.clientHeight/2 - pinsDisplaceYL + 246;
+  for(var j = 13; j < 19; j++){
+    var btn = createButton('',`${1},${j}`);
+    btn.position(buttonCreationLocationX,buttonCreationLocationY);
+    btn.size(pinSizeX,pinSizeY);
+    //console.log(`x${buttonCreationLocationX} y${buttonCreationLocationY}`);
+
+    btn.mouseOver(onHoverAbstraction(1,j,"left"));
+    btn.mouseOut(offHoverAbstraction(1,j,"left"));
+    btn.mousePressed(onClickAbstraction(1,j,"left"));
+
+    leftPinAliases[1][j] = btn;
+
+    buttonCreationLocationY += pinSpacingY+0.5;
+  }
+
+  buttonCreationLocationX = canvas.clientWidth/2 + pinsDisplaceXR - 34;
+  buttonCreationLocationY = canvas.clientHeight/2 - pinsDisplaceYR + 9;
+  for(var j = 1; j < 11; j++){
+    var btn = createButton('',`${0},${j}`);
+    btn.position(buttonCreationLocationX,buttonCreationLocationY);
+    btn.size(pinSizeX,pinSizeY);
+    //console.log(`x${buttonCreationLocationX} y${buttonCreationLocationY}`);
+
+    btn.mouseOver(onHoverAbstraction(0,j,"right"));
+    btn.mouseOut(offHoverAbstraction(0,j,"right"));
+    btn.mousePressed(onClickAbstraction(0,j,"right"));
+
+    rightPinAliases[0][j] = btn;
+
+    buttonCreationLocationY += pinSpacingY+ 0.5;
+  }
+
+  buttonCreationLocationX = canvas.clientWidth/2 + pinsDisplaceXR - 32;
+  buttonCreationLocationY = canvas.clientHeight/2 - pinsDisplaceYR + 206;
+  for(var j = 11; j < 19; j++){
+    var btn = createButton('',`${0},${j}`);
+    btn.position(buttonCreationLocationX,buttonCreationLocationY);
+    btn.size(pinSizeX,pinSizeY);
+    //console.log(`x${buttonCreationLocationX} y${buttonCreationLocationY}`);
+
+    btn.mouseOver(onHoverAbstraction(0,j,"right"));
+    btn.mouseOut(offHoverAbstraction(0,j,"right"));
+    btn.mousePressed(onClickAbstraction(0,j,"right"));
+
+    rightPinAliases[0][j] = btn;
+
+    buttonCreationLocationY += pinSpacingY+ 0.5;
+  }
+
   buttonCreationLocationX = canvas.clientWidth/2 - labelsDisplaceX + 18;
   buttonCreationLocationY = canvas.clientHeight/2 - labelsDisplaceY;
   for(var i = 0; i < pinRowLength; i++){
@@ -605,15 +678,35 @@ function draw() {
       if(leftLabelsHover[i][j]){
         leftPins[i][j].style("border: 2px solid #d81c1c77;");
         leftPins[i][j].style("background: #c85555aa;");
+        
+        if(leftPinAliases[i][j] != null){
+          leftPinAliases[i][j].style("border: 2px solid #d81c1c77;");
+          leftPinAliases[i][j].style("background: #c85555aa;");
+        }
         labelUpdate(i, j, true, "left");
       }else if(leftLabelsVisible[i][j]){
         leftPins[i][j].style("border: 2px solid #33ff7777;");
+
+        if(leftPinAliases[i][j] != null){
+          leftPinAliases[i][j].style("border: 2px solid #33ff7777;"); 
+          leftPinAliases[i][j].style("background: transparent;");
+        }
         labelUpdate(i, j, true, "left");
       }else if(searchMode && leftLabelsSearch[i][j]){
         leftPins[i][j].style("border: 2px solid #9933dd77;");
+
+        if(leftPinAliases[i][j] != null){
+          leftPinAliases[i][j].style("border: 2px solid #9933dd77;");
+          leftPinAliases[i][j].style("background: transparent;");
+        }
         labelUpdate(i, j, true, "left");
       }else{
         leftPins[i][j].style("border: 2px solid #ffffff77;");
+
+        if(leftPinAliases[i][j] != null){
+          leftPinAliases[i][j].style("border: 2px solid #ffffff77;");
+          leftPinAliases[i][j].style("background: transparent;");
+        }
         labelUpdate(i, j, false, "left");
       }
 
@@ -621,15 +714,35 @@ function draw() {
       if(rightLabelsHover[i][j]){
         rightPins[i][j].style("border: 2px solid #d81c1c77;");
         rightPins[i][j].style("background: #c85555aa;");
+
+        if(rightPinAliases[i][j] != null){
+          rightPinAliases[i][j].style("border: 2px solid #d81c1c77;");
+          rightPinAliases[i][j].style("background: #c85555aa;");
+        }
         labelUpdate(i, j, true, "right");
       }else if(rightLabelsVisible[i][j]){
         rightPins[i][j].style("border: 2px solid #33ff7777;");
+
+        if(rightPinAliases[i][j] != null){
+          rightPinAliases[i][j].style("border: 2px solid #33ff7777;"); 
+          rightPinAliases[i][j].style("background: transparent;");
+        }
         labelUpdate(i, j, true, "right");
       }else if(searchMode && rightLabelsSearch[i][j]){
         rightPins[i][j].style("border: 2px solid #9933dd77;");
+
+        if(rightPinAliases[i][j] != null){
+          rightPinAliases[i][j].style("border: 2px solid #9933dd77;");
+          rightPinAliases[i][j].style("background: transparent;");
+        }
         labelUpdate(i, j, true, "right");
       }else{
-        rightPins[i][j].style("border: 2px solid #ffffff77;")
+        rightPins[i][j].style("border: 2px solid #ffffff77;");
+
+        if(rightPinAliases[i][j] != null){
+          rightPinAliases[i][j].style("border: 2px solid #ffffff77;");
+          rightPinAliases[i][j].style("background: transparent;");
+        }
         labelUpdate(i, j, false, "right");
       }
       
