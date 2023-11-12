@@ -325,7 +325,7 @@ function createSubButtons(buttonCreationLocationX,buttonCreationLocationY, i, j,
     }
   }
 
-  if(bd[i][j].pinType == "power" && (bd[i][j].pinName == "GND" || bd[i][j].pinName == "AGND")){
+  if(bd[i][j].pinType == "power" && (bd[i][j].pinName.includes("GND"))){
     var label = createButton(`${bd[i][j].pinName}`,"#222222");
     label.position(miniButtonCreateX+2,miniButtonCreateY+2);
     label.size(labelSizeX-4,labelSizeY-4);
@@ -416,7 +416,9 @@ function setup() {
   var buttonsWidth = 100;
   var buttonsHeight = 40;
 
-  labelsSpacingX = (zoomDiv.clientWidth - img.width)/4;
+  var imgWidth = (img.width != 0) ? img.width : 535;
+
+  labelsSpacingX = (zoomDiv.clientWidth - imgWidth)/4;
   labelSizeX = labelsSpacingX - 3;
   labelsDisplaceX = zoomDiv.clientWidth/2;
   labelsDisplaceY = zoomDiv.clientHeight/2 - 10;
