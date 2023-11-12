@@ -625,15 +625,16 @@ function draw() {
         rightPins[i][j].style("border: 2px solid #ffffff77;")
         labelUpdate(i, j, false, "right");
       }
+      
       for(var x = 0; x < leftButtonTags[i][j].length; x++){
         // console.log(leftButtonTags[i][j][x].html());
         //console.log(`${leftButtonTags[i][j][x].value()}`);
         //console.log(`i${i}j${j} ${leftButtonTags[i][j][x].html()} contains ${hoverTag}`);
-        if(hoverTag.toUpperCase() != "" && leftButtonTags[i][j][x].html().includes(hoverTag)){
+        if(searchTagNum(hoverTag) > 1 && hoverTag.toUpperCase() != "" && leftButtonTags[i][j][x].html() == hoverTag){
           console.log(`i${i}j${j} ${leftButtonTags[i][j][x].html()} contains ${hoverTag}`);
           console.log(`${leftButtonTags[i][j][x].value()}`);
           leftButtonTags[i][j][x].style(`background: ${leftButtonTags[i][j][x].value()};`);
-        }else if(hoverTag.toUpperCase() != ""){
+        }else if(searchTagNum(hoverTag) > 1 && hoverTag.toUpperCase() != ""){
           leftButtonTags[i][j][x].style(`background: silver;`);
         }else{
           leftButtonTags[i][j][x].style(`background: ${leftButtonTags[i][j][x].value()};`);
@@ -644,18 +645,38 @@ function draw() {
         //console.log(`${rightButtonTags[i][j][x].value()}`);
         //console.log(`i${i}j${j} ${rightButtonTags[i][j][x].html()} contains ${hoverTag}`);
         
-        if(hoverTag.toUpperCase() != "" && rightButtonTags[i][j][x].html().includes(hoverTag)){
+        if(searchTagNum(hoverTag) > 1 && hoverTag.toUpperCase() != "" && rightButtonTags[i][j][x].html() == hoverTag){
           console.log(`i${i}j${j} ${rightButtonTags[i][j][x].html()} contains ${hoverTag}`);
           console.log(`${rightButtonTags[i][j][x].value()}`);
           rightButtonTags[i][j][x].style(`background: ${rightButtonTags[i][j][x].value()};`);
-        }else if(hoverTag.toUpperCase() != ""){
+        }else if(searchTagNum(hoverTag) > 1 && hoverTag.toUpperCase() != ""){
           rightButtonTags[i][j][x].style(`background: silver;`);
         }else{
           rightButtonTags[i][j][x].style(`background: ${rightButtonTags[i][j][x].value()};`);
         }
       }
+    
     }
   }
+}
+
+function searchTagNum(tag){
+  count = 0;
+  for(var i = 0; i < 2; i ++){
+    for(var j = 0; j < 19; j ++){
+      for(var x = 0; x < leftButtonTags[i][j].length; x++){
+        if(hoverTag.toUpperCase() != "" && leftButtonTags[i][j][x].html() == tag){
+          count++;
+        }
+      }
+      for(var x = 0; x < rightButtonTags[i][j].length; x++){
+        if(hoverTag.toUpperCase() != "" && rightButtonTags[i][j][x].html() == tag){
+          count++;
+        }
+      }
+    }
+  }
+  return count;
 }
 
 function onHoverAbstraction(i, j, side){
