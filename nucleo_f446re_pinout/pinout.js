@@ -601,8 +601,10 @@ function draw() {
   for(var i = 0; i < 2; i ++){
     for(var j = 0; j < 19; j ++){
       // console.log(`xy${i},${j}`)
+      leftPins[i][j].style("background: transparent;");
       if(leftLabelsHover[i][j]){
-        leftPins[i][j].style("border: 2px solid #d81c1c77;")
+        leftPins[i][j].style("border: 2px solid #d81c1c77;");
+        leftPins[i][j].style("background: #c85555aa;");
         labelUpdate(i, j, true, "left");
       }else if(leftLabelsVisible[i][j]){
         leftPins[i][j].style("border: 2px solid #33ff7777;");
@@ -611,14 +613,17 @@ function draw() {
         leftPins[i][j].style("border: 2px solid #9933dd77;");
         labelUpdate(i, j, true, "left");
       }else{
-        leftPins[i][j].style("border: 2px solid #ffffff77;")
+        leftPins[i][j].style("border: 2px solid #ffffff77;");
         labelUpdate(i, j, false, "left");
       }
+
+      rightPins[i][j].style("background: transparent;");
       if(rightLabelsHover[i][j]){
-        rightPins[i][j].style("border: 2px solid #d81c1c77;")
+        rightPins[i][j].style("border: 2px solid #d81c1c77;");
+        rightPins[i][j].style("background: #c85555aa;");
         labelUpdate(i, j, true, "right");
       }else if(rightLabelsVisible[i][j]){
-        rightPins[i][j].style("border: 2px solid #33ff7777;")
+        rightPins[i][j].style("border: 2px solid #33ff7777;");
         labelUpdate(i, j, true, "right");
       }else if(searchMode && rightLabelsSearch[i][j]){
         rightPins[i][j].style("border: 2px solid #9933dd77;");

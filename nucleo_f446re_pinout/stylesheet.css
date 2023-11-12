@@ -14,6 +14,6 @@ button{
 }
 
 button:hover{
-    background: transparent;
+    background: #e85c5c99;
     border: 2px solid #d81c1c77;
 }
