@@ -750,6 +750,7 @@ function hideAllButton(){
 
 function searchInput(){
   var text = this.value();
+  console.log("searched: "+text);
   if(text == ""){
     searchMode = false;
   }else{
