@@ -130,7 +130,7 @@ rightButtonData[1][0] = {pinType:"digital",pinName:"PC_8",spiID:-1,spiPin:"",can
 rightButtonData[0][1] = {pinType:"digital",pinName:"PB_8",spiID:-1,spiPin:"",canID:1,canPin:"RD",uartID:-1,uartPin:"",i2cID:1,i2cPin:"SCL",pwmTimer:2,pwmChannel:1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
 rightButtonData[1][1] = {pinType:"digital",pinName:"PC_6",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:6,uartPin:"TX",i2cID:1,i2cPin:"SCL",pwmTimer:3,pwmChannel:1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
 
-rightButtonData[0][2] = {pinType:"digital",pinName:"PB_9",spiID:2,spiPin:"CS",canID:1,canPin:"TD",uartID:-1,uartPin:"",i2cID:1,i2cPin:"CS",pwmTimer:2,pwmChannel:2,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
+rightButtonData[0][2] = {pinType:"digital",pinName:"PB_9",spiID:2,spiPin:"CS",canID:1,canPin:"TD",uartID:-1,uartPin:"",i2cID:1,i2cPin:"SDA",pwmTimer:2,pwmChannel:2,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
 rightButtonData[1][2] = {pinType:"digital",pinName:"PC_5",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:3,uartPin:"RX",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:15, dacID:-1, extralabel: ""};
 
 rightButtonData[0][3] = {pinType:"power",pinName:"AVDD",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
