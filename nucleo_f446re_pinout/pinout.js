@@ -407,6 +407,10 @@ const img = new Image();
     ctx.drawImage(img, (canvas.clientWidth-img.width)/2, (canvas.clientHeight-img.height)/2);
 };
 
+function backButton(){
+  window.location.href = '../index.html';
+}
+
 let input, buton, greeting;
 
 function setup() {
@@ -447,6 +451,13 @@ function setup() {
   hideAll.style('background: #abddbe;');
   hideAll.style('font-size', zoomDiv.clientWidth/110 + 'px');
   hideAll.mousePressed(hideAllButton);
+
+  var main = createButton(`Go Back`);
+  main.position(zoomDiv.clientWidth/2, 80);
+  main.size(buttonsWidth,buttonsHeight);
+  main.style('background: #ff9bd8;');
+  main.style('font-size', zoomDiv.clientWidth/110 + 'px');
+  main.mousePressed(backButton);
 
   // var showAll = createButton(`Show All`);
   // showAll.position(zoomDiv.clientWidth/2 - buttonsWidth, 80);
