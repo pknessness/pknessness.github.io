@@ -2,26 +2,15 @@
 var components = [];
 
 var zoomDiv = document.getElementById("zoom-div");
+const canvas = document.getElementById("defaultCanvas0");
 
 var componentHT = new Map();
 var connectionArray = [];
-
-// function Component(string, img, x, y, width, height) {
-//   this.string = string;
-//   this.img = img;
-//   this.x = x;
-//   this.y = y;
-//   this.width = width;
-//   this.height = height;
-//   this.connectionArray = [];
-//   componentHT.set(string,this);
-//   console.log(componentHT);
-//   this.label = createButton(string);
-//   this.label.position(x, y);
-//   this.label.size(width, height);
-// }
 var globalConnectionIndex = 0;
 var connectionWidth = 16;
+
+var label = "";
+//var labelFrom = "";
 
 class Component {
   constructor(string, img, x, y, width, height) {
@@ -87,12 +76,19 @@ class Connection {
     if(fromFace == "" || toFace == ""){
       var fromC = componentHT.get(from);
       var toC = componentHT.get(to);
-      var disX = toC.x - (fromC.x + fromC.width);
-      var disY = toC.y - (fromC.y + fromC.height);
+
+      // var disX = (toC.x > fromC.x ? toC.x - (fromC.x + fromC.width) : fromC.x - (toC.x + toC.width));
+      // var disY = (toC.y > fromC.y ? toC.y - (fromC.y + fromC.height) : fromC.y - (toC.y + toC.height));
+
+      //if(toC.x > fromC.x && toC.x < fromC.x + fromC.y)
+
+      var disX = (toC.x + toC.width/2) - (fromC.x + fromC.width/2);
+      var disY = (toC.y + toC.height/2) - (fromC.y + fromC.height/2);
+
       //console.log(`x${disX}y${disY}`);
-      console.log(`from ${from} at ${fromC.x},${fromC.y} to ${to} at ${toC.x},${toC.y}`);
+      console.log(`from ${from} at ${fromC.x},${fromC.y} to ${to} at ${toC.x},${toC.y}, displaced x${disX} y${disY}`);
       if(abs(disX) > abs(disY)){
-        console.log(`pre:f ${this.fromIndex}/R${fromC.numR}L${fromC.numL} t ${this.toIndex}/R${toC.numR}L${toC.numL}`);
+        //console.log(`pre:f ${this.fromIndex}/R${fromC.numR}L${fromC.numL} t ${this.toIndex}/R${toC.numR}L${toC.numL}`);
         if(fromC.x > toC.x){
           this.fromFace = "left";
           this.toFace = "right";
@@ -112,7 +108,7 @@ class Connection {
           fromC.numR += numComp;// + (fromC.numR == 0 ? 0 : 1);
           toC.numL += numComp;// + (toC.numL == 0 ? 0 : 1);
         }
-        console.log(`post:f ${this.fromIndex}/R${fromC.numR}L${fromC.numL} t ${this.toIndex}/R${toC.numR}L${toC.numL}`);
+        //console.log(`post:f ${this.fromIndex}/R${fromC.numR}L${fromC.numL} t ${this.toIndex}/R${toC.numR}L${toC.numL}`);
       }else{
         if(fromC.y > toC.y){
           this.fromFace = "up";
@@ -126,8 +122,8 @@ class Connection {
         }else{
           this.fromFace = "down";
           this.toFace = "up";
-          fromC.numU += fromC.numU == 0 ? 0 : 1;
-          toC.numD += toC.numD == 0 ? 0 : 1;
+          fromC.numD += fromC.numD == 0 ? 0 : 1;
+          toC.numU += toC.numU == 0 ? 0 : 1;
           this.fromIndex = componentHT.get(from).numD;
           this.toIndex = componentHT.get(to).numU;
           fromC.numD += numComp;
@@ -195,84 +191,86 @@ class Connection {
       //line(srcLoc[0]- 300,srcLoc[1]-10,srcLoc[0] + 300,srcLoc[1]-10);
       //line(dstLoc[0]- 300,dstLoc[1]-10,dstLoc[0] + 300,dstLoc[1]-10);
 
+      var seg1len = connectionWidth/2 + connectionWidth*(- j - (3 - this.composition.length) * 0.5) + connectionWidth;
+
       if(this.fromFace == "right" && this.toFace == "left"){
         
-        size1[0] = abs(srcLoc[0]-dstLoc[0])/2 + connectionWidth/2 + connectionWidth*(this.composition.length/2 - j); 
+        size1[0] = abs(srcLoc[0]-dstLoc[0])/2 + seg1len; 
         size1[1] = connectionWidth;
         
-        pos1[0] = srcLoc[0]; 
+        pos1[0] = srcLoc[0] - connectionWidth; 
         pos1[1] = srcLoc[1];
 
         size2[0] = connectionWidth;
         size2[1] = abs(srcLoc[1]-dstLoc[1]);
 
         pos2[0] = pos1[0] + size1[0];
-        pos2[1] = pos1[1];
+        pos2[1] = pos1[1] - (srcLoc[1] > dstLoc[1] ? size2[1] - connectionWidth : 0);
 
-        size3[0] = abs(srcLoc[0]-dstLoc[0])/2 + connectionWidth*(j - this.composition.length/2) - connectionWidth/2;
+        size3[0] = abs(srcLoc[0]-dstLoc[0]) - size1[0] + 2 * connectionWidth;
         size3[1] = connectionWidth;
 
-        pos3[0] = dstLoc[0] - size3[0];
+        pos3[0] = dstLoc[0] - size3[0] - connectionWidth + (srcLoc[1] < dstLoc[1] ? 2 * connectionWidth : 0);
         pos3[1] = dstLoc[1];
 
       }else if(this.fromFace == "left" && this.toFace == "right"){
 
-        size1[0] = abs(srcLoc[0]-dstLoc[0])/2 + connectionWidth/2 + connectionWidth*(this.composition.length/2 - j);
+        size1[0] = abs(srcLoc[0]-dstLoc[0])/2 + seg1len;
         size1[1] = connectionWidth;
 
-        pos1[0] = srcLoc[0] - size1[0]; 
+        pos1[0] = srcLoc[0] - size1[0] + connectionWidth; 
         pos1[1] = srcLoc[1];
         
         size2[0] = connectionWidth;
         size2[1] = abs(srcLoc[1]-dstLoc[1]);
         
         pos2[0] = pos1[0] - connectionWidth;
-        pos2[1] = pos1[1] - size2[1] + connectionWidth;
+        pos2[1] = pos1[1] - (srcLoc[1] > dstLoc[1] ? size2[1] : connectionWidth) + connectionWidth;
 
-        size3[0] = abs(srcLoc[0]-dstLoc[0])/2 + connectionWidth*(j - this.composition.length/2) - connectionWidth/2;
+        size3[0] = abs(srcLoc[0]-dstLoc[0]) - size1[0] + 2 * connectionWidth;
         size3[1] = connectionWidth;
 
-        pos3[0] = dstLoc[0];
+        pos3[0] = dstLoc[0] - connectionWidth;
         pos3[1] = dstLoc[1];
         
       }else if(this.fromFace == "down" && this.toFace == "up"){
         
-        size1[1] = abs(srcLoc[1]-dstLoc[1])/2 + connectionWidth/2 + connectionWidth*(this.composition.length/2 - j); 
+        size1[1] = abs(srcLoc[1]-dstLoc[1])/2 + seg1len; 
         size1[0] = connectionWidth;
         
-        pos1[1] = srcLoc[1]; 
+        pos1[1] = srcLoc[1] - connectionWidth; 
         pos1[0] = srcLoc[0];
 
         size2[1] = connectionWidth;
         size2[0] = abs(srcLoc[0]-dstLoc[0]);
 
         pos2[1] = pos1[1] + size1[1];
-        pos2[0] = pos1[0];
+        pos2[0] = pos1[0] - (srcLoc[0] > dstLoc[0] ? size2[0] - connectionWidth : 0) ;
 
-        size3[1] = abs(srcLoc[1]-dstLoc[1])/2 + connectionWidth*(j - this.composition.length/2) - connectionWidth/2;
+        size3[1] = abs(srcLoc[1]-dstLoc[1]) - size1[1] + 2 * connectionWidth;
         size3[0] = connectionWidth;
 
-        pos3[1] = dstLoc[1] - size3[1];
+        pos3[1] = dstLoc[1] - size3[1] + connectionWidth;
         pos3[0] = dstLoc[0];
 
       }else if(this.fromFace == "up" && this.toFace == "down"){
 
-        size1[1] = abs(srcLoc[1]-dstLoc[1])/2 + connectionWidth/2 + connectionWidth*(this.composition.length/2 - j);
+        size1[1] = abs(srcLoc[1]-dstLoc[1])/2 + seg1len;
         size1[0] = connectionWidth;
 
-        pos1[1] = srcLoc[1] - size1[1]; 
+        pos1[1] = srcLoc[1] - size1[1] + connectionWidth; 
         pos1[0] = srcLoc[0];
         
         size2[1] = connectionWidth;
-        size2[0] = abs(srcLoc[0]-dstLoc[0]);
+        size2[0] = abs(srcLoc[0]-dstLoc[0]) + (srcLoc[0] > dstLoc[0] ? 0 : 1);
         
         pos2[1] = pos1[1] - connectionWidth;
-        pos2[0] = pos1[0] - size2[0] + connectionWidth;
+        pos2[0] = pos1[0] - (srcLoc[0] > dstLoc[0] ? size2[0] - connectionWidth : 0) ;
 
-        size3[1] = abs(srcLoc[1]-dstLoc[1])/2 + connectionWidth*(j - this.composition.length/2) - connectionWidth/2;
+        size3[1] = abs(srcLoc[1]-dstLoc[1]) - size1[1] + 2 * connectionWidth;
         size3[0] = connectionWidth;
 
-        pos3[1] = dstLoc[1];
+        pos3[1] = dstLoc[1] - connectionWidth;
         pos3[0] = dstLoc[0];
 
       }
@@ -328,6 +326,7 @@ function onHover(conn, j){
       conn.buttons[i].style('background: #5ab854');
     }
   }
+  label = conn.composition[j];
 }
 function offHoverAbs(conn, j){
   return function() {offHover(conn, j);}
@@ -340,6 +339,11 @@ function offHover(conn, j){
       conn.buttons[i].style(`background: ${conn.colors[j]}`);
     }
   }
+  label = "";
+}
+
+function displayLabel(string){
+
 }
 
 function getTracePoint(component, face, index){
@@ -376,6 +380,117 @@ const img = new Image();
     //ctx.drawImage(img, (canvas.clientWidth-img.width)/2, (canvas.clientHeight-img.height)/2);
 };
 
+function layoutReferee(){
+  var c1 = new Component("Nucleo", img, 50, 50, 200, 200);
+  var c2 = new Component("Jetson", img, 300, 450 ,200, 200);
+
+  var conn1 = new Connection("Nucleo","Jetson","UART_TX,UART_RX,GND");
+  var conn2 = new Connection("Jetson","Nucleo","5V");
+}
+
+function layoutEmbedded(){
+  var nucleo = new Component("Nucleo", img, zoomDiv.clientWidth/2 - zoomDiv.clientWidth/14, zoomDiv.clientHeight/2 - zoomDiv.clientHeight/4, zoomDiv.clientWidth/7, zoomDiv.clientHeight/4);
+  var jetson = new Component("Jetson", img, zoomDiv.clientWidth/20, zoomDiv.clientHeight/2 - zoomDiv.clientHeight/16, zoomDiv.clientWidth/7, zoomDiv.clientHeight/4);
+  var bno055 = new Component("BNO055", img, zoomDiv.clientWidth/2 + zoomDiv.clientWidth/4, zoomDiv.clientHeight/2 - zoomDiv.clientHeight/2.3, zoomDiv.clientWidth/9, zoomDiv.clientHeight/6);
+  var radio = new Component("Radio", img, zoomDiv.clientWidth/2 + zoomDiv.clientWidth/4, zoomDiv.clientHeight/2 - zoomDiv.clientHeight/12, zoomDiv.clientWidth/9, zoomDiv.clientHeight/6);
+  
+  //var c2 = new Component("Jetson", img, 200, 200, zoomDiv.clientWidth/7, zoomDiv.clientHeight/4);
+  var can1 = new Component("CAN Tranciever 1", img, zoomDiv.clientWidth/2 - zoomDiv.clientWidth/18 + zoomDiv.clientWidth/12, zoomDiv.clientHeight/2 + zoomDiv.clientHeight/7, zoomDiv.clientWidth/9, zoomDiv.clientHeight/6);
+  var can2 = new Component("CAN Tranciever 2", img, zoomDiv.clientWidth/2 - zoomDiv.clientWidth/18 - zoomDiv.clientWidth/12, zoomDiv.clientHeight/2 + zoomDiv.clientHeight/7, zoomDiv.clientWidth/9, zoomDiv.clientHeight/6);
+  
+  var cb = new Component("Slipring", img, can1.x + zoomDiv.clientWidth/12, zoomDiv.clientHeight - zoomDiv.clientHeight/12, zoomDiv.clientWidth/9, zoomDiv.clientHeight/10);
+  var slipring = new Component("Centerboard", img, can2.x - zoomDiv.clientWidth/12, zoomDiv.clientHeight - zoomDiv.clientHeight/12, zoomDiv.clientWidth/9, zoomDiv.clientHeight/10);
+  
+
+  var conn1 = new Connection("Nucleo","Jetson","UART_TX,UART_RX,GND, 5V");
+  var conn1 = new Connection("BNO055","Nucleo","I2C_SDA,I2C_SCL,3.3V,GND");
+
+  var can1line = new Connection("CAN Tranciever 1","Slipring","CAN_H,CAN_L");
+  var can2line = new Connection("Centerboard","CAN Tranciever 2","CAN_H,CAN_L");
+
+  var can2linetxrx = new Connection("CAN Tranciever 2","Nucleo","CAN_TX, CAN_RX, GND, 3.3V");
+  var can1linetxrx = new Connection("Nucleo","CAN Tranciever 1","CAN_TX, CAN_RX, GND, 3.3V");
+  var radioline = new Connection("Nucleo","Radio","GND, 5V, UART_RX");
+  
+  //var conn2 = new Connection("Jetson","Nucleo","5V");
+}
+
+function layoutHero(){
+  var c1 = new Component("Nucleo", img, 50, 50, 200, 200);
+  var c2 = new Component("Jetson", img, 300, 450 ,200, 200);
+
+  var conn1 = new Connection("Nucleo","Jetson","UART_TX,UART_RX,GND");
+  var conn2 = new Connection("Jetson","Nucleo","5V");
+}
+
+function layoutInfantry(){
+  var c1 = new Component("Nucleo", img, 50, 50, 200, 200);
+  var c2 = new Component("Jetson", img, 300, 450 ,200, 200);
+
+  var conn1 = new Connection("Nucleo","Jetson","UART_TX,UART_RX,GND");
+  var conn2 = new Connection("Jetson","Nucleo","5V");
+}
+
+function layoutSentry(){
+  var c1 = new Component("Nucleo", img, 50, 50, 200, 200);
+  var c2 = new Component("Jetson", img, 300, 450 ,200, 200);
+
+  var conn1 = new Connection("Nucleo","Jetson","UART_TX,UART_RX,GND");
+  var conn2 = new Connection("Jetson","Nucleo","5V");
+}
+
+let settingsBarHeight = zoomDiv.clientWidth/40;
+let settingsNumButtons = 5;
+
+function settingsButtons(){
+  width = zoomDiv.clientWidth/settingsNumButtons;
+  // var clear = createButton("Clear");
+  // clear.size(width,settingsBarHeight);
+  // clear.position(0,0);
+  // clear.mousePressed(changePageAbs(""));
+
+  var c = 0;
+
+  var referee = createButton("Referee");
+  referee.size(width,settingsBarHeight);
+  referee.position(c++ * width,0);
+  referee.mousePressed(changePageAbs("Referee"));
+
+  var embedded = createButton("Embedded");
+  embedded.size(width,settingsBarHeight);
+  embedded.position(c++ * width,0);
+  embedded.mousePressed(changePageAbs("Embedded"));
+
+  var hero = createButton("Hero");
+  hero.size(width,settingsBarHeight);
+  hero.position(c++ * width,0);
+  hero.mousePressed(changePageAbs("Hero"));
+
+  var infantry = createButton("Infantry");
+  infantry.size(width,settingsBarHeight);
+  infantry.position(c++ * width,0);
+  infantry.mousePressed(changePageAbs("Infantry"));
+
+  var sentry = createButton("Sentry");
+  sentry.size(width,settingsBarHeight);
+  sentry.position(c++ * width,0);
+  sentry.mousePressed(changePageAbs("Sentry"));
+  //label.style("font-size: 100px")
+  //label.size(width,settingsBarHeight);
+
+}
+function changePageAbs(string) { 
+  return function() {changePage(string);}
+} 
+function changePage(string) { 
+  console.log(`diagramID = ${string}`);
+  localStorage.setItem("diagramID",string);
+  window.location.reload();
+} 
+if(localStorage.getItem("diagramID") == ""){
+  localStorage.setItem("diagramID", "Embedded");
+}
+
 function setup() {
   img.src = "images/nucleo_real.jpg";
   // create canvas
@@ -383,13 +498,28 @@ function setup() {
   var p5canvas = createCanvas(zoomDiv.clientWidth, zoomDiv.clientHeight);
 
   p5canvas.parent('zoom-div');
-  const canvas = document.getElementById("defaultCanvas0");
 
-  var c1 = new Component("Nucleo", img, 50, 50, 200, 200);
-  var c2 = new Component("Jetson", img, 300, 450 ,200, 200);
+  settingsButtons();
 
-  var conn1 = new Connection("Nucleo","Jetson","UART_TX,UART_RX,GND");
-  var conn2 = new Connection("Jetson","Nucleo","5V");
+  console.log("AAAAAAAA")
+  console.log(localStorage.getItem("diagramID"));
+  switch (localStorage.getItem("diagramID")){
+    case "Embedded":
+      layoutEmbedded();
+      break;
+    case "Referee":
+      layoutReferee();
+      break;
+    case "Hero":
+      layoutHero();
+      break;
+    case "Infantry":
+      layoutInfantry();
+      break;
+    case "Sentry":
+      layoutSentry();
+      break;
+  }
 
   for(var i = 0; i < connectionArray.length; i ++){
     conn = connectionArray[i];
@@ -400,55 +530,14 @@ function setup() {
 }
 
 function draw() {
-  // image(bg, (canvas.clientWidth-bg.width)/2, (canvas.clientHeight-bg.height)/2, bg.width, bg.height);
 
-  // const cv = document.getElementById("defaultCanvas0");
-  // var ctx = cv.getContext("2d");
-  // alert("aSdas")
-  // for(var i = 0; i < componentArray.length; i ++){
-
-  // }
+  textSize(100);
+  textAlign(LEFT,TOP)
+  background(255,255,255);
+  text(label,0,zoomDiv.clientHeight/20);
 
   for(var i = 0; i < connectionArray.length; i ++){
     conn = connectionArray[i];
-    //if(connectionArray[i])
-    // for(var j = 0; j < componentArray.length; j++){
-
-
-    // }
-    // var srce = componentHT.get(conn.from);
-    // var dest = componentHT.get(conn.to);
-    // //console.log(`searched ${connectionArray[i].from},${connectionArray[i].to}i${i} ${srce.string} to ${dest.string} with ${connectionArray[i].composition}`);
-    // //console.log(componentHT);
-    // for(var j = 0; j < conn.composition.length; j ++){
-    //   srcLoc = getTracePoint(srce,conn.fromFace,conn.fromIndex + j);
-    //   dstLoc = getTracePoint(dest,conn.toFace,conn.toIndex + j);
-    //   srcLoc[0] -= 10;
-    //   dstLoc[0] -= 10;
-    //   srcLoc[1] -= 10;
-    //   dstLoc[1] -= 10;
-    //   srcLoc2 = [...srcLoc];
-    //   dstLoc2 = [...dstLoc];
-      
-    //   stroke(0);
-    //   if(conn.fromFace == "left" || conn.fromFace == "right"){
-    //     srcLoc2[1] += connectionWidth;
-    //   }else{
-    //     srcLoc2[0] += connectionWidth;
-    //   }
-    //   if(conn.toFace == "left" || conn.toFace == "right"){
-    //     dstLoc2[1] += connectionWidth;
-    //   }else{
-    //     dstLoc2[0] += connectionWidth;
-    //   }
-    //   line(srcLoc[0],srcLoc[1],dstLoc[0],dstLoc[1]);
-    //   line(srcLoc2[0],srcLoc2[1],dstLoc2[0],dstLoc2[1]);
-    //   stroke(200,50,120);
-    //   //console.log(`index${i} from_${srcLoc} to_${dstLoc} from2_${srcLoc2} to2_${dstLoc2}`)
-    //   line((srcLoc[0]+srcLoc2[0])/2,(srcLoc[1]+srcLoc2[1])/2,(dstLoc[0]+dstLoc2[0])/2,(dstLoc[1]+dstLoc2[1])/2);
-    //   //console.log(`index ${i} from${srcLoc} to${dstLoc}`)
-    //   //console.log(`{x:${srce.label.x}, y:${srce.label.y}}`)
-    // }
   }
   
 }
