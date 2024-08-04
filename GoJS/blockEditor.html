@@ -223,6 +223,33 @@
           CMButton({ alignment: new go.Spot(0.75, 0) })
         );
 
+      function diamondPattern() {
+        var patternCanvas = document.createElement('canvas');
+        patternCanvas.width = 40;
+        patternCanvas.height = 40;
+        var pctx = patternCanvas.getContext('2d');
+      
+        // This creates a shape similar to a diamond leaf
+        pctx.beginPath();
+        pctx.moveTo(0.0, 40.0);
+        pctx.lineTo(26.9, 36.0);
+        pctx.bezierCurveTo(31.7, 36.0, 36.0, 32.1, 36.0, 27.3);
+        pctx.lineTo(40.0, 0.0);
+        pctx.lineTo(11.8, 3.0);
+        pctx.bezierCurveTo(7.0, 3.0, 3.0, 6.9, 3.0, 11.7);
+        pctx.lineTo(0.0, 40.0);
+        pctx.closePath();
+        pctx.fillStyle = "rgb(188, 222, 178)";
+        pctx.fill();
+        pctx.lineWidth = 0.8;
+        pctx.strokeStyle = "rgb(0, 156, 86)";
+        pctx.lineJoin = "miter";
+        pctx.miterLimit = 4.0;
+        pctx.stroke();
+      
+        return patternCanvas;
+      }
+
       // Common context menu button definitions
 
       // All buttons in context menu work on both click and contextClick,
@@ -250,6 +277,20 @@
             mouseEnter: (e, shape) => shape.stroke = "dodgerblue",
             mouseLeave: (e, shape) => shape.stroke = "lightgray",
             click: ClickFunction(propname, color), contextClick: ClickFunction(propname, color)
+          });
+      }
+
+      function PatternButton(patt, propname) {
+        if (!propname) propname = "patt";
+        var patternBrush = $(go.Brush, "Pattern", { pattern: patt });
+        console.log(typeof(patternBrush))
+        return $(go.Shape,
+          {
+            width: 16, height: 16, geometryString: PathPatterns.get(patt).geometryString,
+            margin: 1, background: "transparent",
+            mouseEnter: (e, shape) => shape.stroke = "dodgerblue",
+            mouseLeave: (e, shape) => shape.stroke = "black",
+            click: ClickFunction(propname, patt), contextClick: ClickFunction(propname, patt)
           });
       }
 
@@ -293,6 +334,26 @@
         ];
       }
 
+      function PatternButtons() {  // used by multiple context menus
+        return [
+          $("ContextMenuButton",
+            $(go.Panel, "Horizontal",
+              PatternButton("Empty"), PatternButton("Dentil"), PatternButton("Slash"), PatternButton("Greek")
+            )
+          ),
+          $("ContextMenuButton",
+            $(go.Panel, "Horizontal",
+              PatternButton("BackSlash"), PatternButton("Sawtooth"), PatternButton("Zipper"), PatternButton("Square")
+            )
+          ),
+          $("ContextMenuButton",
+            $(go.Panel, "Horizontal",
+              PatternButton("SlashThick"), PatternButton("Sawtooth"), PatternButton("Zipper"), PatternButton("Square")
+            )
+          )
+        ];
+      }
+
       // Create a context menu button for setting a data property with a stroke width value.
       function ThicknessButton(sw, propname) {
         if (!propname) propname = "thickness";
@@ -320,20 +381,107 @@
           });
       }
 
+      /*function CustomPathButton(dash, propname) {
+        if (!propname) propname = "geometryString";
+        return $(go.Shape, "LineH",
+          {
+            width: 24, height: 16, strokeWidth: 2,
+            geometryString: dash,
+            margin: 1, background: "transparent",
+            strokeCap: "square",
+            mouseEnter: (e, shape) => shape.background = "dodgerblue",
+            mouseLeave: (e, shape) => shape.background = "transparent",
+            click: ClickFunction(propname, dash), contextClick: ClickFunction(propname, dash)
+          });
+      }*/
+
       function StrokeOptionsButtons() {  // used by multiple context menus
         return [
           $("ContextMenuButton",
             $(go.Panel, "Horizontal",
-              ThicknessButton(1), ThicknessButton(2), ThicknessButton(3), ThicknessButton(4)
+              ThicknessButton(2), ThicknessButton(4), ThicknessButton(8), ThicknessButton(16)
             )
           ),
           $("ContextMenuButton",
             $(go.Panel, "Horizontal",
-              DashButton(null), DashButton([2, 4]), DashButton([4, 4])
-            )
+              DashButton(null), DashButton([2, 2, 4, 2]), DashButton([4, 4]), DashButton([2, 4])//, CustomPathButton("M0 0 L2 0  2 6  6 6  6 0  8 0")
+            ) 
           )
         ];
       }
+
+      // Conversion functions that make use of the PathPatterns store of pattern Shapes
+      function convertPathPatternToShape(name) {
+        if (!name) return null;
+        return PathPatterns.get(name);
+      }
+
+      function convertPathPatternToColor(name) {
+        var pattobj = convertPathPatternToShape(name);
+        return (pattobj !== null) ? pattobj.stroke : "transparent";
+      }
+
+      // Define a bunch of small Shapes that can be used as values for Shape.pathPattern
+      var PathPatterns = new go.Map();
+
+      function definePathPattern(name, geostr, color, width, cap) {
+        if (typeof name !== 'string' || typeof geostr !== 'string') throw new Error("invalid name or geometry string argument: " + name + " " + geostr);
+        if (color === undefined) color = "black";
+        if (width === undefined) width = 1;
+        if (cap === undefined) cap = "square";
+        PathPatterns.set(name,
+          $(go.Shape,
+            {
+              geometryString: geostr,
+              fill: "transparent",
+              stroke: color,
+              strokeWidth: width,
+              strokeCap: cap
+            }
+          ));
+      }
+
+      definePathPattern("Empty", "");
+      definePathPattern("Single", "M0 0 L1 0");
+      definePathPattern("Double", "M0 0 L1 0 M0 3 L1 3");
+      definePathPattern("Triple", "M0 0 L1 0 M0 3 L1 3 M0 6 L1 6");
+      definePathPattern("DashR", "M0 0 M3 0 L6 0", "red");
+      definePathPattern("DoubleDashR", "M0 0 M3 0 L6 0 M3 3 L6 3", "red");
+      definePathPattern("TripleDashR", "M0 0 M3 0 L6 0 M3 3 L6 3 M3 6 L6 6", "red");
+      definePathPattern("Dash", "M0 0 M3 0 L6 0");
+      definePathPattern("DoubleDash", "M0 0 M3 0 L6 0 M3 3 L6 3");
+      //definePathPattern("TripleDash", "M0 0 M3 0 L6 0 M3 3 L6 3 M3 6 L6 6");
+      definePathPattern("Dot", "M0 0 M4 0 L4.1 0", "black", 2, "round");
+      definePathPattern("DoubleDot", "M0 0 M4 0 L4.1 0 M4 3 L4.1 3", "black", 2, "round");
+      definePathPattern("SingleG", "M0 0 L1 0", "green");
+      definePathPattern("DoubleG", "M0 0 L1 0 M0 3 L1 3", "green");
+      definePathPattern("SingleR", "M0 0 L1 0", "red");
+      definePathPattern("TripleR", "M0 0 L1 0 M0 3 L1 3 M0 6 L1 6", "red");
+      definePathPattern("ZigzagB", "M0 3 L1 0 3 6 4 3", "blue");
+      definePathPattern("ZigzagR", "M0 3 L1 0 3 6 4 3", "red");
+      definePathPattern("BigZigzagR", "M0 4 L2 0 6 8 8 4", "red");
+      definePathPattern("DoubleZigzagB", "M0 3 L1 0 3 6 4 3 M0 9 L1 6 3 12 4 9", "blue");
+      definePathPattern("CrossG", "M0 0 M3 0 M1 0 L1 8", "green");
+      definePathPattern("CrossR", "M0 0 M3 0 M1 0 L1 8", "red");
+      //definePathPattern("Railroad", "M0 2 L3 2 M0 6 L3 6 M1 0 L1 8");  // also == Double & Cross
+      definePathPattern("BackSlash", "M0 3 L2 6 M1 0 L5 6 M4 0 L6 3");
+      definePathPattern("Slash", "M0 3 L2 0 M1 6 L5 0 M4 6 L6 3");
+      definePathPattern("SlashThick", "M0 3 L3 0 M1.5 6 L7.5 0 M6 6 L9 3", "black", 2);
+      definePathPattern("Coil", "M0 0 C2.5 0  5 2.5  5 5  C5 7.5  5 10  2.5 10  C0 10  0 7.5  0 5  C0 2.5  2.5 0  5 0");
+      definePathPattern("Square", "M0 0 M1 0 L7 0 7 6 1 6z");
+      definePathPattern("Circle", "M0 3 A3 3 0 1 0 6 4  A3 3 0 1 0 0 3");
+      definePathPattern("BigCircle", "M0 5 A5 5 0 1 0 10 5  A5 5 0 1 0 0 5");
+      definePathPattern("Triangle", "M0 0 L4 4 0 8z");
+      definePathPattern("Diamond", "M0 4 L4 0 8 4 4 8z");
+      definePathPattern("Dentil", "M0 0 L2 0  2 6  6 6  6 0  8 0");
+      definePathPattern("Greek", "M0 0 L1 0  1 3  0 3  M0 6 L4 6  4 0  8 0  M8 3 L7 3  7 6  8 6");
+      definePathPattern("Seed", "M0 0 A9 9 0 0 0 12 0  A9 9 180 0 0 0 0");
+      definePathPattern("SemiCircle", "M0 0 A4 4 0 0 1 8 0");
+      definePathPattern("BlindHem", "M0 4 L2 4  4 0  6 4  8 4");
+      definePathPattern("Zipper", "M0 4 L1 4 1 0 8 0 8 4 9 4  M0 6 L3 6 3 2 6 2 6 6 9 6");
+      //definePathPattern("Zipper2", "M0 4 L1 4 1 0 8 0 8 4 9 4  M0 7 L3 7 3 3 6 3 6 7 9 7");
+      definePathPattern("Herringbone", "M0 2 L2 4 0 6  M2 0 L4 2  M4 6 L2 8");
+      definePathPattern("Sawtooth", "M0 3 L4 0 2 6 6 3");
 
       // Node context menu
 
@@ -440,20 +588,26 @@
           {
             layerName: "Foreground",
             routing: go.Link.AvoidsNodes, corner: 10,
-            fromShortLength: 10, toShortLength: 15,  // assume arrowhead at "to" end, need to avoid bad appearance when path is thick
+            fromShortLength: 0, toShortLength: 0,  // assume arrowhead at "to" end, need to avoid bad appearance when path is thick
             relinkableFrom: true, relinkableTo: true,
             reshapable: true, resegmentable: true
           },
           new go.Binding("fromSpot", "fromSpot", go.Spot.parse),
           new go.Binding("toSpot", "toSpot", go.Spot.parse),
-          new go.Binding("fromShortLength", "dir", dir => dir >= 1 ? 10 : 0),
-          new go.Binding("toShortLength", "dir", dir => dir >= 1 ? 10 : 0),
+          //new go.Binding("fromShortLength", "dir", dir => dir >= 1 ? 10 : 0),
+          //new go.Binding("toShortLength", "dir", dir => dir >= 1 ? 10 : 0),
+          //new go.Binding("pathPattern", "pattern"),
           new go.Binding("points").makeTwoWay(),  // TwoWay due to user reshaping with LinkReshapingTool
-          
+          //$(go.Shape,  // the link's path shape
+          //  {stroke: "transparent" },
+          //  new go.Binding("stroke", "patt", f => (f === "") ? "red" : "transparent"),
+          //  new go.Binding("pathPattern", "patt", convertPathPatternToShape)),
           $(go.Shape, { strokeWidth: 2 },
             new go.Binding("stroke", "color"),
             new go.Binding("strokeWidth", "thickness"),
+            new go.Binding("pathPattern", "patt", convertPathPatternToShape),
             new go.Binding("strokeDashArray", "dash")),
+          /*
           $(go.Shape, // custom arrowheads to create the lifted effect
             { segmentIndex: 0, segmentOffset: new go.Point(15, 0),
               segmentOrientation: go.Link.OrientAlong,
@@ -487,7 +641,7 @@
             new go.Binding("width", "thickness", t => 7 + (3 * t)),
             new go.Binding("height", "thickness", t => 7 + (3 * t)),
             new go.Binding("segmentOffset", "thickness", t => new go.Point(-15, 4 + (1.5 * t)))
-          ),
+          ),*/
           $(go.TextBlock,
             { alignmentFocus: new go.Spot(0, 1, -4, 0), editable: true },
             new go.Binding("text").makeTwoWay(),  // TwoWay due to user editing with TextEditingTool
@@ -587,11 +741,12 @@
         $("ContextMenu",
           DarkColorButtons(),
           StrokeOptionsButtons(),
-          $("ContextMenuButton",
+          PatternButtons(),
+          /* $("ContextMenuButton",
             $(go.Panel, "Horizontal",
               ArrowButton(0), ArrowButton(1), ArrowButton(2)
             )
-          ),
+          ), */
           $("ContextMenuButton",
             $(go.Panel, "Horizontal",
               $(go.Panel, "Spot",
