@@ -111,6 +111,6 @@ function reroll3(){
             break;
         }
     }
-    document.getElementById("struct3").innerText = name1 + ": "+ s3[r3][0];
+    document.getElementById("struct3").innerText = name3 + ": "+ s3[r3][0];
     document.getElementById("reroll_3").innerText = "Reroll "+ s3[r3][0];
 }
