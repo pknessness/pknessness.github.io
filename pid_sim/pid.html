@@ -150,6 +150,9 @@ function addPlotData(myplot, data){
 function process(){      
   time = (new Date).getTime();
   $("#time").text( time );
+  $("#desired").text( setpoint.toFixed(2) );
+  $("#actual").text( input.toFixed(2) );
+  $("#output").text( output.toFixed(2) );
   if (run) {                        
     noise = (Math.random() - 0.5) * $("#sliderNoise").slider("value");
     //input = Math.sin(time/1000)*40 + noise + output;
@@ -412,7 +415,10 @@ Also, you can adjust the process model by Javascript code below. This simulator 
 <button id="start">Start</button>
 <button id="stop">Stop</button>
 <button id="toggle">PID is ON</button>
-time:<span id="time"></span>
+<!-- time:<span id="time"></span> -->
+Desired:<span id="desired" style="color: #0000FF;"></span>
+Actual:<span id="actual" style="color: #FF0000;"></span>
+Output:<span id="output" style="color: #008f00;"></span>
 
 <!-- <button id="autotune">Auto tune</button>
 tune step <input id="tunestep" type="textbox" size="4" value="50"></input>
@@ -440,7 +446,7 @@ tune loopback (sec) <input id="tuneloopback" type="textbox" size="4" value="20">
   <div style="width:600px" id="sliderSetpoint"></div>
 </div>
 
-<div>
+<div hidden>
     Noise:
   <span id="noise"></span>
   <div style="width:600px" id="sliderNoise"></div>
