@@ -1,4 +1,3 @@
-
 var procs = [
     {key: "week3_assignment2", 
         func: "user.kineticFriction = 1;\n" 
@@ -32,7 +31,7 @@ var procs = [
         + "return user.p;",                             
         sampletime: 100,
         noise: 0,
-        setpoint: 100, 
+        setpoint: 0, 
         Kp: 2,
         Ki: 0.5,
         Kd: 2, 
@@ -103,7 +102,8 @@ var pid = new PID(input, setpoint, Kp, Ki, Kd, 'direct');
 var pidTuner = new PID_ATune();
 
 //ADDED BY ANSHAL JAIN (pknessness)
-var overshot = undefined;
+var overshot = 0;
+var beyondTheBoundary = false;
 var originalspot = 0;
 var prevActual = 0;
 var prevP = undefined;
@@ -152,18 +152,32 @@ function process(){
         prevActual = input;
         input = proc.compute(time, input, noise, output, user);
         
+        if((prevActual < setpoint && input > setpoint) || (prevActual > setpoint && input < setpoint)){
+            beyondTheBoundary = true;
+            console.log(`activated kyoukaiNoKanata`);
+        }
+
         if(setpoint > originalspot){
             if(prevActual > input){
-                if(Math.abs(prevActual - setpoint) > overshot){
+                console.log(`kyoukaiNoKanata ${beyondTheBoundary} os${overshot}`);
+                if(beyondTheBoundary && Math.abs(prevActual - setpoint) > overshot){
+                    console.log(`set overshot`);
+                    beyondTheBoundary = false;
                     overshot = Math.abs(prevActual - setpoint);
-                    $("#time").text( time );
+                    $("#overshot1").text(`kP: ${Kp} kI: ${Ki} kD: ${Kd} max overshot: ${overshot.toFixed(2)}`);
+                    prevP = Kp; prevI = Ki; prevD = Kd;
                 }
                 //console.log(overshot);
             }
         }else if(setpoint < originalspot){
             if(prevActual < input){
-                if(Math.abs(prevActual - setpoint) > overshot){
+                console.log(`kyoukaiNoKanata ${beyondTheBoundary} os${overshot}`);
+                if(beyondTheBoundary && Math.abs(prevActual - setpoint) > overshot){
+                    console.log(`set overshot`);
+                    beyondTheBoundary = false;
                     overshot = Math.abs(prevActual - setpoint);
+                    $("#overshot1").text(`kP: ${Kp} kI: ${Ki} kD: ${Kd} max overshot: ${overshot.toFixed(2)}`);
+                    prevP = Kp; prevI = Ki; prevD = Kd;
                 }
                 //console.log(overshot);
             }
@@ -224,9 +238,25 @@ function processChanged(){
 function setpointChanged(){
     originalspot = setpoint;
     setpoint = $("#sliderSetpoint").slider("value");
-    console.log("setpoint "+setpoint);        
+    // console.log("setpoint "+setpoint);        
     pid.setPoint(setpoint);
-    overshot = undefined;
+    if(Kp != prevP || Ki != prevI || Kd != prevD){
+        // console.log(`${Kp},${prevP} ${Ki},${prevI} ${Kd},${prevD}`);
+        prevP = Kp;
+        prevI = Ki;
+        prevD = Kd;
+        overshot = 0;
+        $("#overshot9").text($("#overshot8").text());
+        $("#overshot8").text($("#overshot7").text());
+        $("#overshot7").text($("#overshot6").text());
+        $("#overshot6").text($("#overshot5").text());
+        $("#overshot5").text($("#overshot4").text());
+        $("#overshot4").text($("#overshot3").text());
+        $("#overshot3").text($("#overshot2").text());
+        $("#overshot2").text($("#overshot1").text());
+        $("#overshot1").text(`kP: ${Kp} kI: ${Ki} kD: ${Kd} max overshot: not yet reachedg`);
+                                
+    }
     updateSliderText();    
 }
 
