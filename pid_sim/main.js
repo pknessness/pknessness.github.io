@@ -184,6 +184,8 @@ var prevP = undefined;
 var prevI = undefined;
 var prevD = undefined;
 
+var stupidDogshit  = new MakeDraw();
+
 
 function initPlot(seriesidx, id, seriesname, myplot, plotcolor, rangemin, rangemax, enumV){
     var series = [];
@@ -282,9 +284,11 @@ function process(){
             output = pid.getOutput();    
         }              
 
+        addPlotData(stupidDogshit, 0);
         addPlotData(plInput, input);
         addPlotData(plSetpoint, setpoint);
         addPlotData(plOutput, output);
+        
     }
     setTimeout(process, sampleTime);      
 }
@@ -426,9 +430,11 @@ $(document).ready(function(){
     });                  
     
     // plots
-    initPlot(0, "plot1", "control input (actual)", plInput, 'rgba(255,0,0,1)', -200,200,0);
-    initPlot(1, "plot1", "control setpoint (desired)", plSetpoint, 'rgba(0,0,255,1)', -200,200,0);
-    initPlot(2, "plot1", "control output (pid out)", plOutput, 'rgba(0,255,0,1)', -200,200,0);
+    initPlot(0, "plot1", "", stupidDogshit, 'rgba(0,255,0,1)', -200,200,1);
+    initPlot(1, "plot1", "control input (actual)", plInput, 'rgba(255,0,0,1)', -200,200,0);
+    initPlot(2, "plot1", "control setpoint (desired)", plSetpoint, 'rgba(0,0,255,1)', -200,200,0);
+    initPlot(3, "plot1", "control output (pid out)", plOutput, 'rgba(0,255,0,1)', -200,200,0);
+    
     
     //$("#ip").val(IP);
     
