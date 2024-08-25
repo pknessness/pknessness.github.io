@@ -47,6 +47,7 @@
     Desired:<span id="desired" style="color: #0000FF;"></span>
     Actual:<span id="actual" style="color: #FF0000;"></span>
     Output:<span id="output" style="color: #008f00;"></span>
+    <button id="testSequenceButton" onclick="testSequence();">Test Sequence</button>
     
     <!-- <button id="autotune">Auto tune</button>
     tune step <input id="tunestep" type="textbox" size="4" value="50"></input>
@@ -58,14 +59,14 @@
         
         <span style="float:left;margin-right:10px">
             Process example:
-            <span style="display:inline-block;width:140px" id="process"></span>
+            <span style="display:inline-block;width:150px" id="process"></span>
             <div style="display:inline-block;width:100px;margin-right:10px" id="sliderProcess"></div>
         </span>  
         
-        <span>  
+        <span hidden>  
             Sample time (ms):
             <span style="display:inline-block;width:40px" id="sampletime"></span>
-            <div style="display:inline-block;width:100px;margin-left:10px" id="sliderSampletime"></div>
+            <div style="display:inline-block;width:100px;margin-left:10px" id="sliderSampletime" ></div>
         </span>
         
         <div>
@@ -123,6 +124,21 @@
             input: last control input (optional)<br>  
             user: custom variable to store long-term data (optional)<br>
             time: current time (ms) (optional)<br>      
+        </div>
+        <br>
+        <div>  
+            Test Sequence Parameters:<br>  
+            <textarea id="testSequence" rows="10" cols="100">
+0MS,-5;
+4000MS,100;
+8000MS,-150;
+12000MS,-180;
+14000MS,50;
+18000MS,0;
+            </textarea>
+            <br>  
+            <b>Test Sequence parameters:<br></b>  
+            [TIME]MS, [POS];<br>      
         </div>
         
         

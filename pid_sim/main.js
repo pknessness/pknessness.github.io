@@ -1,9 +1,9 @@
 var procs = [
     {key: "week3_assignment2", 
-        func: "user.kineticFriction = 1;\n" 
+        func: "user.kineticFriction = 0.5;\n" 
         + "user.frictionCoefficient = 0.05;\n" 
         + "user.inertiaFactor = 0.8;\n" 
-        + "user.randomDisturbance = Math.random() * 0.5;\n" 
+        + "user.randomDisturbance = Math.random() * 0.2;\n" 
         + "\n" 
         + "if (typeof user.v === 'undefined') {\n" 
         + "user.v = 0; \n" 
@@ -31,9 +31,83 @@ var procs = [
         + "return user.p;",                             
         sampletime: 100,
         noise: 0,
-        setpoint: 0, 
+        setpoint: 100, 
+        Kp: 1,
+        Ki: 0,
+        Kd: 0, 
+    },
+    {key: "pid_lecture_example_1", 
+        func: "user.kineticFriction = 0.1;\n" 
+        + "user.frictionCoefficient = 0.01;\n" 
+        + "user.inertiaFactor = 0.8;\n" 
+        + "user.randomDisturbance = Math.random() * 0.05;\n" 
+        + "\n" 
+        + "if (typeof user.v === 'undefined') {\n" 
+        + "user.v = 0; \n" 
+        + "user.a = 0; \n" 
+        + "user.p = 0;\n" 
+        + "user.previousOutput = output;\n" 
+        + "user.randomSeed = Math.random();\n" 
+        + "}\n" 
+        + "\n" 
+        + "if (output > user.kineticFriction) {\n" 
+        + "user.a = output - user.kineticFriction;\n" 
+        + "} else if (output < -user.kineticFriction) {\n" 
+        + "user.a = output + user.kineticFriction;\n" 
+        + "} else {\n" 
+        + "user.a = 0;\n" 
+        + "}\n" 
+        + "\n" 
+        + "user.v = user.v + (user.a - user.frictionCoefficient * user.v * (1 + Math.sin(user.randomSeed * time))) / 50;\n" 
+        + "\n" 
+        + "user.v += user.inertiaFactor * (output - user.previousOutput) / 50;\n" 
+        + "user.v += Math.sin(user.v * time / 100) * user.randomDisturbance;\n" 
+        + "user.p = user.p + user.v;\n" 
+        + "user.previousOutput = output;\n" 
+        + "\n" 
+        + "return user.p;",                             
+        sampletime: 100,
+        noise: 0,
+        setpoint: 100, 
+        Kp: 1,
+        Ki: 0,
+        Kd: 0, 
+    },
+    {key: "pid_lecture_example_2", 
+        func: "user.kineticFriction = 10;\n" 
+        + "user.frictionCoefficient = 20;\n" 
+        + "user.inertiaFactor = 0.8;\n" 
+        + "user.randomDisturbance = Math.random() * 0.05;\n" 
+        + "\n" 
+        + "if (typeof user.v === 'undefined') {\n" 
+        + "user.v = 0; \n" 
+        + "user.a = 0; \n" 
+        + "user.p = 0;\n" 
+        + "user.previousOutput = output;\n" 
+        + "user.randomSeed = Math.random();\n" 
+        + "}\n" 
+        + "\n" 
+        + "if (output > user.kineticFriction) {\n" 
+        + "user.a = output - user.kineticFriction;\n" 
+        + "} else if (output < -user.kineticFriction) {\n" 
+        + "user.a = output + user.kineticFriction;\n" 
+        + "} else {\n" 
+        + "user.a = 0;\n" 
+        + "}\n" 
+        + "\n" 
+        + "user.v = user.v + (user.a - user.frictionCoefficient * user.v * (1 + Math.sin(user.randomSeed * time))) / 50;\n" 
+        + "\n" 
+        + "user.v += user.inertiaFactor * (output - user.previousOutput) / 50;\n" 
+        + "user.v += Math.sin(user.v * time / 100) * user.randomDisturbance;\n" 
+        + "user.p = user.p + user.v;\n" 
+        + "user.previousOutput = output;\n" 
+        + "\n" 
+        + "return user.p;",                             
+        sampletime: 100,
+        noise: 0,
+        setpoint: 100, 
         Kp: 2,
-        Ki: 0.5,
+        Ki: 0,
         Kd: 2, 
     },
     {key: "model", 
@@ -44,7 +118,7 @@ var procs = [
         +"user.theta[30]=output;\n"
         +"for(var i=0;i<49;i++){ user.theta[i] = user.theta[i+1] };\n"             
         +"return (user.kpmodel / user.taup) *(user.theta[0]-user.outputStart) + input*(1-1/user.taup) + (Math.random()-0.5)*0.02",                             
-        sampletime: 100,
+        sampletime: 50,
         noise: 0,
         setpoint: 100, 
         Kp: 2,
@@ -154,12 +228,12 @@ function process(){
         
         if((prevActual < setpoint && input > setpoint) || (prevActual > setpoint && input < setpoint)){
             beyondTheBoundary = true;
-            console.log(`activated kyoukaiNoKanata`);
+            // console.log(`activated kyoukaiNoKanata`);
         }
 
         if(setpoint > originalspot){
             if(prevActual > input){
-                console.log(`kyoukaiNoKanata ${beyondTheBoundary} os${overshot}`);
+                // console.log(`kyoukaiNoKanata ${beyondTheBoundary} os${overshot}`);
                 if(beyondTheBoundary && Math.abs(prevActual - setpoint) > overshot){
                     console.log(`set overshot`);
                     beyondTheBoundary = false;
@@ -171,7 +245,7 @@ function process(){
             }
         }else if(setpoint < originalspot){
             if(prevActual < input){
-                console.log(`kyoukaiNoKanata ${beyondTheBoundary} os${overshot}`);
+                // console.log(`kyoukaiNoKanata ${beyondTheBoundary} os${overshot}`);
                 if(beyondTheBoundary && Math.abs(prevActual - setpoint) > overshot){
                     console.log(`set overshot`);
                     beyondTheBoundary = false;
@@ -438,3 +512,37 @@ $(document).ready(function(){
     
     
 });
+
+function testSequence(){
+    var sequence = document.getElementById("testSequence").value.replaceAll(' ','').replaceAll('\n','').replaceAll('_','').replaceAll(',','').replaceAll('.','').replaceAll('\t','');
+
+    console.log(sequence);
+    x = sequence.split(";")
+    pid.reset();
+    disableButton();
+    t = 0;
+    for(var i = 0; i < x.length; i ++){
+        a = x[i].split("MS");
+        if(a.length == 2){
+            console.log(parseInt(a[0]), parseInt(a[1]));
+            setTimeout(setSetpoint,parseInt(a[0]), parseInt(a[1]));
+            t = a[0];
+        }
+    }
+    setTimeout(enableButton(),parseInt(t));
+}
+
+function setSetpoint(x){
+    console.log(`setting setpoint ${x}`);
+    $( "#sliderSetpoint" ).slider({
+        value: x,                 
+    });
+}
+
+function disableButton(){
+    $("testSequenceButton").prop('disabled', true);
+}
+
+function enableButton(){
+    $("testSequenceButton").prop('disabled', false);
+}

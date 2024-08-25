@@ -33,6 +33,13 @@ PID.prototype.setInput = function(current_value) {
     this.input = current_value;
 };
 
+PID.prototype.reset = function() {
+    this.input = 0;
+    this.ITerm = 0;
+    this.mySetpoint = 0;
+    this.output = 0;
+};
+
 PID.prototype.setPoint = function(current_value) {
     this.mySetpoint = current_value;
     //alert(current_value);
@@ -262,6 +269,8 @@ PID.prototype.getInput = function() {
 PID.prototype.getSetPoint = function() {
     return this.mySetpoint;
 };
+
+
 
 //module.exports = PID;
 
