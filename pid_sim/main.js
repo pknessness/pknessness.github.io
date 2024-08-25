@@ -281,7 +281,7 @@ function process(){
             pid.compute();   
             output = pid.getOutput();    
         }              
-        
+
         addPlotData(plInput, input);
         addPlotData(plSetpoint, setpoint);
         addPlotData(plOutput, output);
@@ -426,7 +426,7 @@ $(document).ready(function(){
     });                  
     
     // plots
-    initPlot(0, "plot1", "control input (actual)", plInput, 'rgba(255,0,0,1)', -200,200,1);
+    initPlot(0, "plot1", "control input (actual)", plInput, 'rgba(255,0,0,1)', -200,200,0);
     initPlot(1, "plot1", "control setpoint (desired)", plSetpoint, 'rgba(0,0,255,1)', -200,200,0);
     initPlot(2, "plot1", "control output (pid out)", plOutput, 'rgba(0,255,0,1)', -200,200,0);
     
