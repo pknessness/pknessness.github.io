@@ -213,8 +213,59 @@ function addPlotData(myplot, data){
     myplot.plot();
 }
 
+function drawMotor(){
+    var canvas = document.getElementById("whee");
+    var ctx = canvas.getContext("2d");
+    
+    var w = $("#whee").width();
+    canvas.width = w;
+    var h = $("#whee").height();
+    canvas.height = h;
 
-function process(){      
+    var r = Math.min(w,h);
+
+    var rad_a = input * Math.PI/180;
+    var rad_d = setpoint * Math.PI/180;
+
+    ctx.beginPath();
+    ctx.arc(w/2,h/2,r*0.4, 0, Math.PI * 2, 1);
+    ctx.closePath();
+    // console.log(`a${w/2} ${h/2} ${Math.min(w,h)*0.4} ${0} ${Math.PI * 2} ${1}`)
+    ctx.fillStyle = "#404040";
+    ctx.fill(); 
+    
+    ctx.beginPath();
+    ctx.moveTo(w/2,h/2);
+    ctx.lineTo(w/2 + Math.cos(rad_d) * r * 0.4,h/2 + Math.sin(rad_d) * r * 0.4);
+    ctx.closePath();
+    ctx.strokeStyle = "#2030d0";
+    ctx.lineWidth = 20;
+    ctx.stroke(); 
+
+    ctx.beginPath();
+    ctx.moveTo(w/2,h/2);
+    ctx.lineTo(w/2 + Math.cos(rad_a) * r * 0.4,h/2 + Math.sin(rad_a) * r * 0.4);
+    ctx.closePath();
+    ctx.strokeStyle = "#d02030";
+    ctx.lineWidth = 20;
+    ctx.stroke(); 
+
+    ctx.beginPath();
+    ctx.arc(w/2,h/2,r*0.12, 0, Math.PI * 2, 1);
+    ctx.closePath();
+    ctx.fillStyle = "#ffffff";
+    ctx.fill(); 
+}
+
+function process(){    
+
+    drawMotor();
+
+    $("#plot1").width(window.innerWidth * 0.55);
+    $("#overshoot").width(window.innerWidth * 0.2);
+    $("#whee").width(window.innerWidth * 0.25);
+    // console.log(window.innerWidth);
+    
     time = (new Date).getTime();
     $("#time").text( time );
     $("#desired").text( setpoint.toFixed(2) );
@@ -332,7 +383,7 @@ function setpointChanged(){
         $("#overshot4").text($("#overshot3").text());
         $("#overshot3").text($("#overshot2").text());
         $("#overshot2").text($("#overshot1").text());
-        $("#overshot1").text(`kP: ${Kp} kI: ${Ki} kD: ${Kd} max overshot: not yet reachedg`);
+        $("#overshot1").text(`kP: ${Kp} kI: ${Ki} kD: ${Kd} max overshot: not yet reached`);
                                 
     }
     updateSliderText();    

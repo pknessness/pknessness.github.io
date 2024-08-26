@@ -871,10 +871,16 @@ table>tbody>tr>* {
 }
 
 .larger-button{
-    width:49%;
+    width:40%;
     height:20%;
     font-size: 20px
 }
+
+.large-button{
+    height:30px;
+    font-size: 20px;
+}
+
 .larger-select{
     height:100%;
     font-size: 13px

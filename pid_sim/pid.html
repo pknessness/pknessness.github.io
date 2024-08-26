@@ -26,8 +26,8 @@
     <br><br>
     On the right you can see a list, that will record and list the maximum overshoot for any given set of PID values that you've tested, so you can track your progress. It is a tad buggy if you move the setpoint around a lot, so keep that in mind. To test a PID, move the setpoint, wait for it to stabilize, and then do so a few more times. This will give you a general sense of the overshoot of a set of PID tunings.
     <div id="plots" style="display: flex">
-        <canvas id="plot1" width="800" height="400"></canvas>   
-        <div id="overshot">
+        <canvas id="plot1" width="700" height="400"></canvas>   
+        <div id="overshot" style="width:200px;">
             <div id="overshot1">1</div> <br>
             <div id="overshot2">2</div> <br>
             <div id="overshot3">3</div> <br>
@@ -38,8 +38,8 @@
             <div id="overshot8">8</div> <br>
             <div id="overshot9">9</div> 
         </div> 
+        <canvas id="whee" width="350" height="350"></canvas>  
     </div>  
-    
     <button id="start">Start</button>
     <button id="stop">Stop</button>
     <button id="toggle">PID is ON</button>
