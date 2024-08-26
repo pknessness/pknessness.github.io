@@ -35,6 +35,8 @@ var procs = [
         Kp: 1,
         Ki: 0,
         Kd: 0, 
+        range: 180,
+        moveType: "pos",
     },
     {key: "pid_lecture_example_1", 
         func: "user.kineticFriction = 0.1;\n" 
@@ -72,6 +74,8 @@ var procs = [
         Kp: 1,
         Ki: 0,
         Kd: 0, 
+        range: 180,
+        moveType: "pos",
     },
     {key: "pid_lecture_example_2", 
         func: "user.kineticFriction = 10;\n" 
@@ -109,48 +113,85 @@ var procs = [
         Kp: 2,
         Ki: 0,
         Kd: 2, 
+        range: 180,
+        moveType: "pos",
     },
-    {key: "model", 
-        func: "if (typeof user.kpmodel === 'undefined'){\n"
-        +"  user.kpmodel=1.5, user.taup=100, user.theta = []; user.outputStart = 5;\n"
-        +"  for(var i=0;i<50;i++){ user.theta[i]=user.outputStart }\n"
-        +"}\n"
-        +"user.theta[30]=output;\n"
-        +"for(var i=0;i<49;i++){ user.theta[i] = user.theta[i+1] };\n"             
-        +"return (user.kpmodel / user.taup) *(user.theta[0]-user.outputStart) + input*(1-1/user.taup) + (Math.random()-0.5)*0.02",                             
-        sampletime: 50,
-        noise: 0,
-        setpoint: 100, 
-        Kp: 2,
-        Ki: 0.5,
-        Kd: 2, 
-    },
-    {key: "sinus", 
-        func: "return (Math.sin(time/1000)-0.5)*50 + noise + output",                 
-        sampletime: 50,
-        setpoint: 50,
-        noise: 0, 
-        Kp: 0.7,
-        Ki: 10,
-        Kd: 0, 
-    },                                                                   
-    {key: "step", 
-        func: "if (time % 5000 < 2500) return 50+output+noise; else return 100+output+noise",                 
+    // {key: "model", 
+    //     func: "if (typeof user.kpmodel === 'undefined'){\n"
+    //     +"  user.kpmodel=1.5, user.taup=100, user.theta = []; user.outputStart = 5;\n"
+    //     +"  for(var i=0;i<50;i++){ user.theta[i]=user.outputStart }\n"
+    //     +"}\n"
+    //     +"user.theta[30]=output;\n"
+    //     +"for(var i=0;i<49;i++){ user.theta[i] = user.theta[i+1] };\n"             
+    //     +"return (user.kpmodel / user.taup) *(user.theta[0]-user.outputStart) + input*(1-1/user.taup) + (Math.random()-0.5)*0.02",                             
+    //     sampletime: 50,
+    //     noise: 0,
+    //     setpoint: 100, 
+    //     Kp: 2,
+    //     Ki: 0.5,
+    //     Kd: 2, 
+    // },
+    // {key: "sinus", 
+    //     func: "return (Math.sin(time/1000)-0.5)*50 + noise + output",                 
+    //     sampletime: 50,
+    //     setpoint: 50,
+    //     noise: 0, 
+    //     Kp: 0.7,
+    //     Ki: 10,
+    //     Kd: 0, 
+    // },                                                                   
+    // {key: "step", 
+    //     func: "if (time % 5000 < 2500) return 50+output+noise; else return 100+output+noise",                 
+    //     sampletime: 50,
+    //     setpoint: 100,
+    //     noise: 0, 
+    //     Kp: 0.1,
+    //     Ki: 10,
+    //     Kd: 0, 
+    // },
+    // {key: "motorspeed", 
+    //     func: "if (Math.abs(output) > 20) return output-20*Math.sign(output)+noise; else return 0",                 
+    //     sampletime: 50,
+    //     setpoint: 100,
+    //     noise: 0, 
+    //     Kp: 0.1,
+    //     Ki: 10,
+    //     Kd: 0, 
+    // },
+    {key: "flywheel_velocity", 
+        func: "user.kineticFriction = 0.5;\n"
+        + "user.frictionCoefficient = 0.05;\n"
+        + "user.inertiaFactor = 0.8;\n"
+        + "\n"
+        + "if (typeof user.v === 'undefined') {\n"
+        + "user.v = 0; \n"
+        + "user.a = 0; \n"
+        + "user.previousOutput = output;\n"
+        + "user.randomSeed = Math.random();\n"
+        + "}\n"
+        + "\n"
+        + "if (output > user.kineticFriction) {\n"
+        + "user.a = output - user.kineticFriction;\n"
+        + "} else if (output < -user.kineticFriction) {\n"
+        + "user.a = output + user.kineticFriction;\n"
+        + "} else {\n"
+        + "user.a = 0;\n"
+        + "}\n"
+        + "\n"
+        + "user.v = user.v + (user.a - user.frictionCoefficient * user.v * (1 + Math.sin(user.randomSeed * time))) / 5;\n"
+        + "\n"
+        + "user.v += user.inertiaFactor * (output - user.previousOutput) / 5;\n"
+        + "user.previousOutput = output;\n"
+        + "\n"
+        + "return user.v;\n",                 
         sampletime: 50,
         setpoint: 100,
         noise: 0, 
         Kp: 0.1,
         Ki: 10,
         Kd: 0, 
-    },
-    {key: "motorspeed", 
-        func: "if (Math.abs(output) > 20) return output-20*Math.sign(output)+noise; else return 0",                 
-        sampletime: 50,
-        setpoint: 100,
-        noise: 0, 
-        Kp: 0.1,
-        Ki: 10,
-        Kd: 0, 
+        range: 150,
+        moveType: "vel",
     },
 ];
 
@@ -183,6 +224,11 @@ var prevActual = 0;
 var prevP = undefined;
 var prevI = undefined;
 var prevD = undefined;
+
+var prevT = 0;
+
+var rad_a = 0;
+var rad_d = 0;
 
 var stupidDogshit  = new MakeDraw();
 
@@ -224,8 +270,22 @@ function drawMotor(){
 
     var r = Math.min(w,h);
 
-    var rad_a = input * Math.PI/180;
-    var rad_d = setpoint * Math.PI/180;
+    var model = procs[ $("#sliderProcess").slider("value") ];
+
+    var curT = Date.now();
+    var dt = curT - prevT;
+    prevT = curT;
+
+    console.log(model.moveType);
+
+    if(model.moveType != "vel" ){
+        rad_a = input * Math.PI/180;
+        rad_d = setpoint * Math.PI/180;
+    }else{
+        rad_a += ((input/60.0)/1000 * dt) * Math.PI * 2;
+        rad_d = undefined;
+    }
+    // console.log(`mod:${model}`);
 
     ctx.beginPath();
     ctx.arc(w/2,h/2,r*0.4, 0, Math.PI * 2, 1);
@@ -234,14 +294,15 @@ function drawMotor(){
     ctx.fillStyle = "#404040";
     ctx.fill(); 
     
-    ctx.beginPath();
-    ctx.moveTo(w/2,h/2);
-    ctx.lineTo(w/2 + Math.cos(rad_d) * r * 0.4,h/2 + Math.sin(rad_d) * r * 0.4);
-    ctx.closePath();
-    ctx.strokeStyle = "#2030d0";
-    ctx.lineWidth = 20;
-    ctx.stroke(); 
-
+    if(rad_d != undefined){
+        ctx.beginPath();
+        ctx.moveTo(w/2,h/2);
+        ctx.lineTo(w/2 + Math.cos(rad_d) * r * 0.4,h/2 + Math.sin(rad_d) * r * 0.4);
+        ctx.closePath();
+        ctx.strokeStyle = "#2030d0";
+        ctx.lineWidth = 20;
+        ctx.stroke(); 
+    }
     ctx.beginPath();
     ctx.moveTo(w/2,h/2);
     ctx.lineTo(w/2 + Math.cos(rad_a) * r * 0.4,h/2 + Math.sin(rad_a) * r * 0.4);
@@ -357,6 +418,11 @@ function processChanged(){
     $("#sliderKp").slider("value", proc.Kp);
     $("#sliderKi").slider("value", proc.Ki);
     $("#sliderKd").slider("value", proc.Kd);
+    $("#sliderKd").slider("value", proc.Kd);
+    $( "#sliderSetpoint" ).slider({
+        min: -proc.range,
+        max: proc.range,                  
+    });
     //$("#processFunc").text(proc.func);
     var func = document.getElementById("processFunc");
     func.value = proc.func; 

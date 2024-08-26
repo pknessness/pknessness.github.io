@@ -68,6 +68,9 @@ PID.prototype.compute = function() {
         // Compute all the working error variables
         var input = this.input;
         var error = this.mySetpoint - input;
+        if(this.ki == 0){
+            this.ITerm = 0;
+        }
         this.ITerm += (this.ki * error);
         var dInput = input - this.lastInput;
         // Compute PID Output
