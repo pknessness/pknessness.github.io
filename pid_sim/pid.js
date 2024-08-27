@@ -18,6 +18,7 @@ var PID = function(Input, Setpoint, Kp, Ki, Kd, ControllerDirection) {
     this.setTunings(Kp, Ki, Kd);
     this.setControllerDirection(ControllerDirection);
     this.lastTime = this.millis() - this.SampleTime;
+    this.Icap = 0;
 
     this.ITerm = 0;
     this.myOutput = 0;
@@ -72,6 +73,15 @@ PID.prototype.compute = function() {
             this.ITerm = 0;
         }
         this.ITerm += (this.ki * error);
+
+        if(this.Icap != 0){
+            if(this.ITerm < 0 && this.ITerm < -this.Icap){
+                this.ITerm = -this.Icap;
+            }else if(this.ITerm > 0 && this.ITerm > this.Icap){
+                this.ITerm = this.Icap;
+            }
+        }
+
         var dInput = input - this.lastInput;
         // Compute PID Output
         var output = (this.kp * error + this.ITerm - this.kd * dInput) * this.setDirection;
@@ -115,6 +125,20 @@ PID.prototype.setTunings = function(Kp, Ki, Kd) {
     this.kp = Kp;
     this.ki = Ki * this.SampleTimeInSec;
     this.kd = Kd / this.SampleTimeInSec;
+};
+
+/**
+ * SetIcap(...)
+ * This function allows the controller's integral cap to be adjusted. 
+ * it's called automatically from the constructor, but tunings can also
+ * be adjusted on the fly during normal operation
+ */
+PID.prototype.setIcap = function(Icap) {
+    if (Icap < 0) {
+        return;
+    }
+
+    this.Icap = Icap;
 };
 
 /**

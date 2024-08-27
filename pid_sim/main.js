@@ -34,7 +34,8 @@ var procs = [
         setpoint: 100, 
         Kp: 1,
         Ki: 0,
-        Kd: 0, 
+        Kd: 0,  
+        Icap: 0,
         range: 180,
         moveType: "pos",
     },
@@ -71,9 +72,10 @@ var procs = [
         sampletime: 100,
         noise: 0,
         setpoint: 100, 
-        Kp: 1,
+        Kp: 2,
         Ki: 0,
-        Kd: 0, 
+        Kd: 0,  
+        Icap: 0,
         range: 180,
         moveType: "pos",
     },
@@ -113,6 +115,7 @@ var procs = [
         Kp: 2,
         Ki: 0,
         Kd: 2, 
+        Icap: 0,
         range: 180,
         moveType: "pos",
     },
@@ -189,7 +192,8 @@ var procs = [
         noise: 0, 
         Kp: 1,
         Ki: 0,
-        Kd: 0, 
+        Kd: 0,  
+        Icap: 0,
         range: 150,
         moveType: "vel",
     },
@@ -226,6 +230,8 @@ var prevI = undefined;
 var prevD = undefined;
 
 var prevT = 0;
+
+var Icap = 0;
 
 var rad_a = 0;
 var rad_d = 0;
@@ -418,7 +424,7 @@ function processChanged(){
     $("#sliderKp").slider("value", proc.Kp);
     $("#sliderKi").slider("value", proc.Ki);
     $("#sliderKd").slider("value", proc.Kd);
-    $("#sliderKd").slider("value", proc.Kd);
+    $("#sliderIcap").slider("value", proc.Icap);
     $( "#sliderSetpoint" ).slider({
         min: -proc.range,
         max: proc.range,                  
@@ -459,8 +465,10 @@ function tuningsChanged(){
     Kp  = $("#sliderKp").slider("value");    
     Ki  = $("#sliderKi").slider("value");
     Kd  = $("#sliderKd").slider("value");
+    Icap  = $("#sliderIcap").slider("value");
     console.log("tunings "+Kp+","+Ki+","+Kd);   
     pid.setTunings(Kp, Ki, Kd);
+    pid.setIcap(Icap);
     updateSliderText();   
 }
 
@@ -486,6 +494,7 @@ function updateSliderText(){
     $("#kp").text( $("#sliderKp").slider("value") );
     $("#ki").text( $("#sliderKi").slider("value") );
     $("#kd").text( $("#sliderKd").slider("value") );  
+    $("#icap").text( $("#sliderIcap").slider("value") );  
 }
 
 function autoTuningChanged(){
@@ -613,6 +622,15 @@ $(document).ready(function(){
         min: 0,
         max: 5,
         step: 0.01,
+        value: 0,
+        slide: function( event, ui ) { tuningsChanged(); }, 
+        change:  function( event, ui ) { tuningsChanged(); },                  
+    });
+
+    $( "#sliderIcap" ).slider({
+        min: 0,
+        max: 300,
+        step: 1,
         value: 0,
         slide: function( event, ui ) { tuningsChanged(); }, 
         change:  function( event, ui ) { tuningsChanged(); },                  
