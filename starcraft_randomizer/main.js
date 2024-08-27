@@ -101,9 +101,9 @@ function reroll2(){
         if(groundAtk != 0 && airAtk != 0){
             break;
         }
-    }
-    document.getElementById("struct2_l").innerText = name1;
-    document.getElementById("struct2").innerText = s1[r1][0];
+    }   
+    document.getElementById("struct2_l").innerText = name2;
+    document.getElementById("struct2").innerText = s2[r2][0];
     document.getElementById("reroll_2").innerText = "Reroll "+ s2[r2][0];
 }
 
@@ -119,7 +119,7 @@ function reroll3(){
             break;
         }
     }
-    document.getElementById("struct3_l").innerText = name1;
-    document.getElementById("struct3").innerText = s1[r1][0];
+    document.getElementById("struct3_l").innerText = name3;
+    document.getElementById("struct3").innerText = s3[r3][0];
     document.getElementById("reroll_3").innerText = "Reroll "+ s3[r3][0];
 }
