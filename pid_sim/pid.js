@@ -18,7 +18,10 @@ var PID = function(Input, Setpoint, Kp, Ki, Kd, ControllerDirection) {
     this.setTunings(Kp, Ki, Kd);
     this.setControllerDirection(ControllerDirection);
     this.lastTime = this.millis() - this.SampleTime;
+
+    this.user = new Object();
     this.Icap = 0;
+    this.FF = undefined;
 
     this.ITerm = 0;
     this.myOutput = 0;
@@ -51,6 +54,11 @@ PID.prototype.millis = function() {
     return d.getTime();
 };
 
+PID.prototype.setFF = function(FF){
+    this.FF = FF;
+    console.log(`type of ff ${typeof FF}`);
+}
+
 /**
  * Compute()
  * This, as they say, is where the magic happens.  this function should be called
@@ -82,9 +90,15 @@ PID.prototype.compute = function() {
             }
         }
 
+        var feed = 0;
+        if(this.FF != undefined){
+            feed = this.FF(this.input,this.mySetpoint,this.user);
+            console.log(`Feed ${feed}`);
+        }
+
         var dInput = input - this.lastInput;
         // Compute PID Output
-        var output = (this.kp * error + this.ITerm - this.kd * dInput) * this.setDirection;
+        var output = (this.kp * error + this.ITerm - this.kd * dInput + feed) * this.setDirection;
 
         if (output > this.outMax) {
             this.ITerm -= (output - this.outMax);

@@ -38,8 +38,9 @@ var procs = [
         Icap: 0,
         range: 180,
         moveType: "pos",
+        ff: "",
     },
-    {key: "pid_lecture_example_1", 
+    {key: "pid_lecture_example_1_basic", 
         func: "user.kineticFriction = 0.1;\n" 
         + "user.frictionCoefficient = 0.01;\n" 
         + "user.inertiaFactor = 0.8;\n" 
@@ -78,8 +79,9 @@ var procs = [
         Icap: 0,
         range: 180,
         moveType: "pos",
+        ff: "",
     },
-    {key: "pid_lecture_example_2", 
+    {key: "pid_lecture_example_2_friction", 
         func: "user.kineticFriction = 10;\n" 
         + "user.frictionCoefficient = 20;\n" 
         + "user.inertiaFactor = 0.8;\n" 
@@ -118,6 +120,53 @@ var procs = [
         Icap: 0,
         range: 180,
         moveType: "pos",
+        ff: "",
+    },
+    {key: "pid_lecture_example_3_imbalanced", 
+        func: "user.kineticFriction = 4;\n" 
+        + "user.frictionCoefficient = 1;\n" 
+        + "user.inertiaFactor = 0.8;\n" 
+        + "user.randomDisturbance = Math.random() * 0.05;\n" 
+        + "user.imbalancedGrav = 40;\n" 
+        + "\n" 
+        + "if (typeof user.v === 'undefined') {\n" 
+        + "user.v = 0; \n" 
+        + "user.a = 0; \n" 
+        + "user.p = 0;\n" 
+        + "user.previousOutput = output;\n" 
+        + "user.randomSeed = Math.random();\n" 
+        + "}\n" 
+        + "\n" 
+        + "if (output > user.kineticFriction) {\n" 
+        + "user.a = output - user.kineticFriction;\n" 
+        + "} else if (output < -user.kineticFriction) {\n" 
+        + "user.a = output + user.kineticFriction;\n" 
+        + "} else {\n" 
+        + "user.a = 0;\n" 
+        + "}\n" 
+        + "user.a += Math.cos(input * Math.PI/180) * user.imbalancedGrav;\n" 
+        + "user.v = user.v + (user.a - user.frictionCoefficient * user.v * (1 + Math.sin(user.randomSeed * time))) / 50;\n" 
+        + "\n" 
+        + "user.v += user.inertiaFactor * (output - user.previousOutput) / 50;\n" 
+        + "user.v += Math.sin(user.v * time / 100) * user.randomDisturbance;\n" 
+        + "user.p = user.p + user.v;\n" 
+        + "if(user.p > 60)user.p = 60;\n" 
+        + "if(user.p < -90)user.p = -90;\n"
+        + "user.previousOutput = output;\n" 
+        + "\n" 
+        + "return user.p;",                             
+        sampletime: 100,
+        noise: 0,
+        setpoint: 30, 
+        Kp: 2,
+        Ki: 0,
+        Kd: 2, 
+        Icap: 0,
+        range: 55,
+        upbound: -90,
+        lowbound: 60,
+        moveType: "pos",
+        ff: "return -40 * Math.cos(input * Math.PI / 180);",
     },
     // {key: "model", 
     //     func: "if (typeof user.kpmodel === 'undefined'){\n"
@@ -196,6 +245,7 @@ var procs = [
         Icap: 0,
         range: 150,
         moveType: "vel",
+        ff: "",
     },
 ];
 
@@ -282,7 +332,7 @@ function drawMotor(){
     var dt = curT - prevT;
     prevT = curT;
 
-    console.log(model.moveType);
+    // console.log(model.moveType);
 
     if(model.moveType != "vel" ){
         rad_a = input * Math.PI/180;
@@ -317,6 +367,29 @@ function drawMotor(){
     ctx.lineWidth = 20;
     ctx.stroke(); 
 
+    if(model.upbound != undefined){
+        var up_rad = model.upbound * Math.PI/180;
+        ctx.beginPath();
+        ctx.moveTo(w/2,h/2);
+        ctx.lineTo(w/2 + Math.cos(up_rad) * r * 0.4,h/2 + Math.sin(up_rad) * r * 0.4);
+        ctx.closePath();
+        ctx.strokeStyle = "#30d020";
+        ctx.lineWidth = 3;
+        ctx.stroke(); 
+    }
+    if(model.lowbound != undefined){
+        var low_rad = model.lowbound * Math.PI/180;
+        ctx.beginPath();
+        ctx.moveTo(w/2,h/2);
+        ctx.lineTo(w/2 + Math.cos(low_rad) * r * 0.4,h/2 + Math.sin(low_rad) * r * 0.4);
+        ctx.closePath();
+        ctx.strokeStyle = "#30d020";
+        ctx.lineWidth = 3;
+        ctx.stroke(); 
+    }
+
+    
+
     ctx.beginPath();
     ctx.arc(w/2,h/2,r*0.12, 0, Math.PI * 2, 1);
     ctx.closePath();
@@ -341,7 +414,7 @@ function process(){
     
     
     if (run) {                        
-        noise = (Math.random() - 0.5) * $("#sliderNoise").slider("value");
+        // noise = (Math.random() - 0.5) * $("#sliderNoise").slider("value");
         //input = Math.sin(time/1000)*40 + noise + output;
         prevActual = input;
         input = proc.compute(time, input, noise, output, user);
@@ -425,11 +498,18 @@ function processChanged(){
     $("#sliderKi").slider("value", proc.Ki);
     $("#sliderKd").slider("value", proc.Kd);
     $("#sliderIcap").slider("value", proc.Icap);
+
     $( "#sliderSetpoint" ).slider({
         min: -proc.range,
         max: proc.range,                  
     });
+
+    var ff = document.getElementById("ffFunc");
+    ff.value = proc.ff;
+    ffFuncChanged();
+
     //$("#processFunc").text(proc.func);
+    
     var func = document.getElementById("processFunc");
     func.value = proc.func; 
     processFuncChanged();    
@@ -484,6 +564,13 @@ function processFuncChanged(){
     console.log("func: "+func);
     if (func == "") func ="return 0"; 
     proc.compute = new Function("time", "input", "noise", "output", "user", func);   
+}
+
+function ffFuncChanged(){  
+    var func = $("#ffFunc").val();
+    console.log("func: "+func);
+    if (func == "") func ="return 0"; 
+    pid.setFF(new Function("input", "setpoint", "user", func));   
 }
 
 function updateSliderText(){
@@ -638,6 +725,10 @@ $(document).ready(function(){
     
     $("#apply").click(function(){      
         processFuncChanged();                                                           
+    });
+
+    $("#applyFF").click(function(){      
+        ffFuncChanged();                                                           
     });
     
     pid.setOutputLimits(-1000, 1000);    

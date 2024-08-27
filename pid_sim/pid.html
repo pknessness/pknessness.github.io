@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     
     <link rel="stylesheet" href="jquery-ui.css">
+    <link rel="stylesheet" href="stylesheet.css">
     <style>
     </style>
     
@@ -16,8 +17,6 @@
     <script src="main.js"></script>
 </head>
 <body>
-    This is NOT OF MY CREATION, this is a slight modification of an amazing program, and you can find that at https://www.grauonline.de/alexwww/ardumower/pid/pid.html. It has been modified by Anshal Jain (pknessness). Credit goes to the original creators, I'm just modifing it to better fit my needs.
-    <br><br>
     This PID control simulator allows you to try out a PID controller interactively by adjusting the tuning parameters in realtime.
     Also, you can adjust the process model by Javascript code below. This simulator was developed by porting the 
     <a href="https://github.com/br3ttb/Arduino-PID-Library">Arduino PID library</a> and the  
@@ -59,7 +58,7 @@
         
         <span style="float:left;margin-right:10px">
             Process example:
-            <span style="display:inline-block;width:150px" id="process"></span>
+            <span style="display:inline-block;width:250px" id="process"></span>
             <div style="display:inline-block;width:100px;margin-right:10px" id="sliderProcess"></div>
         </span>  
         
@@ -69,42 +68,52 @@
             <div style="display:inline-block;width:100px;margin-left:10px" id="sliderSampletime" ></div>
         </span>
         
-        <div>
-            Setpoint:
-            <span id="setpoint"></span>
-            <div style="width:600px" id="sliderSetpoint"></div>
-        </div>
-        
-        <div hidden>
-            Noise:
-            <span id="noise"></span>
-            <div style="width:600px" id="sliderNoise"></div>
-        </div>
-        
-        <div>
-            Kp (proportional gain):
-            <span id="kp"></span>
-            <div style="width:600px" id="sliderKp"></div>
-        </div>
-        
-        <div>
-            Ki (integral gain):
-            <span id="ki"></span>
-            <div style="width:600px" id="sliderKi"></div>
-        </div>
-        
-        <div>
-            Kd (derivative gain):
-            <span id="kd"></span>
-            <div style="width:600px" id="sliderKd"></div>
-        </div>
+        <div class="row">
+            <div class="column">
+                <div>
+                    Setpoint:
+                    <span id="setpoint"></span>
+                    <div style="width:95%" id="sliderSetpoint"></div>
+                </div>
+                
+                <div hidden>
+                    Noise:
+                    <span id="noise"></span>
+                    <div style="width:95%" id="sliderNoise"></div>
+                </div>
+                
+                <div>
+                    Kp (proportional gain):
+                    <span id="kp"></span>
+                    <div style="width:95%" id="sliderKp"></div>
+                </div>
+                
+                <div>
+                    Ki (integral gain):
+                    <span id="ki"></span>
+                    <div style="width:95%" id="sliderKi"></div>
+                </div>
+                
+                <div>
+                    Kd (derivative gain):
+                    <span id="kd"></span>
+                    <div style="width:95%" id="sliderKd"></div>
+                </div>
 
-        <div>
-            I cap (Maximum of the I component):
-            <span id="icap"></span>
-            <div style="width:600px" id="sliderIcap"></div>
+                <div>
+                    I cap (Maximum of the I component):
+                    <span id="icap"></span>
+                    <div style="width:95%" id="sliderIcap"></div>
+                </div>
+                <br>
+                Feed Forward (model): control input = function(input, setpoint, user): <br>
+                <textarea id="ffFunc" rows="3" style="width:95%"></textarea> <br>
+                <button id="applyFF">Apply</button>
+            </div>
+            <div class="column">
+                DIV
+            </div>
         </div>
-        
         <br>
         
         
@@ -119,14 +128,13 @@
         </p>
         
         <div>  
-            Process function (model): control input = function(time, input, noise, output, user):<br>  
+            Process function (model): control input = function(time, input, output, user):<br>  
             <textarea id="processFunc" rows="10" cols="100"></textarea>
             <button id="apply">Apply</button>
             <br>  
             <b>Process function parameters:<br></b>  
             output: control output (PID OUTPUT)<br>
             function return value: control input<br>
-            noise: user-defined process noise<br>
             input: last control input (optional)<br>  
             user: custom variable to store long-term data (optional)<br>
             time: current time (ms) (optional)<br>      
@@ -153,7 +161,7 @@
             <li><a href="https://github.com/br3ttb/Arduino-PID-Library">Arduino-PID-Library</a></li>
             <li><a href="https://github.com/br3ttb/Arduino-PID-AutoTune-Library">Arduino-PID-AutoTune-Library</a></li>
         </ul>  
-        
+        This is NOT OF MY CREATION, this is a modification of an amazing program, and you can find that at <a href="https://www.grauonline.de/alexwww/ardumower/pid/pid.html">https://www.grauonline.de/alexwww/ardumower/pid/pid.html</a>. It has been modified by Anshal Jain (pknessness). Credit goes to the original creators, I'm just modifing it to better fit my needs and add features that I think are useful.
         <br>
         <br>
         <br> 
