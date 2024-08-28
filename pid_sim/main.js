@@ -21,7 +21,7 @@ var procs = [
         + "user.a = 0;\n" 
         + "}\n" 
         + "\n" 
-        + "user.v = user.v + (user.a - user.frictionCoefficient * user.v * (1 + Math.sin(user.randomSeed * time))) / 50;\n" 
+        + "user.v = user.v + (user.a - user.frictionCoefficient * user.v) / 50;\n" 
         + "\n" 
         + "user.v += user.inertiaFactor * (output - user.previousOutput) / 50;\n" 
         + "user.v += Math.sin(user.v * time / 100) * user.randomDisturbance;\n" 
@@ -62,7 +62,7 @@ var procs = [
         + "user.a = 0;\n" 
         + "}\n" 
         + "\n" 
-        + "user.v = user.v + (user.a - user.frictionCoefficient * user.v * (1 + Math.sin(user.randomSeed * time))) / 50;\n" 
+        + "user.v = user.v + (user.a - user.frictionCoefficient * user.v) / 50;\n" 
         + "\n" 
         + "user.v += user.inertiaFactor * (output - user.previousOutput) / 50;\n" 
         + "user.v += Math.sin(user.v * time / 100) * user.randomDisturbance;\n" 
@@ -103,7 +103,7 @@ var procs = [
         + "user.a = 0;\n" 
         + "}\n" 
         + "\n" 
-        + "user.v = user.v + (user.a - user.frictionCoefficient * user.v * (1 + Math.sin(user.randomSeed * time))) / 50;\n" 
+        + "user.v = user.v + (user.a - user.frictionCoefficient * user.v) / 50;\n" 
         + "\n" 
         + "user.v += user.inertiaFactor * (output - user.previousOutput) / 50;\n" 
         + "user.v += Math.sin(user.v * time / 100) * user.randomDisturbance;\n" 
@@ -145,9 +145,9 @@ var procs = [
         + "user.a = 0;\n" 
         + "}\n" 
         + "user.a += Math.cos(input * Math.PI/180) * user.imbalancedGrav;\n" 
-        + "user.v = user.v + (user.a - user.frictionCoefficient * user.v * (1 + Math.sin(user.randomSeed * time))) / 50;\n" 
+        + "user.v = user.v + (user.a - user.frictionCoefficient * user.v) / 20;\n" 
         + "\n" 
-        + "user.v += user.inertiaFactor * (output - user.previousOutput) / 50;\n" 
+        + "user.v += user.inertiaFactor * (output - user.previousOutput) / 20;\n" 
         + "user.v += Math.sin(user.v * time / 100) * user.randomDisturbance;\n" 
         + "user.p = user.p + user.v;\n" 
         + "if(user.p > 60)user.p = 60;\n" 
@@ -230,7 +230,7 @@ var procs = [
         + "user.a = 0;\n"
         + "}\n"
         + "\n"
-        + "user.v = user.v + (user.a - user.frictionCoefficient * user.v * (1 + Math.sin(user.randomSeed * time))) / 5;\n"
+        + "user.v = user.v + (user.a - user.frictionCoefficient * user.v) / 5;\n"
         + "\n"
         + "user.v += user.inertiaFactor * (output - user.previousOutput) / 5;\n"
         + "user.previousOutput = output;\n"
@@ -509,7 +509,7 @@ function processChanged(){
     ffFuncChanged();
 
     //$("#processFunc").text(proc.func);
-    
+
     var func = document.getElementById("processFunc");
     func.value = proc.func; 
     processFuncChanged();    
