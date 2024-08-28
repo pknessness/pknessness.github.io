@@ -25,6 +25,11 @@ var PID = function(Input, Setpoint, Kp, Ki, Kd, ControllerDirection) {
 
     this.ITerm = 0;
     this.myOutput = 0;
+
+    this.pcomp = 0;
+    this.icomp = 0;
+    this.dcomp = 0;
+    this.fcomp = 0;
 };
 
 // Constants for backward compatibility
@@ -98,7 +103,11 @@ PID.prototype.compute = function() {
 
         var dInput = input - this.lastInput;
         // Compute PID Output
-        var output = (this.kp * error + this.ITerm - this.kd * dInput + feed) * this.setDirection;
+        this.pcomp = this.kp * error;
+        this.icomp = this.ITerm;
+        this.dcomp = - this.kd * dInput;
+        this.fcomp = feed;
+        var output = (this.pcomp + this.icomp + this.dcomp + this.fcomp) * this.setDirection;
 
         if (output > this.outMax) {
             this.ITerm -= (output - this.outMax);

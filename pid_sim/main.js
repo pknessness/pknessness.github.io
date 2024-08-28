@@ -264,9 +264,9 @@ var run = false;
 var control = true;
 var autoTuning = false;
 var noise = 0;
-var Kp = 0.8;
-var Ki = 0.8;
-var Kd = 0.001;
+var Kp = 1;
+var Ki = 0;
+var Kd = 0;
 var pid = new PID(input, setpoint, Kp, Ki, Kd, 'direct');
 var pidTuner = new PID_ATune();
 
@@ -399,7 +399,7 @@ function drawMotor(){
     ctx.beginPath();
     ctx.arc(w/2,h/2,r*0.12, 0, Math.PI * 2, 1);
     ctx.closePath();
-    ctx.fillStyle = "#ffffff";
+    ctx.fillStyle = "#C0C0C0";
     ctx.fill(); 
 }
 
@@ -434,7 +434,7 @@ function process(){
             if(prevActual > input){
                 // console.log(`kyoukaiNoKanata ${beyondTheBoundary} os${overshot}`);
                 if(beyondTheBoundary && Math.abs(prevActual - setpoint) > overshot){
-                    console.log(`set overshot`);
+                    // console.log(`set overshot`);
                     beyondTheBoundary = false;
                     overshot = Math.abs(prevActual - setpoint);
                     $("#overshot1").text(`kP: ${Kp} kI: ${Ki} kD: ${Kd} max overshot: ${overshot.toFixed(2)}`);
@@ -446,7 +446,7 @@ function process(){
             if(prevActual < input){
                 // console.log(`kyoukaiNoKanata ${beyondTheBoundary} os${overshot}`);
                 if(beyondTheBoundary && Math.abs(prevActual - setpoint) > overshot){
-                    console.log(`set overshot`);
+                    // console.log(`set overshot`);
                     beyondTheBoundary = false;
                     overshot = Math.abs(prevActual - setpoint);
                     $("#overshot1").text(`kP: ${Kp} kI: ${Ki} kD: ${Kd} max overshot: ${overshot.toFixed(2)}`);
@@ -458,7 +458,12 @@ function process(){
         
         pid.setInput(input);
         pid.compute();   
-        output = pid.getOutput();             
+        output = pid.getOutput();  
+        document.getElementById("pcomp").innerText = pid.pcomp.toFixed(2);
+        document.getElementById("icomp").innerText = pid.icomp.toFixed(2);
+        document.getElementById("dcomp").innerText = pid.dcomp.toFixed(2);
+        document.getElementById("fcomp").innerText = pid.fcomp.toFixed(2);
+        // console.log(pid.pcomp);           
 
         addPlotData(stupidDogshit, 0);
         addPlotData(plInput, input);
@@ -479,6 +484,7 @@ function processChanged(){
     // $("#sliderSampletime").slider("value", proc.sampletime);
     sampleTime = proc.sampletime;
     sSetpoint.value = proc.setpoint;
+    setpointChanged();
     // $("#sliderNoise").slider("value", proc.noise);
     sKp.value = proc.Kp;
     sKi.value = proc.Ki;
@@ -607,6 +613,33 @@ function stop(){
 
 
 $(document).ready(function(){
+    katex.render("u(t) = k_pe(t) + k_i \\int{e(t)dt} + k_d\\frac{de(t)}{dt} + FF()", document.getElementById("equation"), {
+        throwOnError: false
+    });
+    katex.render("u(t)", document.getElementById("ut"), {
+        throwOnError: false
+    });
+    katex.render("u_p(t) =", document.getElementById("up_l"), {
+        throwOnError: false
+    });
+    katex.render("u_i(t) =", document.getElementById("ui_l"), {
+        throwOnError: false
+    });
+    katex.render("u_i(t)", document.getElementById("ui_2"), {
+        throwOnError: false
+    });
+    katex.render("u_d(t) =", document.getElementById("ud_l"), {
+        throwOnError: false
+    });
+    katex.render("u_p(t) = k_pe(t)", document.getElementById("up_full"), {
+        throwOnError: false
+    });
+    katex.render("u_i(t) = k_i \\int{e(t)dt}", document.getElementById("ui_full"), {
+        throwOnError: false
+    });
+    katex.render("u_d(t) = k_d\\frac{de(t)}{dt}", document.getElementById("ud_full"), {
+        throwOnError: false
+    });
     // buttons
     $("#start").click(function(){
         start();            
@@ -681,7 +714,7 @@ $(document).ready(function(){
     sSetpoint.step = 1;
     sSetpoint.value = 50;
     // sSetpoint.onslide = setpointChanged();
-    // sSetpoint.onchange = setpointChanged();                  
+    sSetpoint.oninput = function() {setpointChanged(); };                 
     
     
     // $( "#sliderKp" ).slider({
@@ -697,7 +730,7 @@ $(document).ready(function(){
     sKp.step = 0.01;
     sKp.value = 1;
     // sKp.onslide = tuningsChanged();
-    sKp.onchange = tuningsChanged();                      
+    sKp.oninput = function() {tuningsChanged();};                   
     
     // $( "#sliderKi" ).slider({
     //     min: 0,
@@ -712,7 +745,7 @@ $(document).ready(function(){
     sKi.step = 0.01;
     sKi.value = 0;
     // sKi.onslide = tuningsChanged();
-    sKi.onchange = tuningsChanged();                  
+    sKi.oninput = function() {tuningsChanged();};                  
     
     // $( "#sliderKd" ).slider({
     //     min: 0,
@@ -727,7 +760,7 @@ $(document).ready(function(){
     sKd.step = 0.01;
     sKd.value = 0;
     // sKd.onslide = tuningsChanged();
-    sKd.onchange = tuningsChanged();
+    sKd.oninput = function() {tuningsChanged();};
 
     // $( "#sliderIcap" ).slider({
     //     min: 0,
@@ -742,7 +775,7 @@ $(document).ready(function(){
     sIcap.step = 1;
     sIcap.value = 0;
     // sIcap.onslide = tuningsChanged();
-    sIcap.onchange = tuningsChanged();
+    sIcap.oninput = function() {tuningsChanged();};
     
     $("#apply").click(function(){      
         processFuncChanged();                                                           
@@ -788,6 +821,7 @@ function testSequence(){
 function setSetpoint(x){
     console.log(`setting setpoint ${x}`);
     sSetpoint.value = x;
+    setpointChanged();
 }
 
 function disableButton(){

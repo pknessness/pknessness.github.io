@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="jquery-ui.css">
     <link rel="stylesheet" href="stylesheet.css">
     <link rel="stylesheet" href="../stylesheet.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
     <style>
     </style>
 </head>
@@ -18,8 +20,8 @@
     </div>
     <br>
     <div id="plots" style="display: flex">
-        <div class="sunken-panel">
-            <canvas id="plot1" width="700" height="400"></canvas>   
+        <div class="sunken-panel" style="padding-left: 5px;" >
+            <canvas id="plot1" width="700" height="300" style="margin: 0px;"></canvas>   
         </div>
         <div id="overshot" style="width:200px;">
             <div id="overshot1">1</div> <br>
@@ -81,7 +83,7 @@
                         <label id="setpoint" style="font-size:15px;">?</label>
                     </span>
                     <!-- <div style="width:95%" id="sliderSetpoint"></div> -->
-                    <input id="sliderSetpoint" type="range" min="1" max="11" value="5" onchange="setpointChanged();"/>
+                    <input id="sliderSetpoint" type="range" min="0" max="1" value="0" onchange="//setpointChanged();"/>
                 </div>
                 
                 <!-- <div hidden>
@@ -91,12 +93,14 @@
                 </div> -->
 
                 <div class="field-row">
-                    <span style="width: 35%;">
+                    <span style="width: 50%;">
                         <label style="font-size:15px;">Kp (proportional gain):</label>
                         <label id="kp" style="font-size:15px;">?</label>
                     </span>
                     <!-- <div style="width:95%" id="sliderSetpoint"></div> -->
-                    <input id="sliderKp" type="range" min="1" max="11" value="5"/>
+                    <input id="sliderKp" type="range" min="0" max="1" value="0"/>
+                    <label id=up_l style="font-size:15px;width:100px;">P Term:</label>
+                    <label id="pcomp" style="font-size:15px;width:100px;">?</label>
                 </div>
                 
                 <!-- <div>
@@ -106,12 +110,14 @@
                 </div> -->
                 
                 <div class="field-row">
-                    <span style="width: 35%;">
+                    <span style="width: 50%;">
                         <label style="font-size:15px;">Ki (integral gain):</label>
                         <label id="ki" style="font-size:15px;">?</label>
                     </span>
                     <!-- <div style="width:95%" id="sliderSetpoint"></div> -->
-                    <input id="sliderKi" type="range" min="1" max="11" value="5"/>
+                    <input id="sliderKi" type="range" min="0" max="1" value="0"/>
+                    <label id=ui_l style="font-size:15px;width:100px;">I Term:</label>
+                    <label id="icomp" style="font-size:15px;width:100px;">?</label>
                 </div>
 
                 <!-- <div>
@@ -121,12 +127,14 @@
                 </div> -->
                 
                 <div class="field-row">
-                    <span style="width: 35%;">
+                    <span style="width: 50%;">
                         <label style="font-size:15px;">Kd (derivative gain):</label>
                         <label id="kd" style="font-size:15px;">?</label>
                     </span>
                     <!-- <div style="width:95%" id="sliderSetpoint"></div> -->
-                    <input id="sliderKd" type="range" min="1" max="11" value="5"/>
+                    <input id="sliderKd" type="range" min="0" max="1" value="0"/>
+                    <label id="ud_l" style="font-size:15px;width:100px;">D Term:</label>
+                    <label id="dcomp" style="font-size:15px;width:100px;" >?</label>
                 </div>
 
                 <!-- <div>
@@ -136,12 +144,12 @@
                 </div> -->
 
                 <div class="field-row">
-                    <span style="width: 35%;">
-                        <label style="font-size:15px;">Icap (Max of I Component):</label>
+                    <span style="width: 60%;">
+                        <label style="font-size:15px;width:200px;">Icap (Max of <span id="ui_2"></span>):</label>
                         <label id="icap" style="font-size:15px;">?</label>
                     </span>
                     <!-- <div style="width:95%" id="sliderSetpoint"></div> -->
-                    <input id="sliderIcap" type="range" min="1" max="11" value="5"/>
+                    <input id="sliderIcap" type="range" min="0" max="1" value="0"/>
                 </div>
 
                 <!-- <div>
@@ -150,13 +158,32 @@
                     <div style="width:95%" id="sliderIcap"></div>
                 </div> -->
                 <br>
-                Feed Forward (model): control input = function(input, setpoint, user): <br>
+                <label id="fflabel" style="font-size:15px;" >Feed Forward (equation): FF = function(actual, desired, user): </label><label id="fcomp" style="font-size:15px;">?</label> <br>
                 <textarea id="ffFunc" rows="3" style="width:95%"></textarea> <br>
                 <button id="applyFF">Apply</button>
             </fieldset>
             <div class="column">
-                DIV
+                <div class="window">
+                    <div class="title-bar">
+                        <div class="title-bar-text">Mathmatical Theory</div>
+                        <div class="title-bar-controls">
+                            <button aria-label="Help" style="width:20px;height:20px"></button>
+                        </div>
+                    </div>
+                    <div class="window-body" style="font-size:12px;">
+                        <p>The math behind PID can be summed up in the equation below:</p>
+                        <div id="equation" ></div>
+                        Where <span id="ut"></span> is equal to the output given to the actuator, which in this case is a motor.
+                        <span id="et"></span> is the error in the system, which is <span id="stminusat"></span>
+                        On the left, you can see the four terms of the equation separately, which will better help you see what components of PID are contributing, and in what ways.
+                        <span id="up_full"></span>, and reacts proportionally to error, the farther desired is from actual, the stronger it will be. <br>
+                        <span id="ui_full"></span>, and reacts to the derivative of error, so in appropriate quantities will act as a dampening factor.<br>
+                        <span id="ud_full"></span>, and reacts to the integral of error, it will be persistent component that builds to approach the setpoint, but can very easily get out of hand, so keep in mind to cap it appropriately. <br>
+                        Finally, <span id="ff(actual, desired, user)"></span> is whatever equation you put in the box below, and is meant to be a fluid way to react to eccentricities in the system itself.
+                    </div>
+                </div>
             </div>
+            
         </div>
         <br>
         
@@ -174,7 +201,7 @@
         Also, you can adjust the model by Javascript code below. 
 
         <div>  
-            Process function (model): control input = function(time, input, output, user):<br>  
+            Process function (model): control input = function(time, input, output, user): <br>  
             <textarea id="processFunc" rows="10" cols="100"></textarea>
             <button id="apply">Apply</button>
             <br>  
