@@ -6,6 +6,7 @@
     
     <link rel="stylesheet" href="jquery-ui.css">
     <link rel="stylesheet" href="stylesheet.css">
+    <link rel="stylesheet" href="../stylesheet.css">
     <style>
     </style>
     
@@ -17,11 +18,16 @@
     <script src="main.js"></script>
 </head>
 <body>
-    This PID control simulator allows you to try out a PID controller interactively by adjusting the tuning parameters in realtime.
-    
-    On the right you can see a list, that will record and list the maximum overshoot for any given set of PID values that you've tested, so you can track your progress. It is a tad buggy if you move the setpoint around a lot, so keep that in mind. To test a PID, move the setpoint, wait for it to stabilize, and then do so a few more times. This will give you a general sense of the overshoot of a set of PID tunings.
+    <div style="font-size:15px;padding:10px;" class="window">
+        This PID control simulator allows you to try out a PID controller interactively by adjusting the tuning parameters in realtime.
+        
+        On the right you can see a list, that will record and list the maximum overshoot for any given set of PID values that you've tested, so you can track your progress. It is a tad buggy if you move the setpoint around a lot, so keep that in mind. To test a PID, move the setpoint, wait for it to stabilize, and then do so a few more times. This will give you a general sense of the overshoot of a set of PID tunings.
+    </div>
+    <br>
     <div id="plots" style="display: flex">
-        <canvas id="plot1" width="700" height="400"></canvas>   
+        <div class="sunken-panel">
+            <canvas id="plot1" width="700" height="400"></canvas>   
+        </div>
         <div id="overshot" style="width:200px;">
             <div id="overshot1">1</div> <br>
             <div id="overshot2">2</div> <br>
@@ -35,14 +41,8 @@
         </div> 
         <canvas id="whee" width="350" height="350"></canvas>  
     </div>  
-    <button id="start">Start</button>
-    <button id="stop">Stop</button>
-    <button id="toggle">PID is ON</button>
+    <br>
     <!-- time:<span id="time"></span> -->
-    Desired:<span id="desired" style="color: #0000FF;"></span>
-    Actual:<span id="actual" style="color: #FF0000;"></span>
-    Output:<span id="output" style="color: #008f00;"></span>
-    <button id="testSequenceButton" onclick="testSequence();">Test Sequence</button>
     
     <!-- <button id="autotune">Auto tune</button>
     tune step <input id="tunestep" type="textbox" size="4" value="50"></input>
@@ -52,11 +52,27 @@
     
     <p> -->
         
-        <span style="float:left;margin-right:10px">
-            Process example:
-            <span style="display:inline-block;width:250px" id="process"></span>
-            <div style="display:inline-block;width:100px;margin-right:10px" id="sliderProcess"></div>
-        </span>  
+        <span class="field-row" style="width:100%">
+            <label style="white-space: nowrap;"><b>Example Presets:</b></label>
+            <label id="process">?</label>
+            <!-- <div style="width:95%" id="sliderSetpoint"></div> -->
+            <input id="sliderProcess" style="width:15%" type="range" min="0" max="1" value="0" onchange="processChanged();"/>
+        
+            <button id="start">Start</button>
+            <button id="stop">Stop</button>
+            <button id="toggle">PID is ON</button>
+
+            <label><b>Desired:</b></label><label id="desired" style="color: #00008F;"></label>
+            <label><b>Actual:</b></label><label id="actual" style="color: #8F0000;"></label>
+            <label><b>Output:</b></label><label id="output" style="color: #008F00;"></label>
+            <button id="testSequenceButton" onclick="testSequence(); " style="white-space: nowrap; width: fit-content;">Test Sequence</button>
+        </span>
+        <!-- <span style="float:left;margin-right:10px">
+            <label >Process example:</label>
+            <div style="display:inline-block;width:100px;margin-right:10px;margin-left:10px" id="sliderProcess"></div>
+            <label style="display:inline-block;width:250px" id="process"></label>
+            
+        </span>   -->
         
         <span hidden>  
             Sample time (ms):
@@ -65,11 +81,12 @@
         </span>
         
         <div class="row">
-            <div class="column">
-                <div>
-                    Setpoint:
-                    <span id="setpoint"></span>
-                    <div style="width:95%" id="sliderSetpoint"></div>
+            <fieldset class="column">
+                <div class="field-row">
+                    <label style="font-size:15px;">Setpoint:</label>
+                    <label id="setpoint" style="font-size:15px;">?</label>
+                    <!-- <div style="width:95%" id="sliderSetpoint"></div> -->
+                    <input id="sliderSetpoint" type="range" min="1" max="11" value="5" onchange="setpointChanged();"/>
                 </div>
                 
                 <div hidden>
@@ -105,7 +122,7 @@
                 Feed Forward (model): control input = function(input, setpoint, user): <br>
                 <textarea id="ffFunc" rows="3" style="width:95%"></textarea> <br>
                 <button id="applyFF">Apply</button>
-            </div>
+            </fieldset>
             <div class="column">
                 DIV
             </div>

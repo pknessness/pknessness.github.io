@@ -492,17 +492,15 @@ function processChanged(){
     //alert(procs[0].key);
     //alert($("#sliderProcess").slider("value"));        
     $("#sliderSampletime").slider("value", proc.sampletime);
-    $("#sliderSetpoint").slider("value", proc.setpoint);
+    document.getElementById("sliderSetpoint").value = proc.setpoint;
     $("#sliderNoise").slider("value", proc.noise);
     $("#sliderKp").slider("value", proc.Kp);
     $("#sliderKi").slider("value", proc.Ki);
     $("#sliderKd").slider("value", proc.Kd);
     $("#sliderIcap").slider("value", proc.Icap);
 
-    $( "#sliderSetpoint" ).slider({
-        min: -proc.range,
-        max: proc.range,                  
-    });
+    document.getElementById("sliderSetpoint").min = -proc.range;
+    document.getElementById("sliderSetpoint").max = proc.range;
 
     var ff = document.getElementById("ffFunc");
     ff.value = proc.ff;
@@ -518,7 +516,7 @@ function processChanged(){
 
 function setpointChanged(){
     originalspot = setpoint;
-    setpoint = $("#sliderSetpoint").slider("value");
+    setpoint = document.getElementById("sliderSetpoint").value * 1.0;
     // console.log("setpoint "+setpoint);        
     pid.setPoint(setpoint);
     if(Kp != prevP || Ki != prevI || Kd != prevD){
@@ -574,8 +572,8 @@ function ffFuncChanged(){
 }
 
 function updateSliderText(){
-    $("#process").text( procs[$("#sliderProcess").slider("value")].key );   
-    $("#setpoint").text( $("#sliderSetpoint").slider("value") );
+    $("#process").text( procs[document.getElementById("sliderProcess").value].key );   
+    $("#setpoint").text( document.getElementById("sliderSetpoint").value );
     $("#noise").text( $("#sliderNoise").slider("value") );  
     $("#sampletime").text( $("#sliderSampletime").slider("value") );  
     $("#kp").text( $("#sliderKp").slider("value") );
