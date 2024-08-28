@@ -18,11 +18,7 @@
 </head>
 <body>
     This PID control simulator allows you to try out a PID controller interactively by adjusting the tuning parameters in realtime.
-    Also, you can adjust the process model by Javascript code below. This simulator was developed by porting the 
-    <a href="https://github.com/br3ttb/Arduino-PID-Library">Arduino PID library</a> and the  
-    <a href="https://github.com/br3ttb/Arduino-PID-AutoTune-Library">Arduino-PID-AutoTune-Library</a></li> to Javascript.     
     
-    <br><br>
     On the right you can see a list, that will record and list the maximum overshoot for any given set of PID values that you've tested, so you can track your progress. It is a tad buggy if you move the setpoint around a lot, so keep that in mind. To test a PID, move the setpoint, wait for it to stabilize, and then do so a few more times. This will give you a general sense of the overshoot of a set of PID tunings.
     <div id="plots" style="display: flex">
         <canvas id="plot1" width="700" height="400"></canvas>   
@@ -127,6 +123,12 @@
             </ul>
         </p>
         
+        Also, you can adjust the process model by Javascript code below. This simulator was developed by porting the 
+        <a href="https://github.com/br3ttb/Arduino-PID-Library">Arduino PID library</a> and the  
+        <a href="https://github.com/br3ttb/Arduino-PID-AutoTune-Library">Arduino-PID-AutoTune-Library</a></li> to Javascript.     
+    
+        <br><br>
+
         <div>  
             Process function (model): control input = function(time, input, output, user):<br>  
             <textarea id="processFunc" rows="10" cols="100"></textarea>
