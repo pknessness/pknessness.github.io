@@ -640,6 +640,9 @@ $(document).ready(function(){
     katex.render("u_d(t) = k_d\\frac{de(t)}{dt}", document.getElementById("ud_full"), {
         throwOnError: false
     });
+    katex.render("FF()", document.getElementById("ff_t"), {
+        throwOnError: false
+    });
     // buttons
     $("#start").click(function(){
         start();            

@@ -24,15 +24,15 @@
             <canvas id="plot1" width="700" height="300" style="margin: 0px;"></canvas>   
         </div>
         <div id="overshot" style="width:200px;">
-            <div id="overshot1">1</div> <br>
-            <div id="overshot2">2</div> <br>
-            <div id="overshot3">3</div> <br>
-            <div id="overshot4">4</div> <br>
-            <div id="overshot5">5</div> <br>
-            <div id="overshot6">6</div> <br>
-            <div id="overshot7">7</div> <br>
-            <div id="overshot8">8</div> <br>
-            <div id="overshot9">9</div> 
+            <div id="overshot1" class="window">1</div> <br>
+            <div id="overshot2" class="window">2</div> <br>
+            <div id="overshot3" class="window">3</div> <br>
+            <div id="overshot4" class="window">4</div> <br>
+            <div id="overshot5" class="window">5</div> <br>
+            <div id="overshot6" class="window">6</div> <br>
+            <div id="overshot7" class="window">7</div> <br>
+            <div id="overshot8" class="window">8</div> <br>
+            <div id="overshot9" class="window">9</div> 
         </div> 
         <canvas id="whee" width="350" height="350"></canvas>  
     </div>  
@@ -175,11 +175,11 @@
                         <div id="equation" ></div>
                         Where <span id="ut"></span> is equal to the output given to the actuator, which in this case is a motor.
                         <span id="et"></span> is the error in the system, which is <span id="stminusat"></span>
-                        On the left, you can see the four terms of the equation separately, which will better help you see what components of PID are contributing, and in what ways.
-                        <span id="up_full"></span>, and reacts proportionally to error, the farther desired is from actual, the stronger it will be. <br>
-                        <span id="ui_full"></span>, and reacts to the derivative of error, so in appropriate quantities will act as a dampening factor.<br>
-                        <span id="ud_full"></span>, and reacts to the integral of error, it will be persistent component that builds to approach the setpoint, but can very easily get out of hand, so keep in mind to cap it appropriately. <br>
-                        Finally, <span id="ff(actual, desired, user)"></span> is whatever equation you put in the box below, and is meant to be a fluid way to react to eccentricities in the system itself.
+                        On the left, you can see the four terms of the equation separately, which will better help you see what components of PID are contributing, and in what ways. <br>
+                        <span id="up_full"></span>. The P term reacts proportionally to error, the farther desired is from actual, the stronger it will be. <br>
+                        <span id="ui_full"></span>, The I term reacts to the derivative of error, so in appropriate quantities will act as a dampening factor.<br>
+                        <span id="ud_full"></span>, The D term reacts to the integral of error, it will be persistent component that builds to approach the setpoint, but can very easily get out of hand, so keep in mind to cap it appropriately. <br>
+                        Finally, <span id="ff_t"></span> is whatever equation you put in the box below, and is meant to be a fluid way to react to eccentricities in the system itself.
                     </div>
                 </div>
             </div>
@@ -188,45 +188,51 @@
         <br>
         
         
-        <p>
+        <fieldset>
             <b>Manual tuning hints</b>
             <ul>
-                <li>If it overshoots a lot and oscillates, either the integral gain (I) needs to be increased or all gains (P,I,D) should be reduced</li>
+                <li>Takes too long to get to setpoint? Increase P.</li>
                 <li>Too much overshoot? Increase D, decrease P.</li>
                 <li>Response too damped? Increase P.</li>
                 <li>Ramps up quickly to a value below target value and then slows down as it approaches target value? Try increasing the I constant.</li>
             </ul>
-        </p>
+        </fieldset>
         
-        Also, you can adjust the model by Javascript code below. 
-
-        <div>  
-            Process function (model): control input = function(time, input, output, user): <br>  
-            <textarea id="processFunc" rows="10" cols="100"></textarea>
-            <button id="apply">Apply</button>
-            <br>  
-            <b>Process function parameters:<br></b>  
-            output: control output (PID OUTPUT)<br>
-            function return value: control input<br>
-            input: last control input (optional)<br>  
-            user: custom variable to store long-term data (optional)<br>
-            time: current time (ms) (optional)<br>      
-        </div>
-        <br>
-        <div>  
-            Test Sequence Parameters:<br>  
-            <textarea id="testSequence" rows="10" cols="100">
+        <div class="row">
+            <fieldset class="column">
+                You can adjust the model with the Javascript code below. 
+                <div>  
+                    Process function (model): control input = function(time, input, output, user): <br>  
+                    <textarea id="processFunc" rows="10" cols="100"></textarea>
+                    <button id="apply">Apply</button>
+                    <br>  
+                    <b>Process function parameters:<br></b>  
+                    output: control output (PID OUTPUT)<br>
+                    function return value: control input<br>
+                    input: last control input (optional)<br>  
+                    user: custom variable to store long-term data (optional)<br>
+                    time: current time (ms) (optional)<br>      
+                </div>
+            </fieldset>
+            <fieldset class="column">
+                <div>  
+                    Test Sequence Parameters:<br>  
+                    <textarea id="testSequence" rows="10" cols="100">
 0MS,-5;
 4000MS,100;
 8000MS,-150;
 12000MS,-180;
 14000MS,50;
 18000MS,0;
-            </textarea>
-            <br>  
-            <b>Test Sequence parameters:<br></b>  
-            [TIME]MS, [POS];<br>      
+                    </textarea>
+                    <br>  
+                    <b>Test Sequence parameters:<br></b>  
+                    [TIME]MS, [POS];<br>      
+                </div>
+            </fieldset>
         </div>
+        
+        <br>
         
         
         <b>Further links</b>
