@@ -256,7 +256,7 @@ var sampleTime = 50;
 var plInput   = new MakeDraw();
 var plOutput = new MakeDraw();
 var plSetpoint  = new MakeDraw();
-var setpoint = 50;
+var setpoint = 100;
 var input = 50;
 var output = 0;
 var user = new Object();
@@ -288,6 +288,12 @@ var rad_d = 0;
 
 var stupidDogshit  = new MakeDraw();
 
+var sProcess = document.getElementById("sliderProcess");
+var sSetpoint = document.getElementById("sliderSetpoint");
+var sKp = document.getElementById("sliderKp");
+var sKi = document.getElementById("sliderKi");
+var sKd = document.getElementById("sliderKd");
+var sIcap = document.getElementById("sliderIcap");
 
 function initPlot(seriesidx, id, seriesname, myplot, plotcolor, rangemin, rangemax, enumV){
     var series = [];
@@ -326,7 +332,7 @@ function drawMotor(){
 
     var r = Math.min(w,h);
 
-    var model = procs[ $("#sliderProcess").slider("value") ];
+    var model = procs[ sProcess.value ];
 
     var curT = Date.now();
     var dt = curT - prevT;
@@ -450,30 +456,9 @@ function process(){
             }
         }
         
-        if (autoTuning){
-            pidTuner.setInput(input);          
-            var res = pidTuner.runtime(output);
-            if (res != 0){
-                // tuning done
-                autoTuning = false;
-                console.log("tuning done");
-                var kp = pidTuner.getKp();
-                var ki = pidTuner.getKi();
-                var kd = pidTuner.getKd();
-                console.log("tunings "+kp+","+ki+","+kd);
-                //pid.setTunings(kp,ki,kd);
-                $("#sliderKp").slider("value", kp);
-                $("#sliderKi").slider("value", ki);
-                $("#sliderKd").slider("value", kd);
-                autoTuningChanged();        
-            }
-            output = pidTuner.getOutput();
-            //console.log("PID_Atune.runtime output " + output);
-        } else {  
-            pid.setInput(input);
-            pid.compute();   
-            output = pid.getOutput();    
-        }              
+        pid.setInput(input);
+        pid.compute();   
+        output = pid.getOutput();             
 
         addPlotData(stupidDogshit, 0);
         addPlotData(plInput, input);
@@ -486,21 +471,22 @@ function process(){
 
 
 function processChanged(){
-    proc = procs[ $("#sliderProcess").slider("value") ];
+    proc = procs[ sProcess.value ];
     console.log("-------");
     console.log("process "+proc.key);
     //alert(procs[0].key);
     //alert($("#sliderProcess").slider("value"));        
-    $("#sliderSampletime").slider("value", proc.sampletime);
-    document.getElementById("sliderSetpoint").value = proc.setpoint;
-    $("#sliderNoise").slider("value", proc.noise);
-    $("#sliderKp").slider("value", proc.Kp);
-    $("#sliderKi").slider("value", proc.Ki);
-    $("#sliderKd").slider("value", proc.Kd);
-    $("#sliderIcap").slider("value", proc.Icap);
+    // $("#sliderSampletime").slider("value", proc.sampletime);
+    sampleTime = proc.sampletime;
+    sSetpoint.value = proc.setpoint;
+    // $("#sliderNoise").slider("value", proc.noise);
+    sKp.value = proc.Kp;
+    sKi.value = proc.Ki;
+    sKd.value = proc.Kd;
+    sIcap.value = proc.Icap;
 
-    document.getElementById("sliderSetpoint").min = -proc.range;
-    document.getElementById("sliderSetpoint").max = proc.range;
+    sSetpoint.min = -proc.range;
+    sSetpoint.max = proc.range;
 
     var ff = document.getElementById("ffFunc");
     ff.value = proc.ff;
@@ -516,7 +502,7 @@ function processChanged(){
 
 function setpointChanged(){
     originalspot = setpoint;
-    setpoint = document.getElementById("sliderSetpoint").value * 1.0;
+    setpoint = sSetpoint.value * 1.0;
     // console.log("setpoint "+setpoint);        
     pid.setPoint(setpoint);
     if(Kp != prevP || Ki != prevI || Kd != prevD){
@@ -540,22 +526,22 @@ function setpointChanged(){
 }
 
 function tuningsChanged(){  
-    Kp  = $("#sliderKp").slider("value");    
-    Ki  = $("#sliderKi").slider("value");
-    Kd  = $("#sliderKd").slider("value");
-    Icap  = $("#sliderIcap").slider("value");
+    Kp  = sKp.value; 
+    Ki  = sKi.value;
+    Kd  = sKd.value;
+    Icap  = sIcap.value;
     console.log("tunings "+Kp+","+Ki+","+Kd);   
     pid.setTunings(Kp, Ki, Kd);
     pid.setIcap(Icap);
     updateSliderText();   
 }
 
-function sampleTimeChanged(){
-    sampleTime = $("#sliderSampletime").slider("value");
-    console.log("sampletime "+sampleTime);
-    pid.setSampleTime(sampleTime);
-    updateSliderText();  
-}
+// function sampleTimeChanged(){
+//     sampleTime = $("#sliderSampletime").slider("value");
+//     console.log("sampletime "+sampleTime);
+//     pid.setSampleTime(sampleTime);
+//     updateSliderText();  
+// }
 
 function processFuncChanged(){  
     var func = $("#processFunc").val();
@@ -572,14 +558,14 @@ function ffFuncChanged(){
 }
 
 function updateSliderText(){
-    $("#process").text( procs[document.getElementById("sliderProcess").value].key );   
-    $("#setpoint").text( document.getElementById("sliderSetpoint").value );
-    $("#noise").text( $("#sliderNoise").slider("value") );  
-    $("#sampletime").text( $("#sliderSampletime").slider("value") );  
-    $("#kp").text( $("#sliderKp").slider("value") );
-    $("#ki").text( $("#sliderKi").slider("value") );
-    $("#kd").text( $("#sliderKd").slider("value") );  
-    $("#icap").text( $("#sliderIcap").slider("value") );  
+    $("#process").text( procs[sProcess.value].key );   
+    $("#setpoint").text( sSetpoint.value );
+    // $("#noise").text( $("#sliderNoise").slider("value") );  
+    // $("#sampletime").text( $("#sliderSampletime").slider("value") );  
+    $("#kp").text( sKp.value );
+    $("#ki").text( sKi.value );
+    $("#kd").text( sKd.value );  
+    $("#icap").text( sIcap.value );  
 }
 
 function autoTuningChanged(){
@@ -656,70 +642,107 @@ $(document).ready(function(){
         value: 0,                
         change:  function( event, ui ) { processChanged(); updateSliderText(); },                  
     });
-    
-    $( "#sliderNoise" ).slider({
-        min: 0,
-        max: 50,
-        step: 1,
-        value: 10,
-        slide: function( event, ui ) { updateSliderText(); },
-        change:  function( event, ui ) { updateSliderText(); },                  
-    });
-    
-    $( "#sliderSampletime" ).slider({
-        min: 50,
-        max: 1000,
-        step: 10,
-        value: 50,
-        slide: function( event, ui ) { sampleTimeChanged(); },
-        change:  function( event, ui ) { sampleTimeChanged(); },                  
-    });                                                  
-    
-    $( "#sliderSetpoint" ).slider({
-        min: -180,
-        max: 180,
-        step: 1,
-        value: 50,
-        slide: function( event, ui ) { setpointChanged(); },
-        change:  function( event, ui ) { setpointChanged(); },                  
-    });                  
-    
-    
-    $( "#sliderKp" ).slider({
-        min: 0,
-        max: 5,
-        step: 0.01,
-        value: 0.5,
-        slide: function( event, ui ) { tuningsChanged();  },
-        change:  function( event, ui ) { tuningsChanged(); },                  
-    });                      
-    
-    $( "#sliderKi" ).slider({
-        min: 0,
-        max: 20,
-        step: 0.01,
-        value: 0.5,
-        slide: function( event, ui ) { tuningsChanged(); },
-        change:  function( event, ui ) { tuningsChanged(); },                  
-    });                  
-    
-    $( "#sliderKd" ).slider({
-        min: 0,
-        max: 5,
-        step: 0.01,
-        value: 0,
-        slide: function( event, ui ) { tuningsChanged(); }, 
-        change:  function( event, ui ) { tuningsChanged(); },                  
-    });
+    sProcess.min = 0;
+    sProcess.max = procs.length-1,
+    sProcess.step = 1;
+    sProcess.value = 0;
+    sProcess.onchange = function( event, ui ) { processChanged(); updateSliderText(); };
 
-    $( "#sliderIcap" ).slider({
-        min: 0,
-        max: 300,
-        step: 1,
-        value: 0,
-        slide: function( event, ui ) { tuningsChanged(); }, 
-        change:  function( event, ui ) { tuningsChanged(); },                  
-    });
+    
+    
+    // $( "#sliderNoise" ).slider({
+    //     min: 0,
+    //     max: 50,
+    //     step: 1,
+    //     value: 10,
+    //     slide: function( event, ui ) { updateSliderText(); },
+    //     change:  function( event, ui ) { updateSliderText(); },                  
+    // });
+    
+    // $( "#sliderSampletime" ).slider({
+    //     min: 50,
+    //     max: 1000,
+    //     step: 10,
+    //     value: 50,
+    //     slide: function( event, ui ) { sampleTimeChanged(); },
+    //     change:  function( event, ui ) { sampleTimeChanged(); },                  
+    // });                                                  
+    
+    // $( "#sliderSetpoint" ).slider({
+    //     min: -180,
+    //     max: 180,
+    //     step: 1,
+    //     value: 50,
+    //     slide: function( event, ui ) { setpointChanged(); },
+    //     change:  function( event, ui ) { setpointChanged(); },                  
+    // });
+    sSetpoint.min = -180;
+    sSetpoint.max = 180;
+    sSetpoint.step = 1;
+    sSetpoint.value = 50;
+    // sSetpoint.onslide = setpointChanged();
+    // sSetpoint.onchange = setpointChanged();                  
+    
+    
+    // $( "#sliderKp" ).slider({
+    //     min: 0,
+    //     max: 5,
+    //     step: 0.01,
+    //     value: 0.5,
+    //     slide: function( event, ui ) { tuningsChanged();  },
+    //     change:  function( event, ui ) { tuningsChanged(); },                  
+    // });
+    sKp.min = 0;
+    sKp.max = 5;
+    sKp.step = 0.01;
+    sKp.value = 1;
+    // sKp.onslide = tuningsChanged();
+    sKp.onchange = tuningsChanged();                      
+    
+    // $( "#sliderKi" ).slider({
+    //     min: 0,
+    //     max: 20,
+    //     step: 0.01,
+    //     value: 0.5,
+    //     slide: function( event, ui ) { tuningsChanged(); },
+    //     change:  function( event, ui ) { tuningsChanged(); },                  
+    // });
+    sKi.min = 0;
+    sKi.max = 20;
+    sKi.step = 0.01;
+    sKi.value = 0;
+    // sKi.onslide = tuningsChanged();
+    sKi.onchange = tuningsChanged();                  
+    
+    // $( "#sliderKd" ).slider({
+    //     min: 0,
+    //     max: 5,
+    //     step: 0.01,
+    //     value: 0,
+    //     slide: function( event, ui ) { tuningsChanged(); }, 
+    //     change:  function( event, ui ) { tuningsChanged(); },                  
+    // });
+    sKd.min = 0;
+    sKd.max = 5;
+    sKd.step = 0.01;
+    sKd.value = 0;
+    // sKd.onslide = tuningsChanged();
+    sKd.onchange = tuningsChanged();
+
+    // $( "#sliderIcap" ).slider({
+    //     min: 0,
+    //     max: 300,
+    //     step: 1,
+    //     value: 0,
+    //     slide: function( event, ui ) { tuningsChanged(); }, 
+    //     change:  function( event, ui ) { tuningsChanged(); },                  
+    // });
+    sIcap.min = 0;
+    sIcap.max = 300;
+    sIcap.step = 1;
+    sIcap.value = 0;
+    // sIcap.onslide = tuningsChanged();
+    sIcap.onchange = tuningsChanged();
     
     $("#apply").click(function(){      
         processFuncChanged();                                                           
@@ -764,9 +787,7 @@ function testSequence(){
 
 function setSetpoint(x){
     console.log(`setting setpoint ${x}`);
-    $( "#sliderSetpoint" ).slider({
-        value: x,                 
-    });
+    sSetpoint.value = x;
 }
 
 function disableButton(){

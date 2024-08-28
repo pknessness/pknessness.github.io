@@ -9,13 +9,6 @@
     <link rel="stylesheet" href="../stylesheet.css">
     <style>
     </style>
-    
-    <script src="jquery.min.js"></script>
-    <script src="jquery-ui.min.js"></script>
-    <script src="plot.js"></script>
-    <script src="pid.js"></script>
-    <script src="pid-autotune.js"></script>
-    <script src="main.js"></script>
 </head>
 <body>
     <div style="font-size:15px;padding:10px;" class="window">
@@ -74,50 +67,88 @@
             
         </span>   -->
         
-        <span hidden>  
+        <!-- <span hidden>  
             Sample time (ms):
             <span style="display:inline-block;width:40px" id="sampletime"></span>
             <div style="display:inline-block;width:100px;margin-left:10px" id="sliderSampletime" ></div>
-        </span>
+        </span> -->
         
         <div class="row">
             <fieldset class="column">
                 <div class="field-row">
-                    <label style="font-size:15px;">Setpoint:</label>
-                    <label id="setpoint" style="font-size:15px;">?</label>
+                    <span style="width: 15%;">
+                        <label style="font-size:15px;">Setpoint:</label>
+                        <label id="setpoint" style="font-size:15px;">?</label>
+                    </span>
                     <!-- <div style="width:95%" id="sliderSetpoint"></div> -->
                     <input id="sliderSetpoint" type="range" min="1" max="11" value="5" onchange="setpointChanged();"/>
                 </div>
                 
-                <div hidden>
+                <!-- <div hidden>
                     Noise:
                     <span id="noise"></span>
                     <div style="width:95%" id="sliderNoise"></div>
+                </div> -->
+
+                <div class="field-row">
+                    <span style="width: 35%;">
+                        <label style="font-size:15px;">Kp (proportional gain):</label>
+                        <label id="kp" style="font-size:15px;">?</label>
+                    </span>
+                    <!-- <div style="width:95%" id="sliderSetpoint"></div> -->
+                    <input id="sliderKp" type="range" min="1" max="11" value="5"/>
                 </div>
                 
-                <div>
+                <!-- <div>
                     Kp (proportional gain):
                     <span id="kp"></span>
                     <div style="width:95%" id="sliderKp"></div>
-                </div>
+                </div> -->
                 
-                <div>
+                <div class="field-row">
+                    <span style="width: 35%;">
+                        <label style="font-size:15px;">Ki (integral gain):</label>
+                        <label id="ki" style="font-size:15px;">?</label>
+                    </span>
+                    <!-- <div style="width:95%" id="sliderSetpoint"></div> -->
+                    <input id="sliderKi" type="range" min="1" max="11" value="5"/>
+                </div>
+
+                <!-- <div>
                     Ki (integral gain):
                     <span id="ki"></span>
                     <div style="width:95%" id="sliderKi"></div>
-                </div>
+                </div> -->
                 
-                <div>
+                <div class="field-row">
+                    <span style="width: 35%;">
+                        <label style="font-size:15px;">Kd (derivative gain):</label>
+                        <label id="kd" style="font-size:15px;">?</label>
+                    </span>
+                    <!-- <div style="width:95%" id="sliderSetpoint"></div> -->
+                    <input id="sliderKd" type="range" min="1" max="11" value="5"/>
+                </div>
+
+                <!-- <div>
                     Kd (derivative gain):
                     <span id="kd"></span>
                     <div style="width:95%" id="sliderKd"></div>
+                </div> -->
+
+                <div class="field-row">
+                    <span style="width: 35%;">
+                        <label style="font-size:15px;">Icap (Max of I Component):</label>
+                        <label id="icap" style="font-size:15px;">?</label>
+                    </span>
+                    <!-- <div style="width:95%" id="sliderSetpoint"></div> -->
+                    <input id="sliderIcap" type="range" min="1" max="11" value="5"/>
                 </div>
 
-                <div>
+                <!-- <div>
                     I cap (Maximum of the I component):
                     <span id="icap"></span>
                     <div style="width:95%" id="sliderIcap"></div>
-                </div>
+                </div> -->
                 <br>
                 Feed Forward (model): control input = function(input, setpoint, user): <br>
                 <textarea id="ffFunc" rows="3" style="width:95%"></textarea> <br>
@@ -140,11 +171,7 @@
             </ul>
         </p>
         
-        Also, you can adjust the process model by Javascript code below. This simulator was developed by porting the 
-        <a href="https://github.com/br3ttb/Arduino-PID-Library">Arduino PID library</a> and the  
-        <a href="https://github.com/br3ttb/Arduino-PID-AutoTune-Library">Arduino-PID-AutoTune-Library</a></li> to Javascript.     
-    
-        <br><br>
+        Also, you can adjust the model by Javascript code below. 
 
         <div>  
             Process function (model): control input = function(time, input, output, user):<br>  
@@ -177,6 +204,7 @@
         
         <b>Further links</b>
         <ul>
+            This simulator was developed by porting the following:
             <li><a href="https://github.com/br3ttb/Arduino-PID-Library">Arduino-PID-Library</a></li>
             <li><a href="https://github.com/br3ttb/Arduino-PID-AutoTune-Library">Arduino-PID-AutoTune-Library</a></li>
         </ul>  
@@ -188,5 +216,11 @@
     </body>
     </html>
     
+    <script src="jquery.min.js"></script>
+    <script src="jquery-ui.min.js"></script>
+    <script src="plot.js"></script>
+    <script src="pid.js"></script>
+    <script src="pid-autotune.js"></script>
+    <script src="main.js"></script>
     
     

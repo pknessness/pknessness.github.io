@@ -93,7 +93,7 @@ PID.prototype.compute = function() {
         var feed = 0;
         if(this.FF != undefined){
             feed = this.FF(this.input,this.mySetpoint,this.user);
-            console.log(`Feed ${feed}`);
+            // console.log(`Feed ${feed}`);
         }
 
         var dInput = input - this.lastInput;
