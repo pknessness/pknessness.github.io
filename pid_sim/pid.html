@@ -24,15 +24,27 @@
             <canvas id="plot1" width="700" height="300" style="margin: 0px;"></canvas>   
         </div>
         <div id="overshot" style="width:200px;">
-            <div id="overshot1" class="window">1</div> <br>
-            <div id="overshot2" class="window">2</div> <br>
-            <div id="overshot3" class="window">3</div> <br>
-            <div id="overshot4" class="window">4</div> <br>
-            <div id="overshot5" class="window">5</div> <br>
-            <div id="overshot6" class="window">6</div> <br>
-            <div id="overshot7" class="window">7</div> <br>
-            <div id="overshot8" class="window">8</div> <br>
-            <div id="overshot9" class="window">9</div> 
+            <div class="title-bar-controls">
+                <label style="width:100px">Setpoint Reached</label>
+                <button id="set_reach" aria-label="Blank" style="background-color: #FF0000;"></button>
+            </div>
+            <div class="title-bar-controls">
+                <label style="width:100px">Setpoint Stabilized</label>
+                <button id="set_stab" aria-label="Blank" style="background-color: #FF0000;"></button>
+            </div>
+            <div id="overshot1" class="window" style="height:50px;">
+                kP:<span id="os_kp" style="margin:5px;"> ? </span>
+                kI:<span id="os_ki" style="margin:5px;"> ? </span>
+                kD:<span id="os_kd" style="margin:5px;"> ? </span>
+                Icap:<span id="os_icap" style="margin:5px;"> ? </span>
+                <br>
+                Worst overshoot:<span id="os_os" style="margin:5px;"> Has not overshot </span>
+                <br>
+                Worst Stabilization Time:<span id="os_stab" style="margin:5px;"> Has not stabilized </span>
+            </div> <br>
+            <div id="overshot2" class="window" style="height:50px;"></div> <br>
+            <div id="overshot3" class="window" style="height:50px;"></div> <br>
+            <div id="overshot4" class="window" style="height:50px;"></div> <br>
         </div> 
         <canvas id="whee" width="350" height="350"></canvas>  
     </div>  
@@ -78,7 +90,7 @@
         <div class="row">
             <fieldset class="column">
                 <div class="field-row">
-                    <span style="width: 15%;">
+                    <span style="width: 25%;">
                         <label style="font-size:15px;">Setpoint:</label>
                         <label id="setpoint" style="font-size:15px;">?</label>
                     </span>
@@ -93,7 +105,7 @@
                 </div> -->
 
                 <div class="field-row">
-                    <span style="width: 50%;">
+                    <span style="width: 55%;">
                         <label style="font-size:15px;">Kp (proportional gain):</label>
                         <label id="kp" style="font-size:15px;">?</label>
                     </span>
@@ -110,7 +122,7 @@
                 </div> -->
                 
                 <div class="field-row">
-                    <span style="width: 50%;">
+                    <span style="width: 55%;">
                         <label style="font-size:15px;">Ki (integral gain):</label>
                         <label id="ki" style="font-size:15px;">?</label>
                     </span>
@@ -127,7 +139,7 @@
                 </div> -->
                 
                 <div class="field-row">
-                    <span style="width: 50%;">
+                    <span style="width: 55%;">
                         <label style="font-size:15px;">Kd (derivative gain):</label>
                         <label id="kd" style="font-size:15px;">?</label>
                     </span>
@@ -167,7 +179,7 @@
                     <div class="title-bar">
                         <div class="title-bar-text">Mathmatical Theory</div>
                         <div class="title-bar-controls">
-                            <button aria-label="Help" style="width:20px;height:20px"></button>
+                            <button aria-label="Help"></button>
                         </div>
                     </div>
                     <div class="window-body" style="font-size:12px;">

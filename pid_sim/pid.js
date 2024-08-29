@@ -61,7 +61,7 @@ PID.prototype.millis = function() {
 
 PID.prototype.setFF = function(FF){
     this.FF = FF;
-    console.log(`type of ff ${typeof FF}`);
+    // console.log(`type of ff ${typeof FF}`);
 }
 
 /**

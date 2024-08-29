@@ -178,8 +178,8 @@ input[type=submit]:disabled {
 
 .title-bar-controls button {
     display: block;
-    min-height: 14px;
-    min-width: 16px;
+    min-height: 20px;
+    min-width: 20px;
     padding: 0
 }
 
@@ -216,6 +216,24 @@ input[type=submit]:disabled {
 }
 
 .title-bar-controls button[aria-label=Close] {
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='8' height='7' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M0 0h2v1h1v1h2V1h1V0h2v1H7v1H6v1H5v1h1v1h1v1h1v1H6V6H5V5H3v1H2v1H0V6h1V5h1V4h1V3H2V2H1V1H0V0z' fill='%23000'/%3E%3C/svg%3E");
+    background-position: top 3px left 4px;
+    background-repeat: no-repeat;
+    margin-left: 2px
+}
+
+.title-bar-controls button[aria-label=Blank] {
+    
+}
+
+.title-bar-controls button[aria-label=IndicatorOn] {
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='8' height='7' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M0 0h2v1h1v1h2V1h1V0h2v1H7v1H6v1H5v1h1v1h1v1h1v1H6V6H5V5H3v1H2v1H0V6h1V5h1V4h1V3H2V2H1V1H0V0z' fill='%23000'/%3E%3C/svg%3E");
+    background-position: top 3px left 4px;
+    background-repeat: no-repeat;
+    margin-left: 2px
+}
+
+.title-bar-controls button[aria-label=IndicatorOff] {
     background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='8' height='7' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M0 0h2v1h1v1h2V1h1V0h2v1H7v1H6v1H5v1h1v1h1v1h1v1H6V6H5V5H3v1H2v1H0V6h1V5h1V4h1V3H2V2H1V1H0V0z' fill='%23000'/%3E%3C/svg%3E");
     background-position: top 3px left 4px;
     background-repeat: no-repeat;
@@ -317,6 +335,17 @@ input[type=radio]:active+label:before {
 
 input[type=radio]:checked+label:after {
     background: url("data:image/svg+xml;charset=utf-8,%3Csvg width='4' height='4' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M3 0H1v1H0v2h1v1h2V3h1V1H3V0z' fill='%23000'/%3E%3C/svg%3E");
+    content: "";
+    display: block;
+    height: 4px;
+    left: -14px;
+    position: absolute;
+    top: 4px;
+    width: 4px
+}
+
+.indicator input[type=radio]:checked {
+    background: url("data:image/svg+xml;charset=utf-8,%3Csvg width='4' height='4' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M3 0H1v1H0v2h1v1h2V3h1V1H3V0z' fill='%2300FF00'/%3E%3C/svg%3E");
     content: "";
     display: block;
     height: 4px;

@@ -257,7 +257,7 @@ var plInput   = new MakeDraw();
 var plOutput = new MakeDraw();
 var plSetpoint  = new MakeDraw();
 var setpoint = 100;
-var input = 50;
+var input = 0;
 var output = 0;
 var user = new Object();
 var run = false;
@@ -278,6 +278,11 @@ var prevActual = 0;
 var prevP = undefined;
 var prevI = undefined;
 var prevD = undefined;
+var prevIcap = undefined;
+
+var begunStab = undefined;
+var mostStab = undefined;
+var lastChange = undefined;
 
 var prevT = 0;
 
@@ -413,6 +418,9 @@ function process(){
     // console.log(window.innerWidth);
     
     time = (new Date).getTime();
+    if(lastChange == undefined){
+        lastChange = time;
+    }
     $("#time").text( time );
     $("#desired").text( setpoint.toFixed(2) );
     $("#actual").text( input.toFixed(2) );
@@ -428,6 +436,27 @@ function process(){
         if((prevActual < setpoint && input > setpoint) || (prevActual > setpoint && input < setpoint)){
             beyondTheBoundary = true;
             // console.log(`activated kyoukaiNoKanata`);
+            document.getElementById("set_reach").style = "background-color:#009F00;";
+        }
+
+        if((Math.abs(input - setpoint) < 2)){
+            if(begunStab == undefined){
+                begunStab = time;
+                document.getElementById("set_stab").style = "background-color:#F2BB07;";
+            }else{
+                document.getElementById("set_stab").style = "background-color:#F2BB07;";
+                if((time - begunStab) > 1000){
+                    console.log(`most:${begunStab-lastChange} bl:${mostStab} nod:`,document.getElementById("overshot1").childNodes);
+                    if((begunStab - lastChange < mostStab) || mostStab == undefined){
+                        mostStab = begunStab - lastChange;
+                        document.getElementById("overshot1").childNodes[15].innerText = (mostStab/1000.0);
+                    }
+                    document.getElementById("set_stab").style = "background-color:#009F00;";
+                }
+            }
+        }else{
+            begunStab = undefined;
+            document.getElementById("set_stab").style = "background-color:#FF0000;";
         }
 
         if(setpoint > originalspot){
@@ -437,8 +466,11 @@ function process(){
                     // console.log(`set overshot`);
                     beyondTheBoundary = false;
                     overshot = Math.abs(prevActual - setpoint);
-                    $("#overshot1").text(`kP: ${Kp} kI: ${Ki} kD: ${Kd} max overshot: ${overshot.toFixed(2)}`);
-                    prevP = Kp; prevI = Ki; prevD = Kd;
+                    //$("#overshot1").text(`kP: ${Kp} kI: ${Ki} kD: ${Kd} max overshot: ${overshot.toFixed(2)}`);
+                    updateOvershot();
+                    document.getElementById("overshot1").childNodes[11].innerText = overshot.toFixed(2);
+                    document.getElementById("overshot1").innerText.replace("")
+                    prevP = Kp; prevI = Ki; prevD = Kd; prevIcap = Icap;
                 }
                 //console.log(overshot);
             }
@@ -449,8 +481,10 @@ function process(){
                     // console.log(`set overshot`);
                     beyondTheBoundary = false;
                     overshot = Math.abs(prevActual - setpoint);
-                    $("#overshot1").text(`kP: ${Kp} kI: ${Ki} kD: ${Kd} max overshot: ${overshot.toFixed(2)}`);
-                    prevP = Kp; prevI = Ki; prevD = Kd;
+                    updateOvershot();
+                    document.getElementById("overshot1").childNodes[11].innerText = overshot.toFixed(2);
+                    // $("#overshot1").text(`kP: ${Kp} kI: ${Ki} kD: ${Kd} max overshot: ${overshot.toFixed(2)}`);
+                    prevP = Kp; prevI = Ki; prevD = Kd; prevIcap = Icap;
                 }
                 //console.log(overshot);
             }
@@ -508,26 +542,14 @@ function processChanged(){
 
 function setpointChanged(){
     originalspot = setpoint;
+    beyondTheBoundary = false;
     setpoint = sSetpoint.value * 1.0;
     // console.log("setpoint "+setpoint);        
     pid.setPoint(setpoint);
-    if(Kp != prevP || Ki != prevI || Kd != prevD){
-        // console.log(`${Kp},${prevP} ${Ki},${prevI} ${Kd},${prevD}`);
-        prevP = Kp;
-        prevI = Ki;
-        prevD = Kd;
-        overshot = 0;
-        $("#overshot9").text($("#overshot8").text());
-        $("#overshot8").text($("#overshot7").text());
-        $("#overshot7").text($("#overshot6").text());
-        $("#overshot6").text($("#overshot5").text());
-        $("#overshot5").text($("#overshot4").text());
-        $("#overshot4").text($("#overshot3").text());
-        $("#overshot3").text($("#overshot2").text());
-        $("#overshot2").text($("#overshot1").text());
-        $("#overshot1").text(`kP: ${Kp} kI: ${Ki} kD: ${Kd} max overshot: not yet reached`);
-                                
-    }
+    lastChange = (new Date).getTime();;
+
+    document.getElementById("set_reach").style = "background-color:#FF0000;";
+
     updateSliderText();    
 }
 
@@ -548,6 +570,13 @@ function tuningsChanged(){
 //     pid.setSampleTime(sampleTime);
 //     updateSliderText();  
 // }
+
+function updateOvershot(){
+    document.getElementById("overshot1").childNodes[1].innerText = Kp;
+    document.getElementById("overshot1").childNodes[3].innerText = Ki;
+    document.getElementById("overshot1").childNodes[5].innerText = Kd;
+    document.getElementById("overshot1").childNodes[7].innerText = Icap;
+}
 
 function processFuncChanged(){  
     var func = $("#processFunc").val();
@@ -643,6 +672,13 @@ $(document).ready(function(){
     katex.render("FF()", document.getElementById("ff_t"), {
         throwOnError: false
     });
+    katex.render("e(t)", document.getElementById("et"), {
+        throwOnError: false
+    });
+    katex.render("(Desired-Actual)", document.getElementById("stminusat"), {
+        throwOnError: false
+    });
+
     // buttons
     $("#start").click(function(){
         start();            
@@ -788,6 +824,7 @@ $(document).ready(function(){
         ffFuncChanged();                                                           
     });
     
+    
     pid.setOutputLimits(-1000, 1000);    
     autoModeChanged();
     autoTuningChanged();                                                  
@@ -815,10 +852,34 @@ function testSequence(){
         if(a.length == 2){
             console.log(parseInt(a[0]), parseInt(a[1]));
             setTimeout(setSetpoint,parseInt(a[0]), parseInt(a[1]));
-            t = a[0];
+            t = parseInt(a[0]);
         }
     }
-    setTimeout(enableButton(),parseInt(t));
+    console.log("timing",t);
+    setTimeout(enableButton,t);
+    
+    if(true || (Kp != prevP || Ki != prevI || Kd != prevD || Icap != prevIcap)){
+        // console.log(`${Kp},${prevP} ${Ki},${prevI} ${Kd},${prevD}`);
+        prevP = Kp;
+        prevI = Ki;
+        prevD = Kd;
+        prevIcap = Icap;
+        overshot = 0;
+        $("#overshot4").html($("#overshot3").html());
+        $("#overshot3").html($("#overshot2").html());   
+        $("#overshot2").html($("#overshot1").html());
+        $("#overshot1").html(`
+            kP:<span id="os_kp" style="margin:5px;"> ${Kp} </span>
+            kI:<span id="os_ki" style="margin:5px;"> ${Ki} </span>
+            kD:<span id="os_kd" style="margin:5px;"> ${Kd} </span>
+            Icap:<span id="os_icap" style="margin:5px;"> ${Icap} </span>
+            <br>
+            Worst overshoot:<span id="os_os" style="margin:5px;"> Has not overshot </span>
+            <br>
+            Worst Stabilization Time:<span id="os_stab" style="margin:5px;"> Has not stabilized </span>
+        `);
+        
+    }
 }
 
 function setSetpoint(x){
@@ -828,9 +889,13 @@ function setSetpoint(x){
 }
 
 function disableButton(){
-    $("testSequenceButton").prop('disabled', true);
+    // console.log(`dis button ${document.getElementById("testSequenceButton").disabled}`);
+    document.getElementById("testSequenceButton").disabled = true;
+    // console.log(`dis button ${document.getElementById("testSequenceButton").disabled}`);
 }
 
 function enableButton(){
-    $("testSequenceButton").prop('disabled', false);
+    // console.log(`das button ${document.getElementById("testSequenceButton").disabled}`);
+    document.getElementById("testSequenceButton").disabled = false;
+    // console.log(`das button ${document.getElementById("testSequenceButton").disabled}`);
 }
