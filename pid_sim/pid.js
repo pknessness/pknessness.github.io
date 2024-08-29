@@ -85,15 +85,20 @@ PID.prototype.compute = function() {
         if(this.ki == 0){
             this.ITerm = 0;
         }
+        console.log(`1:${this.ITerm}`);
         this.ITerm += (this.ki * error);
-
+        console.log(`2:${this.ITerm}`);
         if(this.Icap != 0){
+            console.log(`3:${this.ITerm}`);
             if(this.ITerm < 0 && this.ITerm < -this.Icap){
-                this.ITerm = -this.Icap;
+                this.ITerm = -this.Icap * 1.0;
+                console.log(`4:${this.ITerm}`);
             }else if(this.ITerm > 0 && this.ITerm > this.Icap){
-                this.ITerm = this.Icap;
+                this.ITerm = this.Icap * 1.0;
+                console.log(`5:${this.ITerm}`);
             }
         }
+        console.log(`6:${this.ITerm}`);
 
         var feed = 0;
         if(this.FF != undefined){
@@ -107,16 +112,20 @@ PID.prototype.compute = function() {
         this.icomp = this.ITerm;
         this.dcomp = - this.kd * dInput;
         this.fcomp = feed;
+        console.log(`p:${this.pcomp} i:${this.icomp} d:${this.dcomp} f:${this.fcomp} d:${this.setDirection}`);
         var output = (this.pcomp + this.icomp + this.dcomp + this.fcomp) * this.setDirection;
-
+        console.log(`o:${output}`);
         if (output > this.outMax) {
             this.ITerm -= (output - this.outMax);
             output = this.outMax;
+            console.log(`1o:${output}`);
         }
         else if (output < this.outMin) {
             this.ITerm += (this.outMin - output);
             output = this.outMin;
+            console.log(`2o:${output}`);
         }
+        console.log(`3o:${output}`);
         this.myOutput = output;
 
         // Remember some variables for next time

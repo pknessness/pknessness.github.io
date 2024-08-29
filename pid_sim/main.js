@@ -1,5 +1,5 @@
 var procs = [
-    {key: "week3_assignment2", 
+    {key: "week3_assignment2_part1_position", 
         func: "user.kineticFriction = 0.5;\n" 
         + "user.frictionCoefficient = 0.05;\n" 
         + "user.inertiaFactor = 0.8;\n" 
@@ -39,6 +39,88 @@ var procs = [
         range: 180,
         moveType: "pos",
         ff: "",
+    },
+    {key: "week3_assignment2_part2_flywheel", 
+        func: "user.kineticFriction = 0.5;\n"
+        + "user.frictionCoefficient = 0.05;\n"
+        + "user.inertiaFactor = 0.8;\n"
+        + "\n"
+        + "if (typeof user.v === 'undefined') {\n"
+        + "user.v = 0; \n"
+        + "user.a = 0; \n"
+        + "user.previousOutput = output;\n"
+        + "user.randomSeed = Math.random();\n"
+        + "}\n"
+        + "\n"
+        + "if (output > user.kineticFriction) {\n"
+        + "user.a = output - user.kineticFriction;\n"
+        + "} else if (output < -user.kineticFriction) {\n"
+        + "user.a = output + user.kineticFriction;\n"
+        + "} else {\n"
+        + "user.a = 0;\n"
+        + "}\n"
+        + "\n"
+        + "user.v = user.v + (user.a - user.frictionCoefficient * user.v) / 5;\n"
+        + "\n"
+        + "user.v += user.inertiaFactor * (output - user.previousOutput) / 5;\n"
+        + "user.previousOutput = output;\n"
+        + "\n"
+        + "return user.v;\n",                 
+        sampletime: 50,
+        setpoint: 100,
+        noise: 0, 
+        Kp: 1,
+        Ki: 0,
+        Kd: 0,  
+        Icap: 0,
+        range: 150,
+        moveType: "vel",
+        ff: "",
+    },
+    {key: "week3_assignment2_part3_imbalanced", 
+        func: "user.kineticFriction = 7;\n" 
+        + "user.frictionCoefficient = 4;\n" 
+        + "user.inertiaFactor = 0.8;\n" 
+        + "user.randomDisturbance = Math.random() * 0.05;\n" 
+        + "\n" 
+        + "if (typeof user.v === 'undefined') {\n" 
+        + "user.v = 0; \n" 
+        + "user.a = 0; \n" 
+        + "user.p = 0;\n" 
+        + "user.previousOutput = output;\n" 
+        + "user.randomSeed = Math.random();\n" 
+        + "}\n" 
+        + "\n" 
+        + "if (output > user.kineticFriction) {\n" 
+        + "user.a = output - user.kineticFriction;\n" 
+        + "} else if (output < -user.kineticFriction) {\n" 
+        + "user.a = output + user.kineticFriction;\n" 
+        + "} else {\n" 
+        + "user.a = 0;\n" 
+        + "}\n" 
+        + "user.a += Math.cos(input * Math.PI/180) * 60;\n" 
+        + "user.v = user.v + (user.a - user.frictionCoefficient * user.v) / 20;\n" 
+        + "\n" 
+        + "user.v += user.inertiaFactor * (output - user.previousOutput) / 20;\n" 
+        + "user.v += Math.sin(user.v * time / 100) * user.randomDisturbance;\n" 
+        + "user.p = user.p + user.v;\n" 
+        + "if(user.p > 60)user.p = 60;\n" 
+        + "if(user.p < -70)user.p = -70;\n"
+        + "user.previousOutput = output;\n" 
+        + "\n" 
+        + "return user.p;",                             
+        sampletime: 100,
+        noise: 0,
+        setpoint: 30, 
+        Kp: 2,
+        Ki: 0,
+        Kd: 2, 
+        Icap: 0,
+        range: 45,
+        upbound: -70,
+        lowbound: 60,
+        moveType: "pos",
+        ff: "return 0; //you'll probably need this",
     },
     {key: "pid_lecture_example_1_basic", 
         func: "user.kineticFriction = 0.1;\n" 
@@ -145,9 +227,9 @@ var procs = [
         + "user.a = 0;\n" 
         + "}\n" 
         + "user.a += Math.cos(input * Math.PI/180) * user.imbalancedGrav;\n" 
-        + "user.v = user.v + (user.a - user.frictionCoefficient * user.v) / 20;\n" 
+        + "user.v = user.v + (user.a - user.frictionCoefficient * user.v) / 10;\n" 
         + "\n" 
-        + "user.v += user.inertiaFactor * (output - user.previousOutput) / 20;\n" 
+        + "user.v += user.inertiaFactor * (output - user.previousOutput) / 10;\n" 
         + "user.v += Math.sin(user.v * time / 100) * user.randomDisturbance;\n" 
         + "user.p = user.p + user.v;\n" 
         + "if(user.p > 60)user.p = 60;\n" 
@@ -210,43 +292,6 @@ var procs = [
     //     Ki: 10,
     //     Kd: 0, 
     // },
-    {key: "flywheel_velocity", 
-        func: "user.kineticFriction = 0.5;\n"
-        + "user.frictionCoefficient = 0.05;\n"
-        + "user.inertiaFactor = 0.8;\n"
-        + "\n"
-        + "if (typeof user.v === 'undefined') {\n"
-        + "user.v = 0; \n"
-        + "user.a = 0; \n"
-        + "user.previousOutput = output;\n"
-        + "user.randomSeed = Math.random();\n"
-        + "}\n"
-        + "\n"
-        + "if (output > user.kineticFriction) {\n"
-        + "user.a = output - user.kineticFriction;\n"
-        + "} else if (output < -user.kineticFriction) {\n"
-        + "user.a = output + user.kineticFriction;\n"
-        + "} else {\n"
-        + "user.a = 0;\n"
-        + "}\n"
-        + "\n"
-        + "user.v = user.v + (user.a - user.frictionCoefficient * user.v) / 5;\n"
-        + "\n"
-        + "user.v += user.inertiaFactor * (output - user.previousOutput) / 5;\n"
-        + "user.previousOutput = output;\n"
-        + "\n"
-        + "return user.v;\n",                 
-        sampletime: 50,
-        setpoint: 100,
-        noise: 0, 
-        Kp: 1,
-        Ki: 0,
-        Kd: 0,  
-        Icap: 0,
-        range: 150,
-        moveType: "vel",
-        ff: "",
-    },
 ];
 
 
@@ -446,7 +491,7 @@ function process(){
             }else{
                 document.getElementById("set_stab").style = "background-color:#F2BB07;";
                 if((time - begunStab) > 1000){
-                    console.log(`most:${begunStab-lastChange} bl:${mostStab} nod:`,document.getElementById("overshot1").childNodes);
+                    // console.log(`most:${begunStab-lastChange} bl:${mostStab} nod:`,document.getElementById("overshot1").childNodes);
                     if((begunStab - lastChange < mostStab) || mostStab == undefined){
                         mostStab = begunStab - lastChange;
                         document.getElementById("overshot1").childNodes[15].innerText = (mostStab/1000.0);
@@ -494,10 +539,10 @@ function process(){
         pid.compute();   
         output = pid.getOutput();  
         document.getElementById("pcomp").innerText = pid.pcomp.toFixed(2);
-        document.getElementById("icomp").innerText = pid.icomp.toFixed(2);
+        document.getElementById("icomp").innerText = (pid.icomp * 1.0).toFixed(2);
         document.getElementById("dcomp").innerText = pid.dcomp.toFixed(2);
         document.getElementById("fcomp").innerText = pid.fcomp.toFixed(2);
-        // console.log(pid.pcomp);           
+        console.log(`in: ${input} set:${setpoint} out:${output}`);           
 
         addPlotData(stupidDogshit, 0);
         addPlotData(plInput, input);
