@@ -248,7 +248,7 @@ var procs = [
         upbound: -90,
         lowbound: 60,
         moveType: "pos",
-        ff: "return -40 * Math.cos(input * Math.PI / 180);",
+        ff: "return -40 * Math.cos(actual * Math.PI / 180);",
     },
     // {key: "model", 
     //     func: "if (typeof user.kpmodel === 'undefined'){\n"
@@ -634,7 +634,7 @@ function ffFuncChanged(){
     var func = $("#ffFunc").val();
     console.log("func: "+func);
     if (func == "") func ="return 0"; 
-    pid.setFF(new Function("input", "setpoint", "user", func));   
+    pid.setFF(new Function("actual", "desired", "user", func));   
 }
 
 function updateSliderText(){
