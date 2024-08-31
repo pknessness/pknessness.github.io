@@ -15,38 +15,47 @@
 <body>
     <div style="font-size:15px;padding:10px;" class="window">
         This PID control simulator allows you to try out a PID controller interactively by adjusting the tuning parameters in realtime.
-        
-        On the right you can see a list, that will record and list the maximum overshoot for any given set of PID values that you've tested, so you can track your progress. It is a tad buggy if you move the setpoint around a lot, so keep that in mind. To test a PID, move the setpoint, wait for it to stabilize, and then do so a few more times. This will give you a general sense of the overshoot of a set of PID tunings.
+        <br>
+        To test a PID, click the <b>Test Sequence</b> button. This will give you a general sense of the overshoot of a set of PID tunings, and it will update the overshoot and stability recordings on the right.
     </div>
     <br>
     <div id="plots" style="display: flex">
-        <div class="sunken-panel" style="padding-left: 5px;" >
-            <canvas id="plot1" width="700" height="300" style="margin: 0px;"></canvas>   
+        <div class="sunken-panel" height="330" style="padding-left: 5px;" >
+            <canvas id="plot1" width="700" height="340" style="margin: 0px;"></canvas>   
         </div>
         <div id="overshot" style="width:200px;">
-            <div class="title-bar-controls">
-                <label style="width:100px">Setpoint Reached</label>
-                <button id="set_reach" aria-label="Blank" style="background-color: #FF0000;"></button>
+            <div>
+                <b style="color: #830071;">Overshoot:</b><span id="pre_os" style="margin:5px;"> ? </span>
+                <br>
+                <b style="color: #a18100;">Stabilization:</b><span id="pre_stab" style="margin:5px;"> ? </span>s
+                <br>
             </div>
+            <div class="title-bar-controls">
+                <label hidden style="width:100px">Setpoint Reached</label>
+                <button hidden id="set_reach" aria-label="Blank" style="background-color: #FF0000;"></button>
+            </div>
+            
             <div class="title-bar-controls">
                 <label style="width:100px">Setpoint Stabilized</label>
                 <button id="set_stab" aria-label="Blank" style="background-color: #FF0000;"></button>
             </div>
             <div id="overshot1" class="window" style="height:50px;">
-                kP:<span id="os_kp" style="margin:5px;"> ? </span>
-                kI:<span id="os_ki" style="margin:5px;"> ? </span>
-                kD:<span id="os_kd" style="margin:5px;"> ? </span>
-                Icap:<span id="os_icap" style="margin:5px;"> ? </span>
+                <b>kP:</b><span id="os_kp" style="margin:5px;"> ? </span>
+                <b>kI:</b><span id="os_ki" style="margin:5px;"> ? </span>
+                <b>kD:</b><span id="os_kd" style="margin:5px;"> ? </span>
+                <b>Icap:</b><span id="os_icap" style="margin:5px;"> ? </span>
                 <br>
-                Worst overshoot:<span id="os_os" style="margin:5px;"> Has not overshot </span>
+                <b style="color: #830071;">Worst Overshoot:</b><span id="os_os" style="margin:5px;"> Not tested </span>
                 <br>
-                Worst Stabilization Time:<span id="os_stab" style="margin:5px;"> Has not stabilized </span>
+                <b style="color: #a18100;">Worst Stabilization:</b><span id="os_stab" style="margin:5px;"> Not tested </span>s
+                <br>
+                <b>Model:</b><span id="os_mod" style="margin:5px;">?</span>
             </div> <br>
             <div id="overshot2" class="window" style="height:50px;"></div> <br>
             <div id="overshot3" class="window" style="height:50px;"></div> <br>
             <div id="overshot4" class="window" style="height:50px;"></div> <br>
         </div> 
-        <canvas id="whee" width="350" height="350"></canvas>  
+        <canvas id="whee" width="300" height="340"></canvas>  
     </div>  
     <br>
     <!-- time:<span id="time"></span> -->
@@ -73,6 +82,7 @@
             <label><b>Actual:</b></label><label id="actual" style="color: #8F0000;"></label>
             <label><b>Output:</b></label><label id="output" style="color: #008F00;"></label>
             <button id="testSequenceButton" onclick="testSequence(); " style="white-space: nowrap; width: fit-content;">Test Sequence</button>
+            <label id="errors"><b>No Errors</b></label>
         </span>
         <!-- <span style="float:left;margin-right:10px">
             <label >Process example:</label>
@@ -88,7 +98,7 @@
         </span> -->
         
         <div class="row">
-            <fieldset class="column">
+            <fieldset class="column" id="tuningsBox">
                 <div class="field-row">
                     <span style="width: 25%;">
                         <label style="font-size:15px;">Setpoint:</label>
@@ -156,9 +166,9 @@
                 </div> -->
 
                 <div class="field-row">
-                    <span style="width: 60%;">
-                        <label style="font-size:15px;width:200px;">Icap (Max of <span id="ui_2"></span>):</label>
-                        <label id="icap" style="font-size:15px;">?</label>
+                    <span style="width: 65%;">
+                        <label style="font-size:15px;">Icap (Max of <span id="ui_2"></span>):</label>
+                        <label id="icap" style="font-size:15px;width:100px;">?</label>
                     </span>
                     <!-- <div style="width:95%" id="sliderSetpoint"></div> -->
                     <input id="sliderIcap" type="range" min="0" max="1" value="0"/>
@@ -231,11 +241,11 @@
                     Test Sequence Parameters:<br>  
                     <textarea id="testSequence" rows="10" cols="100">
 0MS,-5;
-4000MS,100;
-8000MS,-150;
-12000MS,-180;
-14000MS,50;
-18000MS,0;
+6000MS,100;
+12000MS,-150;
+18000MS,-180;
+22000MS,50;
+28000MS,0;
                     </textarea>
                     <br>  
                     <b>Test Sequence parameters:<br></b>  

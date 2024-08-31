@@ -1,5 +1,5 @@
 var procs = [
-    {key: "week3_assignment2_part1_position", 
+    {key: "week3_assignment2_part1-position", 
         func: "user.kineticFriction = 0.5;\n" 
         + "user.frictionCoefficient = 0.05;\n" 
         + "user.inertiaFactor = 0.8;\n" 
@@ -40,7 +40,7 @@ var procs = [
         moveType: "pos",
         ff: "",
     },
-    {key: "week3_assignment2_part2_flywheel", 
+    {key: "week3_assignment2_part2-flywheel", 
         func: "user.kineticFriction = 0.5;\n"
         + "user.frictionCoefficient = 0.05;\n"
         + "user.inertiaFactor = 0.8;\n"
@@ -77,7 +77,7 @@ var procs = [
         moveType: "vel",
         ff: "",
     },
-    {key: "week3_assignment2_part3_imbalanced", 
+    {key: "week3_assignment2_part3-imbalanced", 
         func: "user.kineticFriction = 7;\n" 
         + "user.frictionCoefficient = 4;\n" 
         + "user.inertiaFactor = 0.8;\n" 
@@ -122,7 +122,7 @@ var procs = [
         moveType: "pos",
         ff: "return 0; //you'll probably need this",
     },
-    {key: "pid_lecture_example_1_basic", 
+    {key: "pid_lecture_example_1-basic", 
         func: "user.kineticFriction = 0.1;\n" 
         + "user.frictionCoefficient = 0.01;\n" 
         + "user.inertiaFactor = 0.8;\n" 
@@ -163,7 +163,7 @@ var procs = [
         moveType: "pos",
         ff: "",
     },
-    {key: "pid_lecture_example_2_friction", 
+    {key: "pid_lecture_example_2-friction", 
         func: "user.kineticFriction = 10;\n" 
         + "user.frictionCoefficient = 20;\n" 
         + "user.inertiaFactor = 0.8;\n" 
@@ -204,7 +204,7 @@ var procs = [
         moveType: "pos",
         ff: "",
     },
-    {key: "pid_lecture_example_3_imbalanced", 
+    {key: "pid_lecture_example_3-imbalanced", 
         func: "user.kineticFriction = 4;\n" 
         + "user.frictionCoefficient = 1;\n" 
         + "user.inertiaFactor = 0.8;\n" 
@@ -242,13 +242,13 @@ var procs = [
         setpoint: 30, 
         Kp: 2,
         Ki: 0,
-        Kd: 2, 
+        Kd: 0.5, 
         Icap: 0,
         range: 55,
         upbound: -90,
         lowbound: 60,
         moveType: "pos",
-        ff: "return -40 * Math.cos(actual * Math.PI / 180);",
+        ff: "return -45 * Math.cos(actual * Math.PI / 180);",
     },
     // {key: "model", 
     //     func: "if (typeof user.kpmodel === 'undefined'){\n"
@@ -316,7 +316,9 @@ var pid = new PID(input, setpoint, Kp, Ki, Kd, 'direct');
 var pidTuner = new PID_ATune();
 
 //ADDED BY ANSHAL JAIN (pknessness)
+var mostOver = 0;
 var overshot = 0;
+
 var beyondTheBoundary = false;
 var originalspot = 0;
 var prevActual = 0;
@@ -325,9 +327,16 @@ var prevI = undefined;
 var prevD = undefined;
 var prevIcap = undefined;
 
+var hasStabbed = false;
+
 var begunStab = undefined;
 var mostStab = undefined;
 var lastChange = undefined;
+
+var isStab = false;
+
+var dAdt = 0;
+var prevdAdt = 0;
 
 var prevT = 0;
 
@@ -477,9 +486,12 @@ function process(){
         //input = Math.sin(time/1000)*40 + noise + output;
         prevActual = input;
         input = proc.compute(time, input, noise, output, user);
+        prevdAdt = dAdt;
+        dAdt = input - prevActual;
         
         if((prevActual < setpoint && input > setpoint) || (prevActual > setpoint && input < setpoint)){
             beyondTheBoundary = true;
+            overshot = 0;
             // console.log(`activated kyoukaiNoKanata`);
             document.getElementById("set_reach").style = "background-color:#009F00;";
         }
@@ -491,48 +503,74 @@ function process(){
             }else{
                 document.getElementById("set_stab").style = "background-color:#F2BB07;";
                 if((time - begunStab) > 1000){
-                    // console.log(`most:${begunStab-lastChange} bl:${mostStab} nod:`,document.getElementById("overshot1").childNodes);
-                    if((begunStab - lastChange < mostStab) || mostStab == undefined){
-                        mostStab = begunStab - lastChange;
-                        document.getElementById("overshot1").childNodes[15].innerText = (mostStab/1000.0);
-                    }
+                    console.log(`most:${begunStab-lastChange} bl:${mostStab} nod:`,document.getElementById("overshot1").childNodes);
+                    var stab = begunStab - lastChange;
+                    hasStabbed = true;
+                    updateBlockStab((stab));
                     document.getElementById("set_stab").style = "background-color:#009F00;";
+                    isStab = true;
                 }
             }
         }else{
             begunStab = undefined;
             document.getElementById("set_stab").style = "background-color:#FF0000;";
+            isStab = false;
         }
 
-        if(setpoint > originalspot){
-            if(prevActual > input){
-                // console.log(`kyoukaiNoKanata ${beyondTheBoundary} os${overshot}`);
-                if(beyondTheBoundary && Math.abs(prevActual - setpoint) > overshot){
-                    // console.log(`set overshot`);
-                    beyondTheBoundary = false;
-                    overshot = Math.abs(prevActual - setpoint);
-                    //$("#overshot1").text(`kP: ${Kp} kI: ${Ki} kD: ${Kd} max overshot: ${overshot.toFixed(2)}`);
-                    updateOvershot();
-                    document.getElementById("overshot1").childNodes[11].innerText = overshot.toFixed(2);
-                    document.getElementById("overshot1").innerText.replace("")
-                    prevP = Kp; prevI = Ki; prevD = Kd; prevIcap = Icap;
-                }
-                //console.log(overshot);
+        // if(setpoint > originalspot){
+        //     if(prevActual > input){
+        //         // console.log(`kyoukaiNoKanata ${beyondTheBoundary} os${overshot}`);
+        //         var over = Math.abs(prevActual - setpoint);
+        //         if(beyondTheBoundary && over > overshot){
+        //             // console.log(`set overshot`);
+        //             overshot = over;
+        //             beyondTheBoundary = false;
+        //         }
+        //         if(overshot >mostOver){
+        //             mostOver = overshot;
+        //         }
+        //         updateBlockTunings();
+        //         updateBlockOvershoot(overshot.toFixed(2),mostOver.toFixed(2));
+        //         // document.getElementById("overshot1").innerText.replace("")
+        //         prevP = Kp; prevI = Ki; prevD = Kd; prevIcap = Icap;
+        //         //console.log(overshot);
+        //     }
+        // }else if(setpoint < originalspot){
+        //     if(prevActual < input){
+        //         // console.log(`kyoukaiNoKanata ${beyondTheBoundary} os${overshot}`);
+        //         var over = Math.abs(prevActual - setpoint);
+        //         if(beyondTheBoundary && over > overshot){
+        //             // console.log(`set overshot`);
+        //             overshot = over;
+        //             beyondTheBoundary = false;
+        //         }
+        //         if(overshot > mostOver){
+        //             mostOver = overshot;
+        //         }
+        //         updateBlockTunings();
+        //         updateBlockOvershoot(overshot.toFixed(2),mostOver.toFixed(2));
+        //         // $("#overshot1").text(`kP: ${Kp} kI: ${Ki} kD: ${Kd} max overshot: ${overshot.toFixed(2)}`);
+        //         prevP = Kp; prevI = Ki; prevD = Kd; prevIcap = Icap;
+        //         //console.log(overshot);
+        //     }
+        // }
+
+        if((prevdAdt > 0 && dAdt < 0) || (prevdAdt < 0 && dAdt > 0)){
+            // console.log(`kyoukaiNoKanata ${beyondTheBoundary} os${overshot}`);
+            var over = Math.abs(prevActual - setpoint);
+            if(beyondTheBoundary && over > overshot){
+                // console.log(`set overshot`);
+                overshot = over;
+                beyondTheBoundary = false;
             }
-        }else if(setpoint < originalspot){
-            if(prevActual < input){
-                // console.log(`kyoukaiNoKanata ${beyondTheBoundary} os${overshot}`);
-                if(beyondTheBoundary && Math.abs(prevActual - setpoint) > overshot){
-                    // console.log(`set overshot`);
-                    beyondTheBoundary = false;
-                    overshot = Math.abs(prevActual - setpoint);
-                    updateOvershot();
-                    document.getElementById("overshot1").childNodes[11].innerText = overshot.toFixed(2);
-                    // $("#overshot1").text(`kP: ${Kp} kI: ${Ki} kD: ${Kd} max overshot: ${overshot.toFixed(2)}`);
-                    prevP = Kp; prevI = Ki; prevD = Kd; prevIcap = Icap;
-                }
-                //console.log(overshot);
+            if(overshot > mostOver){
+                mostOver = overshot;
             }
+            // updateBlockTunings();
+            updateBlockOvershoot(overshot.toFixed(2),mostOver.toFixed(2));
+            // $("#overshot1").text(`kP: ${Kp} kI: ${Ki} kD: ${Kd} max overshot: ${overshot.toFixed(2)}`);
+            prevP = Kp; prevI = Ki; prevD = Kd; prevIcap = Icap;
+            //console.log(overshot);
         }
         
         pid.setInput(input);
@@ -569,6 +607,7 @@ function processChanged(){
     sKi.value = proc.Ki;
     sKd.value = proc.Kd;
     sIcap.value = proc.Icap;
+    tuningsChanged();
 
     sSetpoint.min = -proc.range;
     sSetpoint.max = proc.range;
@@ -589,6 +628,14 @@ function setpointChanged(){
     originalspot = setpoint;
     beyondTheBoundary = false;
     setpoint = sSetpoint.value * 1.0;
+
+    if(hasStabbed == false){
+        updateBlockStab(-1);
+    }
+
+    overshot = 0;
+    hasStabbed = false; 
+
     // console.log("setpoint "+setpoint);        
     pid.setPoint(setpoint);
     lastChange = (new Date).getTime();;
@@ -616,11 +663,28 @@ function tuningsChanged(){
 //     updateSliderText();  
 // }
 
-function updateOvershot(){
-    document.getElementById("overshot1").childNodes[1].innerText = Kp;
-    document.getElementById("overshot1").childNodes[3].innerText = Ki;
-    document.getElementById("overshot1").childNodes[5].innerText = Kd;
-    document.getElementById("overshot1").childNodes[7].innerText = Icap;
+function updateBlockTunings(){
+    document.getElementById("overshot1").childNodes[2].innerText = Kp;
+    document.getElementById("overshot1").childNodes[5].innerText = Ki;
+    document.getElementById("overshot1").childNodes[8].innerText = Kd;
+    document.getElementById("overshot1").childNodes[11].innerText = Icap;
+}
+
+function updateBlockOvershoot(os, mostos){
+    if(document.getElementById("testSequenceButton").disabled){
+        document.getElementById("overshot1").childNodes[16].innerText = mostos
+    }
+    document.getElementById("pre_os").innerText = os
+}
+
+function updateBlockStab(st){
+    if((st > mostStab && st != -1) || st == -1){
+        mostStab = st;
+    }
+    if(document.getElementById("testSequenceButton").disabled){
+        document.getElementById("overshot1").childNodes[21].innerText = (mostStab == -1 ? "Not stabilized" : mostStab/1000.0)
+    }
+    document.getElementById("pre_stab").innerText = (st == -1 ? "Not stabilized" : st/1000.0)
 }
 
 function processFuncChanged(){  
@@ -885,46 +949,59 @@ $(document).ready(function(){
 });
 
 function testSequence(){
-    var sequence = document.getElementById("testSequence").value.replaceAll(' ','').replaceAll('\n','').replaceAll('_','').replaceAll(',','').replaceAll('.','').replaceAll('\t','');
+    if(isStab){
+        var sequence = document.getElementById("testSequence").value.replaceAll(' ','').replaceAll('\n','').replaceAll('_','').replaceAll(',','').replaceAll('.','').replaceAll('\t','');
 
-    console.log(sequence);
-    x = sequence.split(";")
-    pid.reset();
-    disableButton();
-    t = 0;
-    for(var i = 0; i < x.length; i ++){
-        a = x[i].split("MS");
-        if(a.length == 2){
-            console.log(parseInt(a[0]), parseInt(a[1]));
-            setTimeout(setSetpoint,parseInt(a[0]), parseInt(a[1]));
-            t = parseInt(a[0]);
+        console.log(sequence);
+        x = sequence.split(";")
+        pid.reset();
+        disableButton();
+        t = 0;
+        for(var i = 0; i < x.length; i ++){
+            a = x[i].split("MS");
+            if(a.length == 2){
+                console.log(parseInt(a[0]), parseInt(a[1]));
+                setTimeout(setSetpoint,parseInt(a[0]), parseInt(a[1]));
+                t = parseInt(a[0]);
+            }
         }
-    }
-    console.log("timing",t);
-    setTimeout(enableButton,t);
+        console.log("timing",t);
+        setTimeout(enableButton,t);
     
-    if(true || (Kp != prevP || Ki != prevI || Kd != prevD || Icap != prevIcap)){
-        // console.log(`${Kp},${prevP} ${Ki},${prevI} ${Kd},${prevD}`);
-        prevP = Kp;
-        prevI = Ki;
-        prevD = Kd;
-        prevIcap = Icap;
-        overshot = 0;
-        $("#overshot4").html($("#overshot3").html());
-        $("#overshot3").html($("#overshot2").html());   
-        $("#overshot2").html($("#overshot1").html());
-        $("#overshot1").html(`
-            kP:<span id="os_kp" style="margin:5px;"> ${Kp} </span>
-            kI:<span id="os_ki" style="margin:5px;"> ${Ki} </span>
-            kD:<span id="os_kd" style="margin:5px;"> ${Kd} </span>
-            Icap:<span id="os_icap" style="margin:5px;"> ${Icap} </span>
-            <br>
-            Worst overshoot:<span id="os_os" style="margin:5px;"> Has not overshot </span>
-            <br>
-            Worst Stabilization Time:<span id="os_stab" style="margin:5px;"> Has not stabilized </span>
-        `);
+        if(true || (Kp != prevP || Ki != prevI || Kd != prevD || Icap != prevIcap)){
+            // console.log(`${Kp},${prevP} ${Ki},${prevI} ${Kd},${prevD}`);
+            prevP = Kp;
+            prevI = Ki;
+            prevD = Kd;
+            prevIcap = Icap;
+            mostOver = 0;
+            mostStab = 0;
+
+            $("#overshot4").html($("#overshot3").html());
+            $("#overshot3").html($("#overshot2").html());   
+            $("#overshot2").html($("#overshot1").html());
+            $("#overshot1").html(`
+                <b>kP:</b><span id="os_kp" style="margin:5px;"> ${Kp} </span>
+                <b>kI:</b><span id="os_ki" style="margin:5px;"> ${Ki} </span>
+                <b>kD:</b><span id="os_kd" style="margin:5px;"> ${Kd} </span>
+                <b>Icap:</b><span id="os_icap" style="margin:5px;"> ${Icap} </span>
+                <br>
+                <b style="color: #830071;">Worst Overshoot:</b><span id="os_os" style="margin:5px;"> Has not overshot </span>
+                <br>
+                <b style="color: #a18100;">Worst Stabilization:</b><span id="os_stab" style="margin:5px;"> Not stabilized </span>
+                <br>
+                <b>Model:</b><span id="os_mod" style="margin:5px;">${(proc.key).split("-")[0]}</span>
+            `);
         
+        }
+    }else{
+        document.getElementById("errors").innerHTML = "<b>Stabilize Before Testing</b>";
+        setTimeout(restoreError, 2000);
     }
+}
+
+function restoreError(){
+    document.getElementById("errors").innerHTML = "<b>No Errors</b>";
 }
 
 function setSetpoint(x){
@@ -933,14 +1010,24 @@ function setSetpoint(x){
     setpointChanged();
 }
 
+
 function disableButton(){
     // console.log(`dis button ${document.getElementById("testSequenceButton").disabled}`);
     document.getElementById("testSequenceButton").disabled = true;
+    document.getElementById("sliderSetpoint").disabled = true;
+    document.getElementById("sliderKp").disabled = true;
+    document.getElementById("sliderKi").disabled = true;
+    document.getElementById("sliderKd").disabled = true;
+    document.getElementById("sliderIcap").disabled = true;
+    document.getElementById("ffFunc").disabled = true;
+    document.getElementById("tuningsBox").disabled = true;
+    
     // console.log(`dis button ${document.getElementById("testSequenceButton").disabled}`);
 }
 
 function enableButton(){
     // console.log(`das button ${document.getElementById("testSequenceButton").disabled}`);
     document.getElementById("testSequenceButton").disabled = false;
+    document.getElementById("tuningsBox").disabled = false;
     // console.log(`das button ${document.getElementById("testSequenceButton").disabled}`);
 }
