@@ -1028,6 +1028,12 @@ function disableButton(){
 function enableButton(){
     // console.log(`das button ${document.getElementById("testSequenceButton").disabled}`);
     document.getElementById("testSequenceButton").disabled = false;
+    document.getElementById("sliderSetpoint").disabled = false;
+    document.getElementById("sliderKp").disabled = false;
+    document.getElementById("sliderKi").disabled = false;
+    document.getElementById("sliderKd").disabled = false;
+    document.getElementById("sliderIcap").disabled = false;
+    document.getElementById("ffFunc").disabled = false;
     document.getElementById("tuningsBox").disabled = false;
     // console.log(`das button ${document.getElementById("testSequenceButton").disabled}`);
 }
