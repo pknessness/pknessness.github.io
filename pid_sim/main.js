@@ -120,7 +120,7 @@ var procs = [
         upbound: -70,
         lowbound: 60,
         moveType: "pos",
-        ff: "return 0; //you'll probably need this",
+        ff: "return 0; //you'll probably need this. look at pid_lecture_example_3 for an example of this being used.",
     },
     {key: "pid_lecture_example_1-basic", 
         func: "user.kineticFriction = 0.1;\n" 
