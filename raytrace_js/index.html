@@ -1,0 +1,41 @@
+<html>
+  <head>
+    <!-- <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> -->
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="../stylesheet.css" />
+    <link rel="stylesheet" href="stylesheet.css" />
+  </head>
+  <title>RayTracing in JS</title>
+  <body>
+    <div class="sunken-panel" id="sunk">
+        <div style="width:100%;height: 99%;text-align: center;background-color:darkorchid" id="enclosing">
+            <canvas id="mainCanvas"></canvas>
+        </div>
+        <!-- <canvas style="width:50;height:50;" id="mainCanvas"></canvas> -->
+    </div>
+    <fieldset>
+        <div class="field-row">
+            <span style="width: 55%;">
+                <label style="font-size:15px;">Width</label>
+                <label id="d_width" style="font-size:15px;">?</label>
+            </span>
+            <!-- <div style="width:95%" id="sliderSetpoint"></div> -->
+            <input id="sliderWidth" type="range" min="10" max="1" value="0"/>
+            <label id=up_l style="font-size:15px;width:100px;">P Term:</label>
+            <label id="pcomp" style="font-size:15px;width:100px;">?</label>
+        </div>
+                    
+        <div class="field-row">
+            <span style="width: 55%;">
+                <label style="font-size:15px;">Height</label>
+                <label id="d_width" style="font-size:15px;">?</label>
+            </span>
+            <!-- <div style="width:95%" id="sliderSetpoint"></div> -->
+            <input id="sliderHeight" type="range" min="10" max="1" value="0"/>
+            <label id=ui_l style="font-size:15px;width:100px;">I Term:</label>
+            <label id="icomp" style="font-size:15px;width:100px;">?</label>
+        </div>
+    </fieldset>
+  </body>
+  <script src = "main.js"></script>
+</html>
