@@ -1,5 +1,5 @@
-var w = 100;
-var h = 100;
+var w = 50;
+var h = 50;
 var projScale = 1;
 // var fov = 90;
 var camlength = 10;
@@ -13,11 +13,12 @@ var canvas = document.getElementById("mainCanvas");
 var ctx = canvas.getContext("2d");
 
 var randseed = 6;
+var truerRand = true;
 
 var objects = [];
 var materials = [];
 
-var maxBounces = 7;
+var maxBounces = 5;
 var raysPerPixel = 1;
 
 var hardColors = false;
@@ -74,6 +75,7 @@ function printHit(hitData){
 }
 
 function randomValue(){
+    if(truerRand) return Math.random();
     randseed = (randseed * 16625 + 1013223) & 0xFFFFFF;
     // console.log(`rand:${randseed}`);
     return randseed/(0xFFFFFF);
@@ -110,7 +112,16 @@ function checkCollision(line_pos, line_dir, obj){
         if(hitOrMiss){
             var distA = (-b + Math.sqrt(discrim))/(2*a);
             var distB = (-b - Math.sqrt(discrim))/(2*a);
-            var dist = Math.min(distA, distB);
+            var dist = 0;
+            // if(distA < 0 && distB < 0){
+            //     return {hit: false, distance: undefined, normal: undefined, hitPoint: undefined, obj: undefined};
+            //     console.log(`negative hit on ${obj.colorIndex}`);
+            // }
+            if(distA < 0) {dist = distB;}
+            else if(distB < 0) {dist = distA;}
+            else {
+                dist = Math.min(distA, distB);
+            }
             var hitPoint = addVec(line_pos,scaleVec(line_dir, dist));
             return {hit: true, distance: dist, normal: invertVec(norm(subVec(hitPoint,[obj.x,obj.y,obj.z]))), hitPoint: hitPoint, obj: undefined};
         }
@@ -198,11 +209,11 @@ function singleRay(x, y){
 
         var rayColor = [1.0,1.0,1.0];
         var incomingLight = [0,0,0];
+        var startTime = performance.now();
         for(var i = 0; i < maxBounces; i ++){
-            var startTime = performance.now();
+            
             var col = checkAllCollisions(raySource, ray);
-            var endTime = performance.now();
-            console.log(`Call to took ${endTime - startTime} milliseconds`);
+            
             if(col.hit){
                 raySource = col.hitPoint;
                 ray = randomHemisphere(col.normal);
@@ -217,6 +228,8 @@ function singleRay(x, y){
                 break;
             }
         }
+        var endTime = performance.now();
+        console.log(`Call to took ${endTime - startTime} milliseconds`);
         
         return scaleVec(incomingLight,255);
     }else{
@@ -254,19 +267,21 @@ function draw(){
         }
     }
     numFrames ++;
-    setTimeout(draw, 20);
-    randseed *= 1203;
+    setTimeout(draw, 10);
+    randseed *= 2301;
 }
 
 document.addEventListener('DOMContentLoaded', function(){
     addMaterial("Red", 200, 10, 20, 0.4, 0);
     addMaterial("Blue", 100, 150, 210, 0.4, 0);
     addMaterial("Floor", 180, 50, 210, 0.4, 0);
-    addMaterial("Light", 255, 255, 255, 0, 0.7);
+    addMaterial("Light", 255, 255, 255, 0, 2);
+    addMaterial("Dim Light", 255, 255, 255, 0, 0.01);
     addSphere(5, 0, 0, 10, 0);
     addSphere(-5, 8, 8, 5, 1);
     addSphere(-5,-30, 0, 10, 3);
-    addSphere(0, 50, 0, 25, 2);
+    // addSphere(0, 120, 0, 100, 2);
+    addSphere(-5, -10, 0, 25, 2);
     resize();
     draw();
 }); 
