@@ -623,6 +623,10 @@ function processChanged(){
     processFuncChanged();    
 }
 
+function processSlid(){
+    $("#process").text( procs[sProcess.value].key ); 
+}
+
 
 function setpointChanged(){
     originalspot = setpoint;

@@ -24,22 +24,24 @@
             <canvas id="plot1" width="700" height="340" style="margin: 0px;"></canvas>   
         </div>
         <div id="overshot" style="width:200px;">
-            <div>
-                <b >Most Recent:</b>
-                <b style="color: #830071;">Overshoot:</b><span id="pre_os" style="margin:5px;"> ? </span>
-                <br>
-                <b style="color: #a18100;">Stabilization:</b><span id="pre_stab" style="margin:5px;"> ? </span>s
-                <br>
-            </div>
-            <div class="title-bar-controls">
-                <label hidden style="width:100px">Setpoint Reached</label>
-                <button hidden id="set_reach" aria-label="Blank" style="background-color: #FF0000;"></button>
-            </div>
-            
-            <div class="title-bar-controls">
-                <label style="width:100px">Setpoint Stabilized</label>
-                <button id="set_stab" aria-label="Blank" style="background-color: #FF0000;"></button>
-            </div>
+            <fieldset>
+                <div>
+                    <b >Most Recent:</b> <br>
+                    <b style="color: #830071;">Overshoot:</b><span id="pre_os" style="margin:5px;"> ? </span>
+                    <br>
+                    <b style="color: #a18100;">Stabilization:</b><span id="pre_stab" style="margin:5px;"> ? </span>s
+                    <br>
+                </div>
+                <div hidden class="title-bar-controls">
+                    <label hidden style="width:100px">Setpoint Reached</label>
+                    <button hidden id="set_reach" aria-label="Blank" style="background-color: #FF0000;"></button>
+                </div>
+                
+                <div class="title-bar-controls">
+                    <label style="width:100px">Setpoint Stabilized</label>
+                    <button id="set_stab" aria-label="Blank" style="background-color: #FF0000;"></button>
+                </div>
+            </fieldset>
             <div id="overshot1" class="window" style="height:50px;">
                 <b>kP:</b><span id="os_kp" style="margin:5px;"> ? </span>
                 <b>kI:</b><span id="os_ki" style="margin:5px;"> ? </span>
@@ -71,9 +73,9 @@
         
         <span class="field-row" style="width:100%">
             <label style="white-space: nowrap;"><b>Example Presets:</b></label>
-            <label id="process">?</label>
+            <label id="process" style="width:15%">?</label>
             <!-- <div style="width:95%" id="sliderSetpoint"></div> -->
-            <input id="sliderProcess" style="width:15%" type="range" min="0" max="1" value="0" onchange="processChanged();"/>
+            <input id="sliderProcess" style="width:15%" type="range" min="0" max="1" value="0" onchange="processChanged();" oninput="processSlid();"/>
         
             <button id="start">Start</button>
             <button id="stop">Stop</button>
