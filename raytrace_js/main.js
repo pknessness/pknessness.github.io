@@ -231,7 +231,7 @@ function singleRay(x, y){
         var endTime = performance.now();
         console.log(`Call to took ${endTime - startTime} milliseconds`);
         
-        return scaleVec(incomingLight,255);
+        return scaleVec([Math.sqrt(incomingLight[0]),Math.sqrt(incomingLight[1]),Math.sqrt(incomingLight[2])],255);
     }else{
         var col = checkAllCollisions(camCore, projVector);
         if(col.hit){
