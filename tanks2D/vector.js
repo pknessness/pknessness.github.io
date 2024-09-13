@@ -22,7 +22,7 @@ function invertVec(vectorA){
 }
 
 function absVec(vectorA){
-    if(vectorA.length != 3) throw new Error('ABS Error: VectorA is not the right size');
+    if(vectorA.length != 3) throw new Error(`ABS Error: VectorA ${vectorA} is not the right size`);
     return [Math.abs(vectorA[0]),Math.abs(vectorA[1]),Math.abs(vectorA[2])];
 }
 
