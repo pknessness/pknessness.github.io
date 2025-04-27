@@ -1,0 +1,28 @@
+{ "class": "GraphLinksModel",
+  "pointsDigits": 0,
+  "nodeDataArray": [
+{"text":"What is the problem?","key":-1,"loc":"-20 -520","figure":"CreateRequest","fill":"#a5d2fa"},
+{"text":"The robot is not moving","key":-2,"loc":"-130 -450","size":"180 40","figure":"ManualOperation","fill":"#ffffff","color":"#7d33ff"},
+{"text":"Is the battery in and is the robot and battery turned on?","key":-3,"loc":"-20 -380","figure":"CreateRequest","size":"240 60"},
+{"text":"Is the Nucleo being powered by anything? An XT30 on the bottom of the board perhaps?","key":-4,"loc":"-370 -230","figure":"CreateRequest","size":"260 80"},
+{"text":"Are there green LEDs lit on the Nucleo breakout (Green board that is atop the Nucleo)?","key":-5,"loc":"-20 -230","figure":"CreateRequest","size":"240 80"},
+{"text":"Turn the robot/battery on","key":-6,"loc":"290 -380","fill":"#b3e6b3","figure":"Parallelogram2","size":"200 40"},
+{"text":"No","key":-7,"loc":"150 -410","size":"60 40","figure":"ManualOperation","fill":"#ffffff","color":"#7d33ff"},
+{"text":"Yes","key":-8,"loc":"20 -310","size":"60 40","figure":"ManualOperation","fill":"#ffffff","color":"#7d33ff"},
+{"text":"Is the slide switch on the Nucleo Breakout set to ON?","key":-9,"loc":"-370 -90","figure":"CreateRequest","size":"260 80"},
+{"text":"Figure out a way to power the Nucleo","key":-10,"loc":"-370 -360","fill":"#b3e6b3","figure":"Parallelogram2","size":"240 40"},
+{"text":"Turn the slide switch ON","key":-11,"loc":"-370 30","fill":"#b3e6b3","figure":"Parallelogram2","size":"200 40"},
+{"text":"No","key":-12,"loc":"-320 -300","size":"60 40","figure":"ManualOperation","fill":"#ffffff","color":"#7d33ff"},
+{"text":"Yes","key":-13,"loc":"-320 -160","size":"60 40","figure":"ManualOperation","fill":"#ffffff","color":"#7d33ff"},
+{"text":"No","key":-14,"loc":"-320 -20","size":"60 40","figure":"ManualOperation","fill":"#ffffff","color":"#7d33ff"},
+{"text":"No","key":-15,"loc":"-190 -260","size":"60 40","figure":"ManualOperation","fill":"#ffffff","color":"#7d33ff"}
+],
+  "linkDataArray": [
+{"from":-1,"to":-3,"points":[-20,-490,-20,-480,-20,-450,-20,-450,-20,-420,-20,-410],"dir":1,"thickness":4},
+{"from":-3,"to":-6,"points":[100,-380,110,-380,145,-380,145,-380,180,-380,190,-380],"thickness":4,"dir":1},
+{"from":-3,"to":-5,"points":[-20,-350,-20,-340,-20,-310,-20,-310,-20,-280,-20,-270],"dir":1,"thickness":4},
+{"from":-4,"to":-10,"points":[-370,-270,-370,-280,-370,-305,-370,-305,-370,-330,-370,-340],"thickness":4,"dir":1},
+{"from":-5,"to":-4,"points":[-140,-230,-150,-230,-190,-230,-190,-230,-230,-230,-240,-230],"dir":1,"thickness":4},
+{"from":-4,"to":-9,"points":[-370,-190,-370,-180,-370,-160,-370,-160,-370,-140,-370,-130],"dir":1,"thickness":4},
+{"from":-9,"to":-11,"points":[-370,-50,-370,-40,-370,-20,-370,-20,-370,0,-370,10],"dir":1,"thickness":4}
+]}

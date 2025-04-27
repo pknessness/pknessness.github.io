@@ -1,0 +1,19 @@
+.zoom-frame {
+    width: 100%;
+    height:100%;
+    top: 0;
+    left: 0;
+    /*border: 2px dashed #ffffff;*/
+}
+
+button{
+    background: silver;
+    border: 2px solid #ffffff77;
+    /* font-size: 12px */
+    background-color: rgb(151, 177, 244); 
+}
+
+button:hover{
+    background: rgba(200, 171, 235, 0.6);
+    border: 2px solid rgba(158, 83, 244, 0.467);
+}
