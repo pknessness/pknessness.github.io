@@ -89,10 +89,10 @@ leftButtonData[1][4] = {pinType:"nc",pinName:"NC",spiID:-1,spiPin:"",canID:-1,ca
 leftButtonData[0][5] = {pinType:"nc",pinName:"NC",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
 leftButtonData[1][5] = {pinType:"power",pinName:"IOREF",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
 
-leftButtonData[0][6] = {pinType:"digital",pinName:"PA_13",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
+leftButtonData[0][6] = {pinType:"digital",pinName:"PA_13",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: "SWDIO"};
 leftButtonData[1][6] = {pinType:"control",pinName:"RESET",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
 
-leftButtonData[0][7] = {pinType:"digital",pinName:"PA_14",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
+leftButtonData[0][7] = {pinType:"digital",pinName:"PA_14",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: "SWCLK"};
 leftButtonData[1][7] = {pinType:"power",pinName:"3.3V",spiID:-1,spiPin:"",canID:-1,canPin:"",uartID:-1,uartPin:"",i2cID:-1,i2cPin:"",pwmTimer:-1,pwmChannel:-1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
 
 leftButtonData[0][8] = {pinType:"digital",pinName:"PA_15",spiID:1,spiPin:"CS",canID:-1,canPin:"",uartID:4,uartPin:"RTS",i2cID:-1,i2cPin:"",pwmTimer:2,pwmChannel:1,pwmInverted:false, adcID:-1, dacID:-1, extralabel: ""};
