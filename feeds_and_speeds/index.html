@@ -80,6 +80,7 @@ Bugs, Suggestions, and PayPal donations to: bryan.turner@pobox.com
         
         div.results li { width: 24em; }
         div.results ul li ul li { width: 8em; border: none;}
+        div.results ul li ul li small {color: green}
     </style>
 </head>
 
@@ -113,7 +114,11 @@ Bugs, Suggestions, and PayPal donations to: bryan.turner@pobox.com
             <li>Spindle Power  <small class="imperial">HP</small>    <small class="metric">KW</small>   <input id="max_HP" value="0.5364"></li>
         </ul>
         
-        <div class="header"><b class="header">Tool</b></div>
+        <div class="header"><b class="header">Tool</b>
+            <button style="margin-left: 20px" onclick="document.getElementById('in_DIAMETER').value = imperialToDisplay((1/8), mmToInch)">1/8</button>
+            <button style="margin-left: 20px" onclick="document.getElementById('in_DIAMETER').value = imperialToDisplay((3/16), mmToInch)">3/16</button>
+            <button style="margin-left: 20px" onclick="document.getElementById('in_DIAMETER').value = imperialToDisplay((1/4), mmToInch)">1/4</button>
+        </div>
         <ul>
             <li><select id="ux_E" onchange="uxPick('E')">
                 <option value="HSS">High Speed Steel, 27-31</option>
@@ -148,7 +153,10 @@ Bugs, Suggestions, and PayPal donations to: bryan.turner@pobox.com
             <li>Chipload <small class="imperial">in</small><small class="metric">mm</small><small>(min, max)</small><input id="max_CHIPLOAD" value="0.0023"><input id="min_CHIPLOAD" value="0.0001"></li>
         </ul>
         
-        <div class="header"><b class="header">Cut</b></div>
+        <div class="header"><b class="header">Cut</b>
+            <button style="margin-left: 20px" onclick="document.getElementById('min_WOC').value = document.getElementById('in_DIAMETER').value; document.getElementById('max_WOC').value = document.getElementById('in_DIAMETER').value">Slotting</button>
+            <button style="margin-left: 20px" onclick="document.getElementById('min_WOC').value = document.getElementById('in_DIAMETER').value * 0.1; document.getElementById('max_WOC').value = document.getElementById('in_DIAMETER').value * 0.9">Adaptive</button>
+        </div>
         <ul>
             <li>DOC   <small class="imperial">inch</small><small class="metric">mm</small>      <small>(min, max)</small>   <input id="max_DOC" value="0.75">           <input id="min_DOC" value="0.01"></li>
             <li>WOC   <small class="imperial">inch</small><small class="metric">mm</small>      <small>(min, max)</small>   <input id="max_WOC" value="0.125">          <input id="min_WOC" value="0.01"></li>

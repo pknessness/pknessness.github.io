@@ -280,7 +280,7 @@ function new_compute()
         CHIPLOAD.v  = results[0].CHIPLOAD;
         WOC.v       = results[0].WOC;
         DOC.v       = results[0].DOC;
-                
+        
         finalize();
                 
         // --------------------------------------------
@@ -905,45 +905,55 @@ function toRadians (angle) {
 // Google Charts
 //
         
-var docOptions_in = {
-    colorAxis: {colors: ['white', 'red']},
-            
-    title: 'RPM label, MRR heatmap, IPM size',
-    hAxis: {title: 'Width of Cut'},
-    vAxis: {title: 'Depth of Cut'},
+var docOps = {
+    colorAxis: {colors: ['blue', 'red']},
+
+    title: 'RPM label, MRR heatmap, feedrate size',
+    hAxis: {title: 'Width of Cut', titleTextStyle: {
+        fontName: "Pixelated MS Sans Serif",
+        fontSize: 24,
+        bold: true,}},
+    vAxis: {title: 'Depth of Cut', titleTextStyle: {
+        fontName: "Pixelated MS Sans Serif",
+        fontSize: 24,
+        bold: true,}},
     bubble: {opacity: 0.5},
-    sizeAxis: {minValue: 0,  maxSize: 15}
-};
-        
-var rpmOptions_in = {
-    colorAxis: {colors: ['white', 'red']},
-            
-    title: 'DOC label, MRR heatmap, HP size',
-    hAxis: {title: 'Inches per Minute'},
-    vAxis: {title: 'Spindle RPM'},
-    bubble: {opacity: 0.5},
-    sizeAxis: {minValue: 0,  maxSize: 15}
+    sizeAxis: {minValue: 0,  maxSize: 15},
+    backgroundColor: '#D4D4D4',
+    legend: {}
 };
 
-var docOptions_mm = {
-    colorAxis: {colors: ['white', 'red']},
+var rpmOps = {
+    colorAxis: {colors: ['blue', 'red']},
             
-    title: 'RPM label, MRR heatmap, mmPM size',
-    hAxis: {title: 'Width of Cut'},
-    vAxis: {title: 'Depth of Cut'},
+    title: 'DOC label, MRR heatmap, HP size',
+    hAxis: {title: 'Feed Rate', titleTextStyle: {
+        fontName: "Pixelated MS Sans Serif",
+        fontSize: 24,
+        bold: true,}},
+    vAxis: {title: 'Spindle RPM', titleTextStyle: {
+        fontName: "Pixelated MS Sans Serif",
+        fontSize: 24,
+        bold: true,}},
     bubble: {opacity: 0.5},
-    sizeAxis: {minValue: 0,  maxSize: 15}
+    sizeAxis: {minValue: 0,  maxSize: 15},
+    backgroundColor: '#D4D4D4',
 };
-        
-var rpmOptions_mm = {
-    colorAxis: {colors: ['white', 'red']},
-            
-    title: 'DOC label, MRR heatmap, kW size',
-    hAxis: {title: 'Millimeters per Minute'},
-    vAxis: {title: 'Spindle RPM'},
-    bubble: {opacity: 0.5},
-    sizeAxis: {minValue: 0,  maxSize: 15}
-};
+
+var docOptions_in = docOps;
+docOptions_in.title = 'RPM label, MRR heatmap, IPM size';
+
+var rpmOptions_in = rpmOps;
+rpmOptions_in.title = 'DOC label, MRR heatmap, HP size';
+rpmOptions_in.hAxis.title = 'Inches per Minute';
+
+var docOptions_mm = docOps;
+docOptions_mm.title = 'RPM label, MRR heatmap, mmPM size';
+
+var rpmOptions_mm = rpmOps;
+rpmOptions_mm.title = 'DOC label, MRR heatmap, kW size';
+rpmOptions_mm.hAxis.title = 'Millimeters per Minute';
+
         
 var googleData = {};
 var googleChart = {};
@@ -970,12 +980,21 @@ function drawChart(doms,id,options)
                 displayAll();
 
                 for (const [key, value] of Object.entries(googleChart)) {
-                    if(key != id && (value.getSelection().row == undefined || value.getSelection().row != index)){
-                        console.log(key, id, value.getSelection().row, index)
+                    if(key != id && (value.getSelection()[0].row == undefined || value.getSelection()[0].row != index)){
                         value.setSelection(selection);
                     }
                 }
             }
+        });
+
+        google.visualization.events.addListener(googleChart[id], 'ready', function() {
+            if(googleChart[id].getSelection() == undefined || googleChart[id].getSelection().length == 0 || googleChart[id].getSelection()[0].row == undefined){
+                googleChart[id].setSelection([{row:0, column: undefined}]);
+            }
+        });
+
+        google.visualization.events.addListener(googleChart[id], 'error', function (err) {
+            google.visualization.errors.removeError(err.id);
         });
 
         // google.visualization.events.addListener(googleChart[id], 'onmouseover', function() {
