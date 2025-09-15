@@ -78,13 +78,12 @@ Bugs, Suggestions, and PayPal donations to: bryan.turner@pobox.com
         .imperial .metric   { display: none;   }
         .imperial .imperial { display: inline; }
         
-        div.results li { width: 16em; }
-        div.results ul li ul li { width: 6em; border: none;}
+        div.results li { width: 24em; }
+        div.results ul li ul li { width: 8em; border: none;}
     </style>
 </head>
 
-<body role="document">
-    <input type="checkbox">
+<body role="document" id="mainbod">
     <div id="inputs" class="container imperial">
         <div class="header">
             <!-- Donation button -->
@@ -122,9 +121,9 @@ Bugs, Suggestions, and PayPal donations to: bryan.turner@pobox.com
                 <option value="CUSTOM">CUSTOM</option>
             </select></li>
             <li>Modulus of Elasticity               <input id="in_E" value="27"> <small>(10^6 psi)</small></li>
-            <li>Diameter    <small class="imperial">inch</small><small class="metric">mm</small><input id="in_DIAMETER" value="0.375"></li>
-            <li>#Teeth                              <input id="in_TEETH" value="3"></li>
-            <li><input type="checkbox" id="in_BALLNOSE" onclick="inputChanged()">Ballnose?</li>
+            <li>Diameter    <small class="imperial">inch</small><small class="metric">mm</small><input id="in_DIAMETER" value="0.125"></li>
+            <li>#Teeth                              <input id="in_TEETH" value="4"></li>
+            <li><input type="checkbox" id="in_BALLNOSE" onclick="inputChanged()"><label for="in_BALLNOSE">Ballnose?</label></li>
             <li>Total Stickout  <small class="imperial">inch</small><small class="metric">mm</small><input id="in_L" value="0.9"></li>
             <li>Helix Angle                         <input id="in_HELIX" value="30"></li>
         </ul>
@@ -146,18 +145,18 @@ Bugs, Suggestions, and PayPal donations to: bryan.turner@pobox.com
             </li>
             <li>Unit Power  <small>HP/in^3</small> <input id="in_UNITPOWER" value="0.33"></li>
             <li><span class="imperial">SFM</span><span class="metric">SMM</span>         <small>(min, max)</small>   <input id="max_SFM" value="600">            <input id="min_SFM" value="100"></li>
-            <li>Chipload <small class="imperial">in</small><small class="metric">mm</small><small>(min, max)</small><input id="max_CHIPLOAD" value="0.0023"><input id="min_CHIPLOAD" value="0.0008"></li>
+            <li>Chipload <small class="imperial">in</small><small class="metric">mm</small><small>(min, max)</small><input id="max_CHIPLOAD" value="0.0023"><input id="min_CHIPLOAD" value="0.0001"></li>
         </ul>
         
         <div class="header"><b class="header">Cut</b></div>
         <ul>
             <li>DOC   <small class="imperial">inch</small><small class="metric">mm</small>      <small>(min, max)</small>   <input id="max_DOC" value="0.75">           <input id="min_DOC" value="0.01"></li>
-            <li>WOC   <small class="imperial">inch</small><small class="metric">mm</small>      <small>(min, max)</small>   <input id="max_WOC" value="0.375">          <input id="min_WOC" value="0.01"></li>
+            <li>WOC   <small class="imperial">inch</small><small class="metric">mm</small>      <small>(min, max)</small>   <input id="max_WOC" value="0.125">          <input id="min_WOC" value="0.01"></li>
             <li>Deflection  <small class="imperial">inch</small><small class="metric">mm</small> <small>(max)</small>        <input id="max_DEFLECTION" value="0.001"></li>
             <!--         <li>Reserve HP %                            <input id="in_RESERVE_HP"     value="5"></li>
             <li>Reserve Torque %                        <input id="in_RESERVE_TORQUE" value="5"></li>
             -->
-            <li><input type="checkbox" id="in_ADAPTIVE" onclick="inputChanged()"><small>HSM / Adaptive / Constant TEA</small></li>
+            <li><input type="checkbox" id="in_ADAPTIVE" onclick="inputChanged()"><label for="in_ADAPTIVE">HSM / Adaptive / Constant TEA</label></li>
         </ul>
         
         <div class="header"><b class="header">RESULTS</b>
@@ -201,9 +200,9 @@ Bugs, Suggestions, and PayPal donations to: bryan.turner@pobox.com
         
         <div class="header"><b class="header">Parameter Variations</b></div>
         <table id="ALTERNATIVES" class="content"></table>
-        <div>
-            <div id="chart_div" style="width: 900px; height: 500px;"></div>
-            <div id="chart_div2" style="width: 900px; height: 500px;"></div>
+        <div style="display: flex;">
+            <div id="chart_div" style="height: 500px; flex: 1;" onresize="resizeGraphs()"></div>
+            <div id="chart_div2" style="height: 500px; flex: 1;" onresize="resizeGraphs()"></div>
         </div>
         
         <div class="footer">Copyright 2015-2016 by Bryan Turner, All Rights Reserved</div>

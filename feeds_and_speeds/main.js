@@ -234,7 +234,7 @@ function finalize()
     // "Cantilevered Beam Deflection with Point Load at end of Beam"  (http://www.engineersedge.com/beam_calc_menu.shtml)
     DEFLECTION.v   = trim_precision((P.v * Math.pow(L.v ,3)) / (3 * local_E * I));
 }
-        
+
 function new_compute()
 {
     // Load the inputs (convert units as we read them in)
@@ -945,14 +945,46 @@ var rpmOptions_mm = {
     sizeAxis: {minValue: 0,  maxSize: 15}
 };
         
-        
+var googleData = {};
+var googleChart = {};
 function drawChart(doms,id,options)
 {
     if ( typeof google != "undefined" )
     {
-        var data = google.visualization.arrayToDataTable(doms);
-        var chart = new google.visualization.BubbleChart(document.getElementById(id));
-        chart.draw(data, options);
+        googleData[id] = google.visualization.arrayToDataTable(doms);
+        googleChart[id] = new google.visualization.BubbleChart(document.getElementById(id));
+        googleChart[id].draw(googleData[id], options);
+
+        //added by pknessness
+        google.visualization.events.addListener(googleChart[id], 'select', function() {
+            var selection = googleChart[id].getSelection();
+            if(selection.length != 0){
+                var index = selection[0].row;
+                // Load this set of parameters and recalculate results
+                SFM.v       = results[index].SFM;
+                CHIPLOAD.v  = results[index].CHIPLOAD;
+                WOC.v       = results[index].WOC;
+                DOC.v       = results[index].DOC;
+                
+                finalize();
+                displayAll();
+
+                for (const [key, value] of Object.entries(googleChart)) {
+                    if(key != id && (value.getSelection().row == undefined || value.getSelection().row != index)){
+                        console.log(key, id, value.getSelection().row, index)
+                        value.setSelection(selection);
+                    }
+                }
+            }
+        });
+
+        // google.visualization.events.addListener(googleChart[id], 'onmouseover', function() {
+        //     for (const [key, value] of Object.entries(googleChart)) {
+        //         if(key != id){
+        //             google.visualization.events.trigger(value, 'onmouseover', {});
+        //         }
+        //     }
+        // });
     }
 }
         
@@ -1460,3 +1492,9 @@ var RandomNumbers = [
 0.10210,0.17877,0.20149,0.11768,0.20335,0.75220,0.76914,0.85167,0.26836,0.32095,
 0.05394,0.56798,0.95672,0.67567,0.31525,0.07855,0.65428,0.24864,0.87909,0.69929,
 ];
+
+//added by pknessness
+function resizeGraphs(){
+    document.getElementById('chart_div').style.width = document.getElementById("mainbod").clientWidth / 2 - 1;
+    console.log('s')
+}
