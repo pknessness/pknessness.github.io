@@ -17,6 +17,8 @@ Bugs, Suggestions, and PayPal donations to: bryan.turner@pobox.com
     
     <title>Optimizing Feeds and Speeds Calculator for Milling</title>
     <link rel="stylesheet" href="../stylesheet.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
     
     <style type="text/css">
         body  {padding: 20px;}
@@ -62,15 +64,15 @@ Bugs, Suggestions, and PayPal donations to: bryan.turner@pobox.com
         }
         
         li {
-        display: inline;
-        
-        float: left;
-        width: 18em;
-        height: 1.6em;
-        text-decoration: none;
-        padding: 0.2em 0.6em;
-        border-right: 1px solid #CCCCCC;
-        font-size: 1.1em;
+            display: inline;
+            
+            float: left;
+            width: 18em;
+            height: 1.6em;
+            text-decoration: none;
+            padding: 0.2em 0.6em;
+            border-right: 1px solid #CCCCCC;
+            font-size: 1.1em;
         }
         
         .metric   .metric   { display: inline; }
@@ -81,6 +83,17 @@ Bugs, Suggestions, and PayPal donations to: bryan.turner@pobox.com
         div.results li { width: 24em; }
         div.results ul li ul li { width: 8em; border: none;}
         div.results ul li ul li small {color: green}
+
+        .elementToPopup {
+            display: none;
+            position: absolute;
+            margin-top: 30px;
+            z-index: 9;
+        }
+
+        .katex { font-size: 1.8em; }
+        .fraceq { font-size: 1.5em;}
+        .sqrteq { font-size: 1.2em;}
     </style>
 </head>
 
@@ -184,25 +197,73 @@ Bugs, Suggestions, and PayPal donations to: bryan.turner@pobox.com
             </ul>
             <div class="header"><b class="header">ADVANCED</b></div>
             <ul>
-                <li><ul><li>MRR        <small class="imperial">in^3/min</small><small class="metric">cm^3/min</small></li><li id="MRR"/></ul></li>
-                <li><ul><li>Cut Power  <small class="imperial">HP</small><small class="metric">KW</small></li><li id="HP"/></ul></li>
-                <li><ul><li>Deflection <small class="imperial">inch</small> <small class="metric">mm</small></li><li id="DEFLECTION"/></ul></li>
+                <li id="MRR_brick"><ul><li>MRR        <small class="imperial">in^3/min</small><small class="metric">cm^3/min</small></li><li id="MRR"/></ul></li>
+                <div class="elementToPopup" id="MRR_eq"> <div class="window" style="position: relative;">
+                    <div class="window-body" style="position: relative;"> <div id="MRR_equation"></div> </div>
+                    </div>
+                </div>
+                <li id="PWR_brick"><ul><li>Cut Power  <small class="imperial">HP</small><small class="metric">KW</small></li><li id="HP"/></ul></li>
+                <div class="elementToPopup" id="PWR_eq"> <div class="window" style="position: relative;">
+                    <div class="window-body" style="position: relative;"> <div id="PWR_equation"></div> </div>
+                    </div>
+                </div>
+                <li id="DEF_brick"><ul><li>Deflection <small class="imperial">inch</small> <small class="metric">mm</small></li><li id="DEFLECTION"/></ul></li>
+                <div class="elementToPopup" id="DEF_eq"> <div class="window" style="position: relative;">
+                    <div class="window-body" style="position: relative;"> <div id="DEF_equation" class="fraceq"></div> </div>
+                    </div>
+                </div>
             </ul>
             <ul>
-                <li><ul><li>Torque     <small class="imperial">in-lbs</small><small class="metric">NM</small> </li><li id="TORQUE"/></ul></li>
+                <li id="TOR_brick"><ul><li>Torque     <small class="imperial">in-lbs</small><small class="metric">NM</small> </li><li id="TORQUE"/></ul></li>
+                <div class="elementToPopup" id="TOR_eq"> <div class="window" style="position: relative;">
+                    <div class="window-body" style="position: relative;"> <div id="TOR_equation" class="fraceq"></div> </div>
+                    </div>
+                </div>
                 <!-- <li><ul><li>Torque     <small>(oz-in)</small>  </li><li id="TORQUEOZ"/></ul></li> -->
-                <li><ul><li>Force      <small class="imperial">lbs</small><small class="metric">kg</small>    </li><li id="P"/></ul></li>
+                <li id="FOR_brick"><ul><li>Force      <small class="imperial">lbs</small><small class="metric">kg</small>    </li><li id="P"/></ul></li>
+                <div class="elementToPopup" id="FOR_eq"> <div class="window" style="position: relative;">
+                    <div class="window-body" style="position: relative;"> <div id="FOR_equation" class="fraceq"></div> </div>
+                    </div>
+                </div>
             </ul>
             <ul>
-                <li><ul><li>Chipload   <small class="imperial">inch</small><small class="metric">mm</small></li><li id="CHIPLOAD"/></ul></li>
-                <li><ul><li>Radial     </li><li id="RCTF"/></ul></li>
-                <li><ul><li>Axial      </li><li id="ACTF"/></ul></li>
-                <li><ul><li>Feed Adj.  </li><li id="FCF"/></ul></li>
+                <li id="CHL_brick"><ul><li>Chipload   <small class="imperial">inch</small><small class="metric">mm</small></li><li id="CHIPLOAD"/></ul></li>
+                <!-- <div class="elementToPopup" id="CHL_eq"> <div class="window" style="position: relative;">
+                    <div class="window-body" style="position: relative;"> <div id="CHL_equation"></div> </div>
+                    </div>
+                </div> -->
+                <li id="RCTF_brick"><ul><li>Radial     </li><li id="RCTF"/></ul></li>
+                <div class="elementToPopup" id="RCTF_eq"> <div class="window" style="position: relative;">
+                    <div class="window-body" style="position: relative;"> <div id="RCTF_equation" class="sqrteq"></div> </div>
+                    </div>
+                </div>
+                <li id="ACTF_brick"><ul><li>Axial      </li><li id="ACTF"/></ul></li>
+                <div class="elementToPopup" id="ACTF_eq"> <div class="window" style="position: relative;">
+                    <div class="window-body" style="position: relative;"> <div id="ACTF_equation" class="sqrteq"></div> </div>
+                    </div>
+                </div>
+                <li id="FCF_brick"><ul><li>Feed Adj.  </li><li id="FCF"/></ul></li>
+                <div class="elementToPopup" id="FCF_eq"> <div class="window" style="position: relative;">
+                    <div class="window-body" style="position: relative;"> <div id="FCF_equation"></div> </div>
+                    </div>
+                </div>
             </ul>
             <ul>
-                <li><ul><li>Adj. Unit Pwr </li><li id="UNITPOWER"/></ul></li>
-                <li><ul><li>Eff. Diameter <small class="imperial">inch</small><small class="metric">mm</small></li><li id="EFFECTIVE"/></ul></li>
-                <li><ul><li>TEA  <small>(deg.)</small> </li><li id="TEA"/></ul></li>
+                <li id="AUP_brick"><ul><li>Adj. Unit Pwr </li><li id="UNITPOWER"/></ul></li>
+                <!-- <div class="elementToPopup" id="AUP_eq"> <div class="window" style="position: relative;">
+                    <div class="window-body" style="position: relative;"> <div id="AUP_equation"></div> </div>
+                    </div>
+                </div> -->
+                <li id="EFF_brick"><ul><li>Eff. Diameter <small class="imperial">inch</small><small class="metric">mm</small></li><li id="EFFECTIVE"/></ul></li>
+                <div class="elementToPopup" id="EFF_eq"> <div class="window" style="position: relative;">
+                    <div class="window-body" style="position: relative;"> <div id="EFF_equation"></div> </div>
+                    </div>
+                </div>
+                <li id="TEA_brick"><ul><li>TEA  <small>(deg.)</small> </li><li id="TEA"/></ul></li>
+                <div class="elementToPopup" id="TEA_eq"> <div class="window" style="position: relative;">
+                    <div class="window-body" style="position: relative;"> <div id="TEA_equation" class="sqrteq"></div> </div>
+                    </div>
+                </div>
             </ul>
         </div>
         

@@ -186,7 +186,11 @@ function finalize()
             
     var local_E          = E.v * 1000000;                                // Scale modulus of elasticity
     var local_UNITPOWER  = UNITPOWER.v * (1 - 0.01 * (HELIX.v - 14));    // Helix angle (1% per degree of positive lead after 14-degrees): Machinery's Handbook 29 (2012) pp1083-1084
-            
+    
+    //added by pknessness
+    var C = 0.787 * Math.pow(CHIPLOAD.v, -0.197) * 0.5287468071; //feed factor, MMachinery's Handbook 29 (2012) pp1086 converted into an eq 
+    var W = 1.1; //Tool wear, lets just say its a constant 1.1
+
     // --------------------------------------------------------------------------------
     // Constants derived from user inputs
     var RADIUS           = trim_precision(DIAMETER.v/2);
@@ -227,7 +231,7 @@ function finalize()
     // TODO: Likely not valid when using HSM techniques -- should probably disable plunge if not calculating full-width cuts.
     PlungeIPM.v    = trim_precision(RPM.v * CHIPLOAD.v);
     MRR.v          = trim_precision(IPM.v * WOC.v * DOC.v);
-    HP.v           = trim_precision(MRR.v * local_UNITPOWER);
+    HP.v           = trim_precision(MRR.v * local_UNITPOWER * C * W);
     TORQUE.v       = trim_precision((HP.v * OneHP * InchesPerFoot) / (2 * PI * RPM.v));
     P.v            = trim_precision((HP.v * OneHP) / SFM.v);
             
@@ -1517,3 +1521,173 @@ function resizeGraphs(){
     document.getElementById('chart_div').style.width = document.getElementById("mainbod").clientWidth / 2 - 1;
     console.log('s')
 }
+
+var leftest = Math.floor(document.getElementById("MRR_brick").getBoundingClientRect().left);
+
+// MRR
+const MRR_brick = document.getElementById('MRR_brick');
+const MRR_eq = document.getElementById('MRR_eq');
+MRR_brick.addEventListener('mouseenter', () => { 
+    MRR_eq.style.display = 'block'; 
+    document.getElementById("MRR_eq").style.left = `${Math.max(leftest, Math.floor(document.getElementById("MRR_brick").getBoundingClientRect().left - (document.getElementById("MRR_eq").clientWidth - document.getElementById("MRR_brick").clientWidth)/2))}px`;
+});
+MRR_brick.addEventListener('mouseleave', () => { MRR_eq.style.display = 'none'; });
+
+// PWR
+const PWR_brick = document.getElementById('PWR_brick');
+const PWR_eq = document.getElementById('PWR_eq');
+PWR_brick.addEventListener('mouseenter', () => { 
+    PWR_eq.style.display = 'block'; 
+    document.getElementById("PWR_eq").style.left = `${Math.max(leftest, Math.floor(document.getElementById("PWR_brick").getBoundingClientRect().left - (document.getElementById("PWR_eq").clientWidth - document.getElementById("PWR_brick").clientWidth)/2))}px`;
+});
+PWR_brick.addEventListener('mouseleave', () => { PWR_eq.style.display = 'none'; });
+
+// DEF
+const DEF_brick = document.getElementById('DEF_brick');
+const DEF_eq = document.getElementById('DEF_eq');
+DEF_brick.addEventListener('mouseenter', () => { 
+    DEF_eq.style.display = 'block'; 
+    document.getElementById("DEF_eq").style.left = `${Math.max(Math.floor(document.getElementById("DEF_brick").getBoundingClientRect().left - (document.getElementById("DEF_eq").clientWidth - document.getElementById("DEF_brick").clientWidth)/2))}px`;
+});
+DEF_brick.addEventListener('mouseleave', () => { DEF_eq.style.display = 'none'; });
+
+// TOR
+const TOR_brick = document.getElementById('TOR_brick');
+const TOR_eq = document.getElementById('TOR_eq');
+TOR_brick.addEventListener('mouseenter', () => { 
+    TOR_eq.style.display = 'block'; 
+    document.getElementById("TOR_eq").style.left = `${Math.max(leftest, Math.floor(document.getElementById("TOR_brick").getBoundingClientRect().left - (document.getElementById("TOR_eq").clientWidth - document.getElementById("TOR_brick").clientWidth)/2))}px`;
+});
+TOR_brick.addEventListener('mouseleave', () => { TOR_eq.style.display = 'none'; });
+
+// FOR
+const FOR_brick = document.getElementById('FOR_brick');
+const FOR_eq = document.getElementById('FOR_eq');
+FOR_brick.addEventListener('mouseenter', () => {
+    FOR_eq.style.display = 'block'; 
+    document.getElementById("FOR_eq").style.left = `${Math.max(Math.floor(document.getElementById("FOR_brick").getBoundingClientRect().left - (document.getElementById("FOR_eq").clientWidth - document.getElementById("FOR_brick").clientWidth)/2))}px`;
+});
+FOR_brick.addEventListener('mouseleave', () => { FOR_eq.style.display = 'none'; });
+
+// CHL
+// const CHL_brick = document.getElementById('CHL_brick');
+// const CHL_eq = document.getElementById('CHL_eq');
+// CHL_brick.addEventListener('mouseenter', () => { CHL_eq.style.display = 'block'; });
+// CHL_brick.addEventListener('mouseleave', () => { CHL_eq.style.display = 'none'; });
+
+// RCTF
+const RCTF_brick = document.getElementById('RCTF_brick');
+const RCTF_eq = document.getElementById('RCTF_eq');
+RCTF_brick.addEventListener('mouseenter', () => { 
+    RCTF_eq.style.display = 'block'; 
+    document.getElementById("RCTF_eq").style.left = `${Math.max(Math.floor(document.getElementById("RCTF_brick").getBoundingClientRect().left - (document.getElementById("RCTF_eq").clientWidth - document.getElementById("RCTF_brick").clientWidth)/2))}px`;
+});
+RCTF_brick.addEventListener('mouseleave', () => { RCTF_eq.style.display = 'none'; });
+
+// ACTF
+const ACTF_brick = document.getElementById('ACTF_brick');
+const ACTF_eq = document.getElementById('ACTF_eq');
+ACTF_brick.addEventListener('mouseenter', () => { 
+    ACTF_eq.style.display = 'block'; 
+    document.getElementById("ACTF_eq").style.left = `${Math.max(Math.floor(document.getElementById("ACTF_brick").getBoundingClientRect().left - (document.getElementById("ACTF_eq").clientWidth - document.getElementById("ACTF_brick").clientWidth)/2))}px`;
+});
+ACTF_brick.addEventListener('mouseleave', () => { ACTF_eq.style.display = 'none'; });
+
+// FCF
+const FCF_brick = document.getElementById('FCF_brick');
+const FCF_eq = document.getElementById('FCF_eq');
+FCF_brick.addEventListener('mouseenter', () => { 
+    FCF_eq.style.display = 'block'; 
+    document.getElementById("FCF_eq").style.left = `${Math.max(Math.floor(document.getElementById("FCF_brick").getBoundingClientRect().left - (document.getElementById("FCF_eq").clientWidth - document.getElementById("FCF_brick").clientWidth)/2))}px`;
+});
+FCF_brick.addEventListener('mouseleave', () => { FCF_eq.style.display = 'none'; });
+
+// AUP
+// const AUP_brick = document.getElementById('AUP_brick');
+// const AUP_eq = document.getElementById('AUP_eq');
+// AUP_brick.addEventListener('mouseenter', () => { AUP_eq.style.display = 'block'; });
+// AUP_brick.addEventListener('mouseleave', () => { AUP_eq.style.display = 'none'; });
+
+// EFF
+const EFF_brick = document.getElementById('EFF_brick');
+const EFF_eq = document.getElementById('EFF_eq');
+EFF_brick.addEventListener('mouseenter', () => { 
+    EFF_eq.style.display = 'block'; 
+    document.getElementById("EFF_eq").style.left = `${Math.max(Math.floor(document.getElementById("EFF_brick").getBoundingClientRect().left - (document.getElementById("EFF_eq").clientWidth - document.getElementById("EFF_brick").clientWidth)/2))}px`;
+});
+EFF_brick.addEventListener('mouseleave', () => { EFF_eq.style.display = 'none'; });
+
+// TEA
+const TEA_brick = document.getElementById('TEA_brick');
+const TEA_eq = document.getElementById('TEA_eq');
+TEA_brick.addEventListener('mouseenter', () => { 
+    TEA_eq.style.display = 'block'; 
+    document.getElementById("TEA_eq").style.left = `${Math.max(Math.floor(document.getElementById("TEA_brick").getBoundingClientRect().left - (document.getElementById("TEA_eq").clientWidth - document.getElementById("TEA_brick").clientWidth)/2))}px`;
+});
+TEA_brick.addEventListener('mouseleave', () => { TEA_eq.style.display = 'none'; });
+
+document.addEventListener("DOMContentLoaded", function(event) {
+    var min = document.getElementById("MRR_brick").getBoundingClientRect().left;
+
+    // MRR
+    document.getElementById("MRR_eq").style.left = Math.floor(document.getElementById("MRR_brick").getBoundingClientRect().left);
+    katex.render("MRR = V_{feed} * WOC * DOC", document.getElementById("MRR_equation"), {
+        throwOnError: false
+    });
+    
+    // PWR
+    katex.render("MRR * UNITPOWER_{material} * C_{feed factor} * W_{tool wear}", document.getElementById("PWR_equation"), {
+        throwOnError: false
+    });
+    
+    // DEF
+    katex.render("\\frac{Force * Length^3}{3 * Elasticity * Inertia}", document.getElementById("DEF_equation"), {
+        throwOnError: false
+    });
+    
+    // TOR
+    katex.render("\\frac{Power * V_{feed}}{RPM}", document.getElementById("TOR_equation"), {
+        throwOnError: false
+    });
+    
+    // FOR
+    katex.render("\\frac{Power}{Surface Speed}", document.getElementById("FOR_equation"), {
+        throwOnError: false
+    });
+    
+    // CHL
+    // katex.render("", document.getElementById("CHL_equation"), {
+    //     throwOnError: false
+    // });
+    
+    // RCTF
+    katex.render("min(1, \\sqrt{1 - (1 - \\frac{2WOC}{Effective Diameter})^2}", document.getElementById("RCTF_equation"), {
+        throwOnError: false
+    });
+    
+    // ACTF
+    katex.render("min(1, \\sqrt{1 - (1 - \\frac{DOC}{RADIUS})^2}", document.getElementById("ACTF_equation"), {
+        throwOnError: false
+    });
+    
+    // FCF
+    katex.render("ChipThinning_{axial} * ChipThinning_{radial}", document.getElementById("FCF_equation"), {
+        throwOnError: false
+    });
+    
+    // AUP
+    // katex.render("", document.getElementById("AUP_equation"), {
+    //     throwOnError: false
+    // });
+    
+    // EFF
+    katex.render("2 * \\sqrt{RADIUS^2 - (RADIUS - DOC)^2}", document.getElementById("EFF_equation"), {
+        throwOnError: false
+    });
+    
+    // TEA
+    katex.render("acos(1 - \\frac{min(WOC, DIAMETER)}{RADIUS})", document.getElementById("TEA_equation"), {
+        throwOnError: false
+    });
+});
+
