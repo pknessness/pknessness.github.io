@@ -1,55 +1,225 @@
 <html>
-    <style>
-      body {
-        background-color: rgb(192,192,192);
-      }
-    </style>
-    <head>
-    <!-- <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> -->
-    <meta charset="UTF-8" />
-    <link rel="stylesheet" href="stylesheet.css" />
+  <style>
+    body {
+      background-color: rgb(192,192,192);
+      
+      
+    }
+
+    .subproj {
+      padding: 5px 5px 5px 0px;
+    }
+
+    .scale {
+      transform: scale(1.5) translate3d(16.66%, 16.66%, 0);
+      transform-origin: center;
+    }
+
+    .project-grid {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .window {
+      width: 320px; 
+      height: 100%; 
+      display: flex; 
+      flex-direction: column; 
+      flex-wrap: wrap; 
+      justify-content: space-between;
+    }
+  </style>
+  <head>
+  <!-- <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> -->
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="stylesheet.css" />
   </head>
-  <div class="title-bar">
-    <div class="title-bar-text">
-        Some Projects:
+  <title>
+      Anshal Jain's Projects
+  </title>
+  <body id="bod">
+    <div id="wrap" class="scale" >
+      <div class="title-bar">
+        <div class="title-bar-text">
+            Tools for Triton Robotics:
+        </div>
+        <div class="title-bar-controls">
+          <button aria-label="Help"></button>
+        </div>
+      </div>
+      <button class="large-button" id="nucleo_pinout" onclick="window.location.href = 'nucleo_f446re_pinout/pinout.html'">
+        Nucleo F446RE Pinout
+      </button>
+      <button class="large-button" id="wiring_diagram" onclick="window.location.href = 'tr_wiring_diagram_v2/diagram.html'">
+        TR Wiring Diagram
+      </button>
+      <button class="large-button" id="decision_tree" onclick="window.location.href = 'tr_debug_decisiontree/diagram.html'">
+        TR Debugging Decision Tree
+      </button>
+      <button class="large-button" id="goJS" onclick="window.location.href = 'GoJS/blockEditor.html'">
+        GoJS Editor
+      </button>
+      <button class="large-button" id="pid_sim" onclick="window.location.href = 'pid_sim/pid.html'">
+        PID Simulator
+      </button>
+      <div style="height:20px"></div>
+      <div class="title-bar">
+        <div class="title-bar-text">
+            Projects:
+        </div>
+        <div class="title-bar-controls">
+          <button aria-label="Help" onclick="alert(`These tools are for the use of Triton Robotics made by an alumni (yours truly)`)"></button>
+        </div>
+      </div>
+      <!--  -->
+      <div class="project-grid">
+        <div class="subproj">
+          <div class="window">
+            <div class="title-bar" >
+              <div class="title-bar-text">UCSD Virtual Lab</div>
+            </div>
+            <div class="window-body" style="align-self: flex-start;">
+              <p> Wrote UI in JS and HTML for students to be able to access virtual labs in a more interactive and helpful manner. Utilized AWS S3 Buckets as a web server to host the lab files, and stream them to the user.</p>
+              <button class="large-button" id="virtual_lab" onclick="window.location.href = 'http://ucsdstemlab-deve.ucsd.edu'">
+                Virtual Lab
+              </button>
+            </div>
+            <div class="status-bar" style="align-self: flex-end;">
+              <p class="status-bar-field">Software</p>
+              <p class="status-bar-field">HTML, JS, CSS, AWS</p>
+              <p class="status-bar-field">Project for Professor Maziar Ghazinejad</p>
+            </div>
+          </div>
+        </div>
+        <!--  -->
+        <div class="subproj">
+          <div class="window" style="width: 320px">
+            <div class="title-bar">
+              <div class="title-bar-text">StarCraft II Randomizer</div>
+            </div>
+            <div class="window-body">
+              <p>Fun randomizer for Starcraft II, where both players will run the randomizer and are only allowed to use the units shown. Each player gets one reroll.</p>
+              <button class="large-button" id="starcraft_randomizer" onclick="window.location.href = 'starcraft_randomizer/main.html'">
+                Randomizer
+              </button>
+            </div>
+            <div class="status-bar">
+              <p class="status-bar-field">Software</p>
+              <p class="status-bar-field">HTML, JS</p>
+              <p class="status-bar-field">Personal Project</p>
+            </div>
+          </div>
+        </div>
+        <!--  -->
+        <div class="subproj">
+          <div class="window" style="width: 320px">
+            <div class="title-bar">
+              <div class="title-bar-text">Embedded Code @ Triton Robotics</div>
+            </div>
+            <div class="window-body">
+              <p>I spent my four years (2021-2025) at UCSD working on Firmware and Controls code for the competitive robotics team Triton Robotics. I was a general embedded member for one year and I spent the rest of the three years as the Embedded Team Lead. A lot of the code I wrote my first year is absolute garbage so my hope is that I can help my underclassmen fix up my mistakes over time.</p>
+              <button class="large-button" onclick="window.location.href = 'https://github.com/Triton-Robotics/TR-mbed'">
+                Github
+              </button>
+              <button class="large-button" onclick="window.location.href = 'https://tritonrobotics.org/'">
+                Website
+              </button>
+            </div>
+            <div class="status-bar">
+              <p class="status-bar-field">Firmware, Hardware</p>
+              <p class="status-bar-field">C++, I2C, SPI, UART, PID, Linear Controls, STM32, RTOS</p>
+              <p class="status-bar-field">University Organization</p>
+            </div>
+          </div>
+        </div>
+        <!--  -->
+        <div class="subproj">
+          <div class="window" style="width: 320px">
+            <div class="title-bar">
+              <div class="title-bar-text">Raytracer in a Weekend</div>
+            </div>
+            <div class="window-body">
+              <p>Following Sebastian Lague's series (which is based on the raytracing in a weekend textbook) on making a simple raytracer. For speed and because the raytracer runs on a browser, the pixels are kept to a very small number, and the image gets better the longer you look at it</p>
+              <button class="large-button" onclick="window.location.href = 'raytrace_js/index.html'">
+                Raytracer
+              </button>
+            </div>
+            <div class="status-bar">
+              <p class="status-bar-field">Software</p>
+              <p class="status-bar-field">JS</p>
+              <p class="status-bar-field">Personal Project</p>
+            </div>
+          </div>
+        </div>
+        <!--  -->
+        <div class="subproj">
+          <div class="window" style="width: 320px">
+            <div class="title-bar">
+              <div class="title-bar-text">Tanks!</div>
+            </div>
+            <div class="window-body">
+              <p>Failed attempt at recreating the Wii Play game Tanks!. Learned about project matrices with relation to squares and how to traditionally render 3D objects such as cubes, before realizing that I was overcomplicating things because I was going to be using a 45 degree angle of camera anyway, and I should worry about the gamemplay first. The simplified version has more working features but is still not much to talk about.</p>
+              <button class="large-button" onclick="window.location.href = 'tanks/index.html'">
+                Tanks! 3D
+              </button>
+              <button class="large-button" onclick="window.location.href = 'tanks2D/index.html'">
+                Tanks! 2D
+              </button>
+            </div>
+            <div class="status-bar">
+              <p class="status-bar-field">Software</p>
+              <p class="status-bar-field">JS</p>
+              <p class="status-bar-field">Personal Project</p>
+            </div>
+          </div>
+        </div>
+        <!--  -->
+        <div class="subproj">
+          <div class="window" style="width: 320px">
+            <div class="title-bar">
+              <div class="title-bar-text">Feeds and Speeds Calculator</div>
+            </div>
+            <div class="window-body">
+              <p>I have come into a 60x40cm CNC Router that I want to use for a number of projects, so for that I began looking for a Feeds and Speeds calculator so that I can get fast cuts without wearing my endmill too much or breaking the bits. I found such a calculator with very in depth options and all the math necessary, but I found the UI a bit lacking for my taste, so I spruced that up and kept the underlying everything mostly the same. </p>
+              <button class="large-button" onclick="window.location.href = 'https://brturn.github.io/feeds-and-speeds/'">
+                Original
+              </button>
+              <button class="large-button" onclick="window.location.href = 'feeds_and_speeds/index.html'">
+                My Feeds And Speeds Calculator
+              </button>
+            </div>
+            <div class="status-bar">
+              <p class="status-bar-field">Software</p>
+              <p class="status-bar-field">HTML, JS, CSS</p>
+              <p class="status-bar-field">Personal Project</p>
+            </div>
+          </div>
+        </div>
+        <!--  -->
+        <div class="subproj">
+          <div class="window" style="width: 320px">
+            <div class="title-bar">
+              <div class="title-bar-text">Feeds and Speeds Calculator</div>
+            </div>
+            <div class="window-body">
+              <p>I have come into a 60x40cm CNC Router that I want to use for a number of projects, so for that I began looking for a Feeds and Speeds calculator so that I can get fast cuts without wearing my endmill too much or breaking the bits. I found such a calculator with very in depth options and all the math necessary, but I found the UI a bit lacking for my taste, so I spruced that up and kept the underlying everything mostly the same. </p>
+              <button class="large-button" id="pid_sim" onclick="window.location.href = 'https://brturn.github.io/feeds-and-speeds/'">
+                Original
+              </button>
+              <button class="large-button" id="pid_sim" onclick="window.location.href = 'feeds_and_speeds/index.html'">
+                My Feeds And Speeds Calculator
+              </button>
+            </div>
+            <div class="status-bar">
+              <p class="status-bar-field">Software</p>
+              <p class="status-bar-field">HTML, JS, CSS</p>
+              <p class="status-bar-field">Personal Project</p>
+            </div>
+          </div>
+        </div>
+        <!--  -->
+      </div>
     </div>
-    <div class="title-bar-controls">
-      <button aria-label="Help"></button>
-    </div>
-  </div>
-  <body>
-    <title>
-        Projects
-    </title>
-    <button class="large-button" id="virtual_lab" onclick="window.location.href = 'http://ucsdstemlab-deve.ucsd.edu'">
-      UCSD Virtual Stem Lab
-    </button>
-    <button class="large-button" id="nucleo_pinout" onclick="window.location.href = 'nucleo_f446re_pinout/pinout.html'">
-      Nucleo F446RE Pinout
-    </button>
-    <button class="large-button" id="wiring_diagram" onclick="window.location.href = 'tr_wiring_diagram_v2/diagram.html'">
-      TR Wiring Diagram
-    </button>
-    <button class="large-button" id="decision_tree" onclick="window.location.href = 'tr_debug_decisiontree/diagram.html'">
-      TR Debugging Decision Tree
-    </button>
-    <button class="large-button" id="starcraft_randomizer" onclick="window.location.href = 'starcraft_randomizer/main.html'">
-      StarCraft II Randomizer
-    </button>
-    <button class="large-button" id="goJS" onclick="window.location.href = 'GoJS/blockEditor.html'">
-      GoJS Editor
-    </button>
-    <button class="large-button" id="pid_sim" onclick="window.location.href = 'pid_sim/pid.html'">
-      PID Simulator
-    </button>
-    <button class="large-button" id="pid_sim" onclick="window.location.href = 'raytrace_js/index.html'">
-      Ray Tracing
-    </button>
-    <button class="large-button" id="pid_sim" onclick="window.location.href = 'tanks/index.html'">
-      Tanks!
-    </button>
-    <button class="large-button" id="feeds_and_soeeds" onclick="window.location.href = 'feeds_and_speeds/index.html'">
-      Feeds And Speeds Calculator
-    </button>
   </body>
+  <script src="main.js"></script>
 </html>
