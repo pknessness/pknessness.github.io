@@ -1,0 +1,19 @@
+.viewframe {
+    width: 99%;
+    height:99%;
+    top: 0;
+    left: 0;
+    border: 2px dashed #ffffff;
+}
+
+button{
+    background: transparent;
+    border: 2px solid #ffffff77;
+    /* font-size: 12px */
+    /* background-color: #d81c1c; */
+}
+
+button:hover{
+    background: #e85c5c99;
+    border: 2px solid #d81c1c77;
+}

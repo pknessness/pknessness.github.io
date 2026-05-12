@@ -1,0 +1,107 @@
+<html>
+  <head>
+    <!-- <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> -->
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="../stylesheet.css" />
+  </head>
+  <title>Metal Wii Remote</title>
+  <div class="title-bar">
+    <div class="title-bar-text">
+        Metal Wii Remote: Oct 16, 2025
+    </div>
+    <div class="title-bar-controls">
+      <button aria-label="Minimize" onclick="window.location.href = '../index.html'"><</button>
+    </div>
+  </div>
+  <body style="font-size:1.5em; padding: 40px 200px" >
+    <p>
+        This project began in 2023 when I first modded my Wii and was getting controllers off ebay, 
+        and thought it would be cool to make a shell for a controller out of metal. My motivation and 
+        progress on this project waxed and waned very much over the two years. On this note, 
+        I went to my local makerspace and tried to get a 3D model of an existing wii shell so that 
+        I wouldn't have to CAD it myself, as I'm generally not a big fan of doing complex CAD, but 
+        the results were definitely less than ideal. 
+    </p>
+    <p>
+        I had also previously looked online for wii remote shell cad, but also no luck there. In the 
+        end, I thought, ok I'll just design the shell myself, and began some light CAD work
+        trying to get the PCB to mount into the shell. Before I had gotten too far into this process, 
+        I had the <i>brilliant</i> idea that I could make this process easier for myself if I also 
+        designed the pcb from scratch, and that would require me to also do all the firmware from 
+        scratch, and at the time that seemed like an appealing idea to me, and thus this project began 
+        anew.
+    </p> 
+    <p>
+        Once I had decided to make the software from scratch, I thought it would be best to actually 
+        begin with that, since that would be the most difficult part of this by far, and also the part 
+        that I could do without the need of a 3D printer, (which I do not have of my own, and I was 
+        using the makerspace for iteration). The first order of business was to look into the protocol 
+        of the wii remote itself. The wii has a dedicated fanbase to this day (of which I am one), and 
+        they already have a <a href="https://wiibrew.org/wiki/Wiimote" target="_blank">wonderful page</a> 
+        on the protocol of a wiimote. It seemed to be a pretty simple setup, which is that its a mostly standard HID 
+        bluetooth classic device. 
+    </p>
+    <p>
+      The next order of business is figuring out how exactly HID over bluetooth works. Some resources I found: 
+      <br>
+      <a href="https://www.youtube.com/watch?v=SynyKRkbLh8" target="_blank">Classic Bluetooth & Bluetooth low energy - what's the difference?</a>
+      <br>
+      <a href="https://www.youtube.com/watch?v=0Q_4q1zU6Zc" target="_blank">Bluetooth Classic & BLE with ESP32</a>
+      <br>
+      <a href="https://www.youtube.com/watch?v=MqUe4OLXfIw" target="_blank">Codenomicon Technical Deep Dive: Bluetooth L2CAP</a>
+      <br>
+      During my research I also found someone who wrote <a href="https://github.com/hrgraf/ESP32Wiimote">code that did the opposite of what</a> I wanted it to do, 
+      which is connect a Wii Remote <i>to</i> an ESP32. However, connecting to a wiimote was a lot less difficult than connecting to a wii, assumedly because Nintendo was more concerned about clone wiimotes than someone reusing their Wiimote on their laptop. From there, my goal was to use 
+      examples from ESP-idf to start off and then modify the specifics to match the Wiimote specs I found on wiibrew.
+    </p>
+    <p>
+      Thanks to the help of some people on the wii homebrew discord, I was able to get the report descriptor, which is
+    </p>
+    <code>
+      Raw Name: Nintendo RVL-CNT-01
+      Raw Phys: XX:XX:XX:XX:XX:XX
+      Raw Info:
+          bustype: 5 (Bluetooth)
+          vendor: 0x057e
+          product: 0x0306
+      Report Descriptor Size: 218
+      Report Descriptor:
+      05 01 09 05 A1 01 85 10 15 00 26 FF 00 75 08 95 
+      01 06 00 FF 09 01 91 00 85 11 95 01 09 01 91 00 
+      85 12 95 02 09 01 91 00 85 13 95 01 09 01 91 00 
+      85 14 95 01 09 01 91 00 85 15 95 01 09 01 91 00 
+      85 16 95 15 09 01 91 00 85 17 95 06 09 01 91 00 
+      85 18 95 15 09 01 91 00 85 19 95 01 09 01 91 00 
+      85 1A 95 01 09 01 91 00 85 20 95 06 09 01 81 00 
+      85 21 95 15 09 01 81 00 85 22 95 04 09 01 81 00 
+      85 30 95 02 09 01 81 00 85 31 95 05 09 01 81 00 
+      85 32 95 0A 09 01 81 00 85 33 95 11 09 01 81 00 
+      85 34 95 15 09 01 81 00 85 35 95 15 09 01 81 00 
+      85 36 95 15 09 01 81 00 85 37 95 15 09 01 81 00 
+      85 3D 95 15 09 01 81 00 85 3E 95 15 09 01 81 00 
+      85 3F 95 15 09 01 81 00 C0 00
+    </code>
+    <p>
+      Next on the docket was to get something working. I began initially with bluedroid, as it had 
+      examples with bluetooth mice/keyboards I thought I could modify. I rotated around a few examples,
+      but ended up settling on the <a href="https://github.com/espressif/esp-idf/tree/master/examples/bluetooth/esp_hid_device">
+      esp_hid_device</a> example, as it was the most barebones. To my knowledge at the moment, there 
+      are a few requirements for a wiimote to connect to the wii: The MAC address's first three has 
+      to be one of the nintendo specific ones, the SDP record has to be correct, the product and vendor 
+      id have to be correct, and it has to use legacy pairing with the correct pin.
+    </p>
+    <p>
+      I got the bluedroid example to pair using dolphin emulator, but no reaction on the wii. I hadn't yet 
+      implemented the SDP record yet, because bluedroid's SDP record api is pretty strict and not very flexible. 
+      I would probably have to modify bluedroid to be able to do it, so I briefly looked at an alternative 
+      bluetooth stack, btstack. btstack had a lot more flexibilty with SDP, but unfortunately btstack doesn't 
+      support legacy pairing. I decided it would probably be easier to 
+    </p>
+    <br>
+    <button class="large-button" onclick="window.location.href = '../index.html'">
+        Back
+    </button>
+  </body>
+  <script src = "vector.js"></script>
+  <script src = "main.js"></script>
+</html>

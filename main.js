@@ -9,6 +9,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
     //     //proj.style.padding = `10px 10px`;
     //     console.log(proj.children[0].clientHeight)
     // }
-    document.getElementById("wrap").style.width = document.getElementById("bod").clientWidth / 1.5;
-    console.log(document.getElementById("wrap").clientWidth, document.getElementById("bod").clientWidth);
+    document.getElementById("wrap").style.width = document.getElementById("bod").clientWidth / 1.5 - 20;
+    //console.log(document.getElementById("wrap").clientWidth, document.getElementById("bod").clientWidth);
 });
